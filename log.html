@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect CRM — Development Log & Handoff</title>
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #090b10;
+      --surface: #121620;
+      --surface-accent: #1c2333;
+      --primary: #5865f2;
+      --primary-glow: rgba(88, 101, 242, 0.4);
+      --success: #10b981;
+      --success-glow: rgba(16, 185, 129, 0.2);
+      --warning: #f59e0b;
+      --warning-glow: rgba(245, 158, 11, 0.2);
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border: rgba(255, 255, 255, 0.08);
+      --glass: rgba(18, 22, 32, 0.7);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Header Banner styling */
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--primary-glow) 0%, rgba(9, 11, 16, 0) 70%);
+      z-index: -1;
+      filter: blur(40px);
+    }
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 70px;
+      height: 70px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%);
+      box-shadow: 0 8px 24px var(--primary-glow);
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #ffffff 30%, var(--text-muted) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Meta Details Grid */
+    .meta-card {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 30px;
+      margin-bottom: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .meta-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(9, 11, 16, 0) 70%);
+      z-index: 0;
+    }
+
+    .meta-item {
+      z-index: 1;
+    }
+
+    .meta-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .meta-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .meta-value a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .meta-value a:hover {
+      color: #7d8bff;
+      text-decoration: underline;
+    }
+
+    /* Filters for Tabs */
+    .filter-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .tab-btn {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 10px 24px;
+      border-radius: 30px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tab-btn.active,
+    .tab-btn:hover {
+      color: white;
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 4px 15px var(--primary-glow);
+      transform: translateY(-1px);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Grid Section & Cards */
+    .log-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .log-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: all 0.2s ease;
+    }
+
+    .log-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateX(4px);
+    }
+
+    .log-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .log-icon.done {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .log-icon.pending {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .log-info {
+      flex-grow: 1;
+    }
+
+    .log-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge.completed {
+      background-color: var(--success-glow);
+      color: var(--success);
+    }
+
+    .badge.future {
+      background-color: var(--warning-glow);
+      color: var(--warning);
+    }
+
+    .log-desc {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .log-details {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      color: #818cf8;
+      border-left: 3px solid var(--primary);
+    }
+
+    /* Timeline Style */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+      margin-top: 10px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 7px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 24px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -27px;
+      top: 6px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid var(--primary);
+    }
+
+    .timeline-dot.green {
+      border-color: var(--success);
+    }
+
+    .timeline-date {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .timeline-header {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    /* Footer styles */
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    footer i {
+      color: var(--primary);
+      margin: 0 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-badge">C</div>
+      <h1>Connect CRM</h1>
+      <p class="subtitle">Platform Development Log, Completed Modules, and Handoff Instructions.</p>
+    </header>
+
+    <!-- Meta Details Section -->
+    <div class="meta-card">
+      <div class="meta-item">
+        <div class="meta-label"><i class="fa-solid fa-code-branch"></i> GitHub Repo</div>
+        <div class="meta-value"><a href="https://github.com/7dayscreation/connect" target="_blank">7dayscreation/connect</a></div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label"><i class="fa-solid fa-earth-americas"></i> Live Preview</div>
+        <div class="meta-value"><a href="https://7dayscreation.github.io/connect/" target="_blank">7dayscreation.github.io/connect</a></div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label"><i class="fa-solid fa-server"></i> API Worker URL</div>
+        <div class="meta-value"><a href="https://connect-api.info-f6c.workers.dev/api/auth/branding" target="_blank">connect-api...workers.dev</a></div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label"><i class="fa-solid fa-database"></i> D1 Database</div>
+        <div class="meta-value">connect-db</div>
+      </div>
+    </div>
+
+    <!-- Toggle Filters -->
+    <div class="filter-tabs">
+      <button class="tab-btn active" onclick="switchTab('completed')"><i class="fa-solid fa-circle-check"></i> Completed Development</button>
+      <button class="tab-btn" onclick="switchTab('pending')"><i class="fa-solid fa-circle-notch"></i> Pending / Future Integrations</button>
+      <button class="tab-btn" onclick="switchTab('journey')"><i class="fa-solid fa-timeline"></i> Development History</button>
+    </div>
+
+    <!-- COMPLETED MODULES TAB -->
+    <div id="completed" class="tab-content active">
+      <div class="log-grid">
+        <!-- Log Item -->
+        <div class="log-card">
+          <div class="log-icon done"><i class="fa-solid fa-unlock-keyhole"></i></div>
+          <div class="log-info">
+            <div class="log-title">Two-Step OTP Authentication Whitelist <span class="badge completed">Completed</span></div>
+            <div class="log-desc">Wired the login endpoint to check requests against D1 whitelist. If active, it stores and sends a 6-digit verification code using Resend (fallback local simulation support active). Bypassed captcha checks temporarily via config to permit automated E2E verification.</div>
+            <div class="log-details">POST /api/auth/send-otp &nbsp;|&nbsp; POST /api/auth/verify-otp</div>
+          </div>
+        </div>
+
+        <div class="log-card">
+          <div class="log-icon done"><i class="fa-solid fa-gauge-high"></i></div>
+          <div class="log-info">
+            <div class="log-title">Dynamic Stats Dashboard integration <span class="badge completed">Completed</span></div>
+            <div class="log-desc">Connected the front-end dashboard cards (leads, emails, WhatsApp logs) to live server-side database counts. The statistics are rendered in real-time by querying tables dynamically. No hardcoded or dummy mocks are used.</div>
+            <div class="log-details">GET /api/dashboard/stats &nbsp;|&nbsp; D1preparedStmt.prepare().all()</div>
+          </div>
+        </div>
+
+        <div class="log-card">
+          <div class="log-icon done"><i class="fa-solid fa-user-tag"></i></div>
+          <div class="log-info">
+            <div class="log-title">Lead/Inquiry Capture & Segmenting <span class="badge completed">Completed</span></div>
+            <div class="log-desc">Structured the lead input routing so that custom segments (General, Walking Inquiry, Architect Reference, etc.) are successfully written to D1 database records. Includes validation checking and notification alerts on new inquiries.</div>
+            <div class="log-details">POST /api/inquiries/save &nbsp;|&nbsp; GET /api/inquiries</div>
+          </div>
+        </div>
+
+        <div class="log-card">
+          <div class="log-icon done"><i class="fa-solid fa-cubes"></i></div>
+          <div class="log-info">
+            <div class="log-title">Template Editor Saving Logic <span class="badge completed">Completed</span></div>
+            <div class="log-desc">Wired the template editor's 'Save Template' interface triggers to store custom layouts, HTML code, header titles, and settings in D1 tables under `email_templates`. The custom lists are rendered dynamically on reload.</div>
+            <div class="log-details">POST /api/campaigns/email/templates/save &nbsp;|&nbsp; email_templates table</div>
+          </div>
+        </div>
+
+        <div class="log-card">
+          <div class="log-icon done"><i class="fa-solid fa-network-wired"></i></div>
+          <div class="log-info">
+            <div class="log-title">Serverless Resources & Cron Workflows <span class="badge completed">Completed</span></div>
+            <div class="log-desc">Spun up and bound Cloudflare databases (D1), KV (cache/session storage), and R2 buckets (assets uploading). Set up and deployed a cron worker trigger to sweep campaign dispatch cues every minute.</div>
+            <div class="log-details">wrangler.toml & wrangler-cron.toml &nbsp;|&nbsp; npx wrangler deploy</div>
+          </div>
+        </div>
+
+        <div class="log-card">
+          <div class="log-icon done"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="log-info">
+            <div class="log-title">Dynamic Turnstile Environment Setup <span class="badge completed">Completed</span></div>
+            <div class="log-desc">Refactored the validation middleware to dynamically pull captcha keys from environment variables (`env.TURNSTILE_SITE_KEY` and `env.TURNSTILE_SECRET_KEY`) instead of hardcoded config databases. Supports automatic ON/OFF bypasses.</div>
+            <div class="log-details">env.TURNSTILE_ENABLED = false / true &nbsp;|&nbsp; GET /api/auth/branding</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PENDING / FUTURE INTEGRATIONS TAB -->
+    <div id="pending" class="tab-content">
+      <div class="log-grid">
+        <div class="log-card">
+          <div class="log-icon pending"><i class="fa-solid fa-paper-plane"></i></div>
+          <div class="log-info">
+            <div class="log-title">Resend Custom Domain Setup <span class="badge future">Future Task</span></div>
+            <div class="log-desc">Currently, email blasts send from `no-reply@7dayscreation.com` using a placeholder credential. To launch, the client needs to set their custom domain DNS records (MX, SPF, DKIM) on Resend.com and configure their real `RESEND_API_KEY` on Cloudflare.</div>
+            <div class="log-details">npx wrangler secret put RESEND_API_KEY</div>
+          </div>
+        </div>
+
+        <div class="log-card">
+          <div class="log-icon pending"><i class="fa-brands fa-whatsapp"></i></div>
+          <div class="log-info">
+            <div class="log-title">Live WhatsApp Business API integration <span class="badge future">Future Task</span></div>
+            <div class="log-desc">WhatsApp campaign blasts currently log to the database but simulate actual dispatches. Once a WhatsApp Business Cloud API key and URL are acquired from Meta Developer portal, bind them as Cloudflare secrets to enable real-world phone messaging.</div>
+            <div class="log-details">npx wrangler secret put WHATSAPP_API_KEY & WHATSAPP_API_URL</div>
+          </div>
+        </div>
+
+        <div class="log-card">
+          <div class="log-icon pending"><i class="fa-solid fa-globe"></i></div>
+          <div class="log-info">
+            <div class="log-title">Turnstile allowed Domain Setup <span class="badge future">Future Task</span></div>
+            <div class="log-desc">The Turnstile captcha site key is active but currently throws a domain mismatch error on GitHub Pages. When the client deploys their final landing page custom domain, they must add it to the 'Allowed Domains' list in the Cloudflare Turnstile dashboard.</div>
+            <div class="log-details">CF Dashboard -> Turnstile -> Select Site Key -> Allowed Domains</div>
+          </div>
+        </div>
+
+        <div class="log-card">
+          <div class="log-icon pending"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+          <div class="log-info">
+            <div class="log-title">R2 Image & Asset Upload Handler <span class="badge future">Future Task</span></div>
+            <div class="log-desc">The template editor supports video thumbnail generators and custom blocks, but references local images. Add a media library uploader tab that uploads binary images directly to R2 bucket namespace (`connect-assets`) and generates public URLs.</div>
+            <div class="log-details">env.BUCKET.put() &nbsp;|&nbsp; R2 Public Custom Domain bucket link</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEVELOPMENT HISTORY TAB -->
+    <div id="journey" class="tab-content">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot green"></div>
+          <div class="timeline-date">Phase 1: Project Alignment & Cleanup</div>
+          <div class="timeline-header">Restored tracked base and isolated frontend code</div>
+          <div class="log-desc">Ported the clean frontend HTML files, template components, and base styles into the repository. Inspected existing worker routes and endpoints.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot green"></div>
+          <div class="timeline-date">Phase 2: Configuration Abstraction</div>
+          <div class="timeline-header">Created centralized Config and abstracted API clients</div>
+          <div class="log-desc">Created `js/config.js` to decouple credentials. Refactored `js/api.js` and template modules to dynamically read variables. Committed updates to GitHub.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot green"></div>
+          <div class="timeline-date">Phase 3: Serverless Resource Provisioning</div>
+          <div class="timeline-header">Created D1 SQL database, KV, and R2 assets bucket</div>
+          <div class="log-desc">Spun up databases remotely under wrangler. Generated configuration bindings for both `wrangler.toml` and `wrangler-cron.toml`. Crafted SQL schema pre-seed parameters and populated tables.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot green"></div>
+          <div class="timeline-date">Phase 4: Worker API and Secrets Wiring</div>
+          <div class="timeline-header">Deployed Worker code and set secure random secret tokens</div>
+          <div class="log-desc">Uploaded session secrets and marketing placeholders. Launched `connect-api` and validated response endpoints. Deployed `connect-cron` schedules.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot green"></div>
+          <div class="timeline-date">Phase 5: Dynamic Turnstile Refactoring</div>
+          <div class="timeline-header">Migrated Turnstile configs to server environment variables</div>
+          <div class="log-desc">Refactored route dispatch handlers to enable environment variable checks, allowing site key changes on dashboard settings dynamically without redeployment.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot green"></div>
+          <div class="timeline-date">Phase 6: End-to-End Verification</div>
+          <div class="timeline-header">Conducted headless browser testing of core features</div>
+          <div class="log-desc">Disabled Turnstile temporarily and verified whitelisted email sign-ins, fallback OTP overrides, metrics calculations, new inquiry inputs, and template editor saves.</div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Built with <i class="fa-solid fa-heart"></i> for 7 Days Creation. Connect CRM &copy; 2026. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      // Remove active class from all tabs
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+      // Add active class to selected tab and button
+      document.getElementById(tabId).classList.add('active');
+      const clickedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
+      if (clickedBtn) clickedBtn.classList.add('active');
+    }
+  </script>
+</body>
+
+</html>
