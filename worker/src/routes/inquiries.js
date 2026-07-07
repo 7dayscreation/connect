@@ -86,7 +86,13 @@ async function createInquiry(request, env) {
   const rawConfig = await env.APP_CONFIG.get('app_config');
   const config = rawConfig ? JSON.parse(rawConfig) : {};
   const turnstileSecret = env.TURNSTILE_SECRET || env.TURNSTILE_SECRET_KEY || config.turnstileSecretKey;
-  const turnstileEnabled = env.TURNSTILE_ENABLED === 'true' || env.TURNSTILE_ENABLED === true || config.turnstileEnabled || (!!turnstileSecret && env.TURNSTILE_ENABLED !== 'false');
+  const isExplicitlyDisabled = env.TURNSTILE_ENABLED === false || env.TURNSTILE_ENABLED === 'false';
+  const turnstileEnabled = !isExplicitlyDisabled && (
+    env.TURNSTILE_ENABLED === 'true' || 
+    env.TURNSTILE_ENABLED === true || 
+    config.turnstileEnabled || 
+    !!turnstileSecret
+  );
   if (turnstileEnabled && (config.turnstileApplyInquiry !== false)) {
     if (!turnstileToken) {
       return errorResponse('Captcha verification is required.', 400, env);

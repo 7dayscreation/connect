@@ -45,6 +45,7 @@ bucket_name = "connect-assets"
 ADMIN_EMAIL = "info@7dayscreation.com"
 CORS_ORIGIN = "http://localhost"
 APP_NAME = "Connect"
+TURNSTILE_ENABLED = false
 
 # ============================================================
 # Development Server
