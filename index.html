@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — 7 Days Creation</title>
+  <meta name="description"
+    content="Secure admin login for 7 Days Creation. Access your analytics dashboard with two-step verification.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="../images/favicon.ico" sizes="128x128">
+
+  <!-- Google Fonts — Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Admin Stylesheet -->
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body class="admin-auth-page">
+
+  <div class="auth-container">
+
+    <!-- ============================================
+         LEFT PANEL — BRANDING
+         ============================================ -->
+    <div class="auth-branding">
+
+    </div>
+
+
+    <!-- ============================================
+         RIGHT PANEL — AUTH FORM
+         ============================================ -->
+    <div class="auth-form-panel">
+      <div class="auth-form-wrapper">
+
+        <!-- ========== STEP 1: LOGIN ========== -->
+        <div id="loginStep" class="auth-step active">
+          <div class="auth-form-header">
+            <!-- Mobile-only Logo -->
+            <div class="mobile-logo">
+              <img src="images/logo.png" alt="7 Days Creation" style="height:28px; width:auto; border-radius:4px; margin-right:8px;">
+              <span>7 Days Creation</span>
+            </div>
+
+            <h2>Welcome back</h2>
+            <p>Enter your credentials to access the admin dashboard</p>
+          </div>
+
+          <form id="loginForm" class="auth-form" novalidate>
+            <!-- Email Field -->
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <div class="input-wrapper">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" id="email" name="email" placeholder="info@website.com" required autocomplete="email"
+                  spellcheck="false">
+              </div>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="form-options">
+              <label class="custom-checkbox">
+                <input type="checkbox" id="rememberMe" name="rememberMe">
+                <span class="checkmark"></span>
+                <span class="checkbox-label">Remember me for 30 days</span>
+              </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-primary-admin" id="loginBtn">
+              <span class="btn-text">Sign In</span>
+              <span class="btn-loader"><i class="fas fa-circle-notch fa-spin"></i> Verifying...</span>
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="auth-divider">
+            <span>Your IP : </span>
+          </div>
+
+          <!-- Footer -->
+          <p class="auth-footer-text">
+            Protected by enterprise-grade encryption
+            <i class="fas fa-lock" style="font-size: 11px; opacity: 0.4;"></i>
+          </p>
+        </div>
+
+
+        <!-- ========== STEP 2: TWO-STEP VERIFICATION ========== -->
+        <div id="verifyStep" class="auth-step">
+          <div class="auth-form-header">
+            <!-- Back Button -->
+            <button class="back-btn" id="backToLogin" type="button" aria-label="Go back to login">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+
+            <!-- Shield Icon -->
+            <div class="verify-icon">
+              <div class="verify-icon-ring">
+                <i class="fas fa-shield-halved"></i>
+              </div>
+            </div>
+
+            <h2>Two-Step Verification</h2>
+            <p>We've sent a 6-digit verification code to<br><strong id="maskedEmail">ad••••••@areasqft.com</strong></p>
+          </div>
+
+          <form id="verifyForm" class="auth-form" novalidate>
+            <!-- OTP Inputs -->
+            <div class="otp-container" id="otpContainer">
+              <input type="text" class="otp-input" maxlength="1" data-index="0" inputmode="numeric" pattern="[0-9]"
+                autocomplete="one-time-code" aria-label="Digit 1">
+              <input type="text" class="otp-input" maxlength="1" data-index="1" inputmode="numeric" pattern="[0-9]"
+                aria-label="Digit 2">
+              <input type="text" class="otp-input" maxlength="1" data-index="2" inputmode="numeric" pattern="[0-9]"
+                aria-label="Digit 3">
+              <div class="otp-separator">—</div>
+              <input type="text" class="otp-input" maxlength="1" data-index="3" inputmode="numeric" pattern="[0-9]"
+                aria-label="Digit 4">
+              <input type="text" class="otp-input" maxlength="1" data-index="4" inputmode="numeric" pattern="[0-9]"
+                aria-label="Digit 5">
+              <input type="text" class="otp-input" maxlength="1" data-index="5" inputmode="numeric" pattern="[0-9]"
+                aria-label="Digit 6">
+            </div>
+
+            <!-- Verify Button -->
+            <button type="submit" class="btn-primary-admin" id="verifyBtn">
+              <span class="btn-text">Verify & Continue</span>
+              <span class="btn-loader"><i class="fas fa-circle-notch fa-spin"></i> Verifying...</span>
+            </button>
+          </form>
+
+          <!-- Resend Code -->
+          <div class="resend-section">
+            <p class="resend-text">Didn't receive the code?</p>
+            <button class="resend-btn" id="resendBtn" type="button" disabled>
+              Resend Code <span id="resendTimer">(30s)</span>
+            </button>
+          </div>
+
+          <!-- Alternative Method -->
+          <div class="alt-method">
+            <a href="#" class="alt-method-link">
+              <i class="fas fa-mobile-screen"></i>
+              Use authenticator app instead
+            </a>
+          </div>
+        </div>
+
+
+        <!-- ========== STEP 3: SUCCESS ========== -->
+        <div id="successStep" class="auth-step">
+          <div class="success-content">
+            <!-- Animated Checkmark -->
+            <div class="success-checkmark">
+              <div class="check-icon">
+                <span class="icon-line line-tip"></span>
+                <span class="icon-line line-long"></span>
+                <div class="icon-circle"></div>
+                <div class="icon-fix"></div>
+              </div>
+            </div>
+
+            <h2>Verification Successful!</h2>
+            <p>Redirecting you to the dashboard...</p>
+
+            <!-- Progress Bar -->
+            <div class="redirect-progress">
+              <div class="redirect-bar"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Admin JavaScript -->
+  <script src="js/admin.js"></script>
+</body>
+
+</html>
