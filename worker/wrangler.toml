@@ -1,0 +1,60 @@
+name = "connect-api"
+main = "src/worker.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ============================================================
+# D1 Database Bindings
+# ============================================================
+[[d1_databases]]
+binding = "DB"
+database_name = "connect-db"
+database_id = "2d98b0b1-d822-449e-ad4a-65e94f566120"
+migrations_dir = "migrations"
+
+# ============================================================
+# KV Namespace Bindings (Multi-binding to connect-cache namespace)
+# ============================================================
+[[kv_namespaces]]
+binding = "CACHE"
+id = "2599795f97994ed59510653a6b93eb03"
+
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "2599795f97994ed59510653a6b93eb03"
+
+[[kv_namespaces]]
+binding = "OTP_STORE"
+id = "2599795f97994ed59510653a6b93eb03"
+
+[[kv_namespaces]]
+binding = "APP_CONFIG"
+id = "2599795f97994ed59510653a6b93eb03"
+
+# ============================================================
+# R2 Bucket Bindings
+# ============================================================
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "connect-assets"
+
+# ============================================================
+# Local Dev Variables (.dev.vars file holds secrets)
+# ============================================================
+[vars]
+ADMIN_EMAIL = "info@7dayscreation.com"
+CORS_ORIGIN = "http://localhost"
+APP_NAME = "Connect"
+
+# ============================================================
+# Development Server
+# ============================================================
+[dev]
+port = 8787
+local_protocol = "http"
+
+# ============================================================
+# Build (no bundler needed for single-file worker)
+# ============================================================
+[build]
+command = ""

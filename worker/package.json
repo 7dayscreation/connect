@@ -1,0 +1,17 @@
+{
+  "name": "7dc-comm-worker",
+  "version": "1.0.0",
+  "description": "7 Days Creation Communication Portal — Cloudflare Worker API",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate:local": "wrangler d1 execute 7dc-comm-db --local --file=../migrations/0001_initial.sql",
+    "db:migrate:remote": "wrangler d1 execute 7dc-comm-db --file=../migrations/0001_initial.sql",
+    "db:query:local": "wrangler d1 execute 7dc-comm-db --local --command",
+    "db:query:remote": "wrangler d1 execute 7dc-comm-db --command"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
