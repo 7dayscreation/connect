@@ -85,11 +85,13 @@ async function createInquiry(request, env) {
   // Turnstile Verification
   const rawConfig = await env.APP_CONFIG.get('app_config');
   const config = rawConfig ? JSON.parse(rawConfig) : {};
-  if (config.turnstileEnabled && config.turnstileApplyInquiry) {
+  const turnstileSecret = env.TURNSTILE_SECRET || env.TURNSTILE_SECRET_KEY || config.turnstileSecretKey;
+  const turnstileEnabled = env.TURNSTILE_ENABLED === 'true' || env.TURNSTILE_ENABLED === true || config.turnstileEnabled || (!!turnstileSecret && env.TURNSTILE_ENABLED !== 'false');
+  if (turnstileEnabled && (config.turnstileApplyInquiry !== false)) {
     if (!turnstileToken) {
       return errorResponse('Captcha verification is required.', 400, env);
     }
-    const isValid = await verifyTurnstile(turnstileToken, config.turnstileSecretKey);
+    const isValid = await verifyTurnstile(turnstileToken, turnstileSecret);
     if (!isValid) {
       return errorResponse('Captcha verification failed. Please try again.', 400, env);
     }

@@ -75,12 +75,14 @@ async function sendOTP(request, env) {
   // Turnstile Verification
   const rawConfig = await env.APP_CONFIG.get('app_config');
   const config = rawConfig ? JSON.parse(rawConfig) : {};
-  if (config.turnstileEnabled && config.turnstileApplyLogin) {
+  const turnstileSecret = env.TURNSTILE_SECRET || env.TURNSTILE_SECRET_KEY || config.turnstileSecretKey;
+  const turnstileEnabled = env.TURNSTILE_ENABLED === 'true' || env.TURNSTILE_ENABLED === true || config.turnstileEnabled || (!!turnstileSecret && env.TURNSTILE_ENABLED !== 'false');
+  if (turnstileEnabled && (config.turnstileApplyLogin !== false)) {
     const turnstileToken = body.turnstileToken;
     if (!turnstileToken) {
       return errorResponse('Captcha verification is required.', 400, env);
     }
-    const isValid = await verifyTurnstile(turnstileToken, config.turnstileSecretKey);
+    const isValid = await verifyTurnstile(turnstileToken, turnstileSecret);
     if (!isValid) {
       return errorResponse('Captcha verification failed. Please try again.', 400, env);
     }
@@ -303,16 +305,18 @@ function buildOTPEmailHtml(name, otp) {
 async function getBranding(request, env) {
   const raw = await env.APP_CONFIG.get('app_config');
   const config = raw ? JSON.parse(raw) : {};
+  const turnstileSecret = env.TURNSTILE_SECRET || env.TURNSTILE_SECRET_KEY || config.turnstileSecretKey;
+  const turnstileEnabled = env.TURNSTILE_ENABLED === 'true' || env.TURNSTILE_ENABLED === true || config.turnstileEnabled || (!!turnstileSecret && env.TURNSTILE_ENABLED !== 'false');
   return jsonResponse({
     success: true,
     data: {
-      brandName: config.brandName || '7 Days Creation',
+      brandName: config.brandName || 'Connect',
       brandTagline: config.brandTagline || '',
       brandUrl: config.brandUrl || '',
       logoBase64: config.logoBase64 || null,
       faviconBase64: config.faviconBase64 || null,
-      turnstileEnabled: config.turnstileEnabled || false,
-      turnstileSiteKey: config.turnstileSiteKey || '',
+      turnstileEnabled: turnstileEnabled,
+      turnstileSiteKey: env.TURNSTILE_SITE_KEY || config.turnstileSiteKey || '',
       turnstileTheme: config.turnstileTheme || 'light'
     }
   }, 200, env);
