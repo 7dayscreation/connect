@@ -257,9 +257,12 @@
           <div id="sectionEmail" class="settings-section">
             <div class="settings-card">
               <div class="settings-card-header">
-                <div>
-                  <h3>Resend Email API</h3>
-                  <p>Configure Resend for transactional emails.</p>
+                <div class="flex-between" style="width:100%;">
+                  <div>
+                    <h3>Resend Email API</h3>
+                    <p>Configure Resend for transactional emails.</p>
+                  </div>
+                  <span class="status-badge disconnected" id="resendStatusBadge"><span class="status-dot"></span> Not Connected</span>
                 </div>
               </div>
               <div class="settings-card-body">
@@ -291,25 +294,29 @@
                     <span class="form-description">Send a test email to verify your configuration.</span>
                   </label>
                   <div style="display:flex;gap:10px;">
-                    <input type="email" class="form-input" placeholder="test@example.com" style="flex:1;">
-                    <button class="btn-test"><i class="fas fa-paper-plane" style="margin-right:6px;"></i> Send
-                      Test</button>
+                    <input type="email" id="testEmailAddress" class="form-input" placeholder="test@example.com" style="flex:1;">
+                    <button class="btn-test" id="sendTestEmailBtn"><i class="fas fa-paper-plane" style="margin-right:6px;"></i> Send Test</button>
                   </div>
                 </div>
               </div>
               <div class="settings-card-footer">
+                <button class="btn-test" id="testEmailConnectionBtn">Test Connection</button>
                 <button class="btn-save">Save Email Settings</button>
               </div>
             </div>
+          </div>
 
-            <!-- ===== 5. SECURITY (CAPTCHA & AUTHENTICATOR) ===== -->
+          <!-- ===== 5. SECURITY (CAPTCHA & AUTHENTICATOR) ===== -->
           <div id="sectionSecurity" class="settings-section">
             <!-- CloudFlare Turnstile -->
             <div class="settings-card">
               <div class="settings-card-header">
-                <div>
-                  <h3>CloudFlare Turnstile Captcha</h3>
-                  <p>Protect forms from spam and bots using CloudFlare Turnstile.</p>
+                <div class="flex-between" style="width:100%;">
+                  <div>
+                    <h3>CloudFlare Turnstile Captcha</h3>
+                    <p>Protect forms from spam and bots using CloudFlare Turnstile.</p>
+                  </div>
+                  <span class="status-badge disconnected" id="turnstileStatusBadge"><span class="status-dot"></span> Not Active</span>
                 </div>
               </div>
               <div class="settings-card-body">
@@ -319,7 +326,7 @@
                     <span class="toggle-track"></span>
                     <div>
                       <span class="toggle-label">Enable Turnstile Captcha</span>
-                      <span class="toggle-description">Apply captcha to login, registration, and contact forms.</span>
+                      <span class="toggle-description">Apply captcha to login, registration, and contact forms. Keys are configured in Cloudflare Worker Variables.</span>
                     </div>
                   </label>
                 </div>
@@ -345,9 +352,9 @@
                 </div>
               </div>
               <div class="settings-card-footer">
+                <button class="btn-test" id="verifyTurnstileBtn">Verify Integration</button>
                 <button class="btn-save">Save Captcha</button>
               </div>
-            </div>
             </div>
 
             <!-- Google Authenticator -->
@@ -355,7 +362,8 @@
               <div class="settings-card-header">
                 <h3>Google Authenticator (2FA)</h3>
                 <p>Add time-based one-time password (TOTP) authentication for admin login.</p>
-                <div class="settings-card-body">
+              </div>
+              <div class="settings-card-body">
                 <div class="form-row">
                   <label class="toggle-switch">
                     <input type="checkbox" class="toggle-input" id="twoFAEnabled">
