@@ -7,6 +7,9 @@
 (function () {
   'use strict';
 
+  // Auth Guard
+  if (typeof API !== 'undefined') API.requireAuth();
+
   // =============================================
   // DEFAULT MOCK DATA (Fallback & Initialization)
   // =============================================
@@ -52,6 +55,79 @@
   var emailCampaigns = getOrInit('email_campaigns', defaultEmailCampaigns);
   var whatsappCampaigns = getOrInit('whatsapp_campaigns', defaultWhatsappCampaigns);
   var notifications = getOrInit('notifications', defaultNotifications);
+
+  // =============================================
+  // LIVE STATS FROM API (overrides localStorage)
+  // =============================================
+  async function loadLiveStats() {
+    if (typeof API === 'undefined' || !API.session.isLoggedIn()) return;
+    try {
+      const res = await API.dashboard.stats();
+      if (!res || !res.ok) return;
+      const { stats, recent } = res.data;
+
+      // Override local data with live data
+      if (recent.inquiries.length) {
+        inquiries = recent.inquiries.map(r => ({
+          id: r.id, firstName: r.first_name, surname: r.surname,
+          phone: r.phone, email: r.email || '',
+          inquiryType: r.inquiry_type, date: r.created_at
+        }));
+      }
+      if (recent.emailCampaigns.length) {
+        emailCampaigns = recent.emailCampaigns.map(r => ({
+          id: r.id, name: r.name, subject: r.subject, audience: r.audience,
+          status: r.status, openRate: r.open_rate, clickRate: r.click_rate, date: r.sent_at
+        }));
+      }
+      if (recent.waCampaigns.length) {
+        whatsappCampaigns = recent.waCampaigns.map(r => ({
+          id: r.id, name: r.name, template: r.template_name, audience: r.audience,
+          status: r.status, delivered: r.delivered_rate, read: r.read_rate, date: r.sent_at
+        }));
+      }
+
+      // Patch spotlight counters
+      var elInq = document.getElementById('spotlightInquiries');
+      var elCamp = document.getElementById('spotlightCampaignsCount');
+      var elEmail = document.getElementById('spotlightEmailCount');
+      var elWa = document.getElementById('spotlightWhatsappCount');
+
+      if (elInq) { elInq.setAttribute('data-counter', stats.totalInquiries); elInq.textContent = stats.totalInquiries; }
+      if (elCamp) { elCamp.setAttribute('data-counter', stats.totalCampaigns); elCamp.textContent = stats.totalCampaigns; }
+      if (elEmail) elEmail.textContent = stats.emailCampaignsSent.toLocaleString('en-IN');
+      if (elWa) elWa.textContent = stats.waCampaignsSent.toLocaleString('en-IN');
+
+      // Bell badge
+      var bellBadges = document.querySelectorAll('.notif-badge');
+      bellBadges.forEach(function(badge) {
+        if (stats.unreadNotifications > 0) {
+          badge.style.display = 'block';
+          badge.textContent = stats.unreadNotifications;
+        } else { badge.style.display = 'none'; }
+      });
+
+      // Update segmentation bars from real breakdown
+      if (stats.inquiryBreakdown) {
+        var total = stats.totalInquiries || 1;
+        var bd = stats.inquiryBreakdown;
+        ['General','Walking Inquiry','Architect Reference','Regular Customer'].forEach(function(type, i) {
+          var ids = [['progressGeneral','valGeneral'],['progressWalking','valWalking'],['progressArch','valArch'],['progressRegular','valRegular']];
+          var cnt = bd[type] || 0;
+          var pct = Math.round((cnt / total) * 100);
+          var bar = document.getElementById(ids[i] ? ids[i][0] : null);
+          var val = document.getElementById(ids[i] ? ids[i][1] : null);
+          if (bar) bar.setAttribute('data-width', pct + '%');
+          if (val) val.textContent = pct + '%';
+        });
+      }
+
+      console.log('[Dashboard] Live stats loaded from API:', stats);
+    } catch (err) {
+      console.warn('[Dashboard] API stats unavailable, using localStorage:', err);
+    }
+  }
+  loadLiveStats();
 
   // =============================================
   // CALCULATE AND POPULATE STATISTICS
@@ -620,15 +696,19 @@
     });
   }
 
-  // Logout simulator
+  // Logout
   var logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', function (e) {
+    logoutBtn.addEventListener('click', async function (e) {
       e.preventDefault();
-      alert('Logging out...');
-      setTimeout(function () {
-        window.location.href = 'index.html';
-      }, 1000);
+      if (typeof API !== 'undefined') {
+        await API.auth.logout();
+      } else {
+        alert('Logging out...');
+        setTimeout(function () {
+          window.location.href = 'index.html';
+        }, 1000);
+      }
     });
   }
 

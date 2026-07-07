@@ -6,6 +6,9 @@
 (function () {
   'use strict';
 
+  // Auth Guard
+  if (typeof API !== 'undefined') API.requireAuth();
+
   // =============================================
   // DEFAULT INQUIRIES MOCK DATA
   // =============================================
@@ -63,9 +66,32 @@
   let activeTab = 'all';
 
   // =============================================
-  // DATA MANAGEMENT
+  // DATA MANAGEMENT (Real API with localStorage fallback)
   // =============================================
-  function loadData() {
+  async function loadData() {
+    try {
+      if (typeof API !== 'undefined' && API.session.isLoggedIn()) {
+        const res = await API.inquiries.list();
+        if (res && res.ok && res.data.data) {
+          inquiries = res.data.data.map(r => ({
+            id: r.id,
+            firstName: r.first_name,
+            surname: r.surname,
+            phone: r.phone,
+            email: r.email || '',
+            inquiryType: r.inquiry_type,
+            date: r.created_at
+          }));
+          updateMetrics();
+          renderTable();
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn('[Users] API unavailable, using localStorage fallback:', err);
+    }
+
+    // Fallback to localStorage
     const data = localStorage.getItem('inquiries');
     if (!data) {
       localStorage.setItem('inquiries', JSON.stringify(defaultInquiries));
@@ -405,15 +431,17 @@
     });
   }
 
-  // Logout simulator
+  // Logout
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', function (e) {
+    logoutBtn.addEventListener('click', async function (e) {
       e.preventDefault();
       showToast('Logging out...');
-      setTimeout(function () {
-        window.location.href = 'index.html';
-      }, 1000);
+      if (typeof API !== 'undefined') {
+        await API.auth.logout();
+      } else {
+        setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+      }
     });
   }
 

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Settings — 7 Days Creation</title>
+  <title>Settings â€” 7 Days Creation</title>
   <meta name="description" content="Admin settings for 7 Days Creation.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
@@ -193,25 +193,25 @@
                 <div class="form-grid">
                   <div class="form-row">
                     <label class="form-label">Site Name</label>
-                    <input type="text" class="form-input" placeholder="Your site name">
+                    <input type="text" id="brandName" class="form-input" placeholder="Your site name">
                   </div>
                   <div class="form-row">
                     <label class="form-label">Site Tagline</label>
-                    <input type="text" class="form-input" placeholder="Short description">
+                    <input type="text" id="brandTagline" class="form-input" placeholder="Short description">
                   </div>
                 </div>
                 <div class="form-row">
                   <label class="form-label">Site URL</label>
-                  <input type="url" class="form-input" placeholder="https://example.com">
+                  <input type="url" id="brandUrl" class="form-input" placeholder="https://example.com">
                 </div>
                 <div class="form-grid">
                   <div class="form-row">
                     <label class="form-label">Contact Email</label>
-                    <input type="email" class="form-input" placeholder="admin@example.com">
+                    <input type="email" id="contactEmail" class="form-input" placeholder="admin@example.com">
                   </div>
                   <div class="form-row">
                     <label class="form-label">Contact Phone</label>
-                    <input type="tel" class="form-input" placeholder="+91 XXXXX XXXXX">
+                    <input type="tel" id="contactPhone" class="form-input" placeholder="+91 XXXXX XXXXX">
                   </div>
                 </div>
                 <div class="form-row">
@@ -221,28 +221,28 @@
                 </div>
                 <div class="form-row">
                   <label class="form-label">Copyright Text</label>
-                  <input type="text" class="form-input" placeholder="© Year Company Name">
+                  <input type="text" class="form-input" placeholder="Â© Year Company Name">
                 </div>
                 <hr class="section-divider">
                 <div class="form-grid">
                   <div class="form-row">
                     <label class="form-label">Logo Upload
-                      <span class="form-description">PNG or SVG, max 2MB. Recommended 200×50px.</span>
+                      <span class="form-description">PNG or SVG, max 2MB. Recommended 200Ã—50px.</span>
                     </label>
                     <div class="file-upload-area">
                       <i class="fas fa-cloud-arrow-up"></i>
                       <span>Click to upload or drag & drop</span>
-                      <input type="file" accept=".png,.svg,.jpg,.webp">
+                      <input type="file" id="logoInput" accept=".png,.svg,.jpg,.webp">
                     </div>
                   </div>
                   <div class="form-row">
                     <label class="form-label">Favicon Upload
-                      <span class="form-description">ICO or PNG, 32×32px or 16×16px.</span>
+                      <span class="form-description">ICO or PNG, 32Ã—32px or 16Ã—16px.</span>
                     </label>
                     <div class="file-upload-area">
                       <i class="fas fa-cloud-arrow-up"></i>
                       <span>Click to upload or drag & drop</span>
-                      <input type="file" accept=".ico,.png">
+                      <input type="file" id="faviconInput" accept=".ico,.png">
                     </div>
                   </div>
                 </div>
@@ -273,7 +273,7 @@
                         rel="noopener">resend.com/api-keys</a></span>
                   </label>
                   <div class="api-key-field">
-                    <input type="password" class="form-input" placeholder="re_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" value="">
+                    <input type="password" id="resendApiKey" class="form-input" placeholder="re_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" value="">
                     <div class="api-key-actions">
                       <button type="button" class="api-key-btn api-toggle-btn"><i class="fas fa-eye"></i></button>
                       <button type="button" class="api-key-btn api-copy-btn"><i class="fas fa-copy"></i>
@@ -284,16 +284,16 @@
                 <div class="form-grid">
                   <div class="form-row">
                     <label class="form-label">From Email Address</label>
-                    <input type="email" class="form-input" placeholder="noreply@yourdomain.com">
+                    <input type="email" id="fromEmail" class="form-input" placeholder="noreply@yourdomain.com">
                   </div>
                   <div class="form-row">
                     <label class="form-label">From Name</label>
-                    <input type="text" class="form-input" placeholder="Your brand name">
+                    <input type="text" id="fromName" class="form-input" placeholder="Your brand name">
                   </div>
                 </div>
                 <div class="form-row">
                   <label class="form-label">Reply-To Email</label>
-                  <input type="email" class="form-input" placeholder="support@yourdomain.com">
+                  <input type="email" id="replyToEmail" class="form-input" placeholder="support@yourdomain.com">
                 </div>
                 <hr class="section-divider">
                 <div class="form-row">
@@ -392,11 +392,10 @@
                   </div>
                   <span class="status-badge disconnected"><span class="status-dot"></span> Not Active</span>
                 </div>
-              </div>
-              <div class="settings-card-body">
+                     <div class="settings-card-body">
                 <div class="form-row">
                   <label class="toggle-switch">
-                    <input type="checkbox" class="toggle-input">
+                    <input type="checkbox" class="toggle-input" id="turnstileEnabled">
                     <span class="toggle-track"></span>
                     <div>
                       <span class="toggle-label">Enable Turnstile Captcha</span>
@@ -409,10 +408,10 @@
                   <div class="form-row">
                     <label class="form-label">Site Key
                       <span class="form-description">Get from <a href="https://dash.cloudflare.com" target="_blank"
-                          rel="noopener">CloudFlare Dashboard</a> → Turnstile.</span>
+                          rel="noopener">CloudFlare Dashboard</a> â†’ Turnstile.</span>
                     </label>
                     <div class="api-key-field">
-                      <input type="text" class="form-input" placeholder="0x4AAAAAAXXXXXXXXXXXXXXX">
+                      <input type="text" class="form-input" id="turnstileSiteKey" placeholder="0x4AAAAAAXXXXXXXXXXXXXXX">
                       <div class="api-key-actions">
                         <button type="button" class="api-key-btn api-copy-btn"><i class="fas fa-copy"></i>
                           <span>Copy</span></button>
@@ -422,7 +421,7 @@
                   <div class="form-row">
                     <label class="form-label">Secret Key</label>
                     <div class="api-key-field">
-                      <input type="password" class="form-input" placeholder="0x4AAAAAAXXXXXXXXXXXXXXX">
+                      <input type="password" class="form-input" id="turnstileSecretKey" placeholder="0x4AAAAAAXXXXXXXXXXXXXXX">
                       <div class="api-key-actions">
                         <button type="button" class="api-key-btn api-toggle-btn"><i class="fas fa-eye"></i></button>
                       </div>
@@ -431,21 +430,21 @@
                   <div class="form-row">
                     <label class="form-label">Apply Captcha To</label>
                     <div class="checkbox-group">
-                      <label class="checkbox-item"><input type="checkbox" checked> Admin Login</label>
-                      <label class="checkbox-item"><input type="checkbox" checked> Contact Form</label>
-                      <label class="checkbox-item"><input type="checkbox"> Property Inquiry</label>
-                      <label class="checkbox-item"><input type="checkbox"> Newsletter Signup</label>
+                      <label class="checkbox-item"><input type="checkbox" id="turnstileApplyLogin" checked> Admin Login</label>
+                      <label class="checkbox-item"><input type="checkbox" id="turnstileApplyContact" checked> Contact Form</label>
+                      <label class="checkbox-item"><input type="checkbox" id="turnstileApplyInquiry"> Property Inquiry</label>
+                      <label class="checkbox-item"><input type="checkbox" id="turnstileApplyNewsletter"> Newsletter Signup</label>
                     </div>
                   </div>
                   <div class="form-row">
                     <label class="form-label">Captcha Theme</label>
-                    <select class="form-select">
+                    <select class="form-select" id="turnstileTheme">
                       <option value="light" selected>Light</option>
                       <option value="dark">Dark</option>
                       <option value="auto">Auto (follow system)</option>
                     </select>
                   </div>
-                </div>
+                </div>               </div>
               </div>
               <div class="settings-card-footer">
                 <button class="btn-test">Verify Integration</button>
@@ -458,11 +457,10 @@
               <div class="settings-card-header">
                 <h3>Google Authenticator (2FA)</h3>
                 <p>Add time-based one-time password (TOTP) authentication for admin login.</p>
-              </div>
-              <div class="settings-card-body">
+                <div class="settings-card-body">
                 <div class="form-row">
                   <label class="toggle-switch">
-                    <input type="checkbox" class="toggle-input">
+                    <input type="checkbox" class="toggle-input" id="twoFAEnabled">
                     <span class="toggle-track"></span>
                     <div>
                       <span class="toggle-label">Enable Google Authenticator</span>
@@ -516,13 +514,13 @@
                     </div>
                     <hr class="section-divider">
                     <div class="form-row">
-                      <label class="form-label">Verify Setup — Enter 6-digit code from app</label>
+                      <label class="form-label">Verify Setup â€” Enter 6-digit code from app</label>
                       <div style="display:flex;gap:10px;max-width:340px;">
-                        <input type="text" class="form-input" placeholder="000 000" maxlength="7"
+                        <input type="text" class="form-input" id="setup2faCode" placeholder="000 000" maxlength="7"
                           style="text-align:center;font-weight:600;letter-spacing:4px;font-size:18px;">
-                        <button class="btn-test">Verify</button>
+                        <button type="button" class="btn-test" id="setup2faVerifyBtn">Verify</button>
                       </div>
-                    </div>
+                    </div>                    </div>
                   </div>
                 </div>
               </div>
@@ -541,35 +539,35 @@
                 <div class="form-grid">
                   <div class="form-row">
                     <label class="form-label">Session Timeout (minutes)</label>
-                    <input type="number" class="form-input" value="30" min="5" max="1440">
+                    <input type="number" class="form-input" id="sessionTimeout" value="30" min="5" max="1440">
                   </div>
                   <div class="form-row">
                     <label class="form-label">Max Login Attempts</label>
-                    <input type="number" class="form-input" value="5" min="1" max="20">
+                    <input type="number" class="form-input" id="maxAttempts" value="5" min="1" max="20">
                   </div>
                 </div>
                 <div class="form-grid">
                   <div class="form-row">
                     <label class="form-label">Lockout Duration (minutes)</label>
-                    <input type="number" class="form-input" value="15" min="1" max="120">
+                    <input type="number" class="form-input" id="lockoutDuration" value="15" min="1" max="120">
                   </div>
                   <div class="form-row">
                     <label class="form-label">Minimum Password Length</label>
-                    <input type="number" class="form-input" value="8" min="6" max="32">
+                    <input type="number" class="form-input" id="minPasswordLength" value="8" min="6" max="32">
                   </div>
                 </div>
                 <div class="form-row">
                   <label class="form-label">Password Requirements</label>
                   <div class="checkbox-group">
-                    <label class="checkbox-item"><input type="checkbox" checked> Uppercase letter (A-Z)</label>
-                    <label class="checkbox-item"><input type="checkbox" checked> Lowercase letter (a-z)</label>
-                    <label class="checkbox-item"><input type="checkbox" checked> Number (0-9)</label>
-                    <label class="checkbox-item"><input type="checkbox"> Special character (!@#$%)</label>
+                    <label class="checkbox-item"><input type="checkbox" id="reqUppercase" checked> Uppercase letter (A-Z)</label>
+                    <label class="checkbox-item"><input type="checkbox" id="reqLowercase" checked> Lowercase letter (a-z)</label>
+                    <label class="checkbox-item"><input type="checkbox" id="reqNumber" checked> Number (0-9)</label>
+                    <label class="checkbox-item"><input type="checkbox" id="reqSpecial"> Special character (!@#$%)</label>
                   </div>
                 </div>
                 <div class="form-row">
                   <label class="toggle-switch">
-                    <input type="checkbox" class="toggle-input">
+                    <input type="checkbox" class="toggle-input" id="force2FA">
                     <span class="toggle-track"></span>
                     <div>
                       <span class="toggle-label">Force 2FA for all admin users</span>
@@ -578,6 +576,7 @@
                     </div>
                   </label>
                 </div>
+              </div>
               </div>
               <div class="settings-card-footer">
                 <button class="btn-save">Save Security Policy</button>
@@ -619,10 +618,10 @@
                   <div class="form-row">
                     <label class="form-label">Role</label>
                     <select class="form-select" id="newUserRole">
-                      <option value="admin">Admin — Full access</option>
-                      <option value="manager" selected>Manager — Manage content & data</option>
-                      <option value="editor">Editor — Edit content only</option>
-                      <option value="viewer">Viewer — Read-only access</option>
+                      <option value="admin">Admin â€” Full access</option>
+                      <option value="manager" selected>Manager â€” Manage content & data</option>
+                      <option value="editor">Editor â€” Edit content only</option>
+                      <option value="viewer">Viewer â€” Read-only access</option>
                     </select>
                   </div>
                 </div>
@@ -697,7 +696,7 @@
                         <td>amit@areasqft.com</td>
                         <td><span class="role-badge editor">Editor</span></td>
                         <td><span class="status-badge pending"><span class="status-dot"></span> Invited</span></td>
-                        <td>—</td>
+                        <td>â€”</td>
                         <td><button class="widget-icon-btn" style="border:none;"><i
                               class="fas fa-ellipsis"></i></button></td>
                       </tr>
@@ -795,7 +794,7 @@
                   <label class="form-label">Font Preview</label>
                   <div class="font-preview" id="fontPreview"
                     style="font-family:'DM Sans',sans-serif;font-size:16px;padding:16px;background:#f9f9f9;border-radius:12px;border:1px solid #e5e5e5;line-height:1.6;">
-                    The quick brown fox jumps over the lazy dog — DM Sans
+                    The quick brown fox jumps over the lazy dog â€” DM Sans
                   </div>
                 </div>
                 <div class="form-grid cols-3">
@@ -896,7 +895,7 @@
                 <div class="maintenance-preview" id="maintenancePreview" style="display:none;">
                   <div class="maintenance-preview-inner">
                     <div class="lime-dot-pulse"></div>
-                    <h2>🛠️ Under Maintenance</h2>
+                    <h2>ðŸ› ï¸ Under Maintenance</h2>
                     <p class="preview-message">We are currently performing scheduled maintenance. We'll be back shortly
                       with an improved experience!</p>
                     <div style="margin-top:16px;font-size:12px;opacity:0.5;">Preview of maintenance page</div>
@@ -1033,7 +1032,9 @@
     </main>
   </div>
 
-  <script src="js/settings.js?v=1.2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/settings.js?v=2"></script>
 </body>
 
 </html>

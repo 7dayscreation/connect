@@ -6,6 +6,9 @@
 (function () {
   'use strict';
 
+  // Auth Guard
+  if (typeof API !== 'undefined') API.requireAuth();
+
   // =============================================
   // DETECT PAGE TYPE
   // =============================================
@@ -57,9 +60,9 @@
   // WHATSAPP TEMPLATES MOCK PRESETS
   // =============================================
   const waTemplates = {
-    launch: "Hello {Name}! 👋\n\nExciting news from 7 Days Creation! We are offering a private booking slot for our newest project: Signature Towers.\n\nReserve your appointment this week and enjoy exclusive pre-launch pricing. Click here to confirm: https://7dayscreation.com/tours",
-    followup: "Hi {Name},\n\nThis is Rajesh from 7 Days Creation. Thank you for your inquiry about Creation Residency.\n\nWould you like to schedule a site tour this Thursday or Friday? Let me know! 🏢",
-    promo: "Great news {Name}! 💥\n\nFor the next 48 hours, booking a 3BHK villa at Greenfield Villa comes with a free luxury kitchen upgrade package.\n\nReply 'INFO' to receive the brochure directly!"
+    launch: "Hello {Name}! 👋\n\nExciting news from " + (typeof CONFIG !== 'undefined' ? CONFIG.APP_NAME : "Connect") + "! We are offering a private booking slot for our newest project.\n\nReserve your appointment this week and enjoy exclusive pre-launch pricing.",
+    followup: "Hi {Name},\n\nThis is Rajesh from " + (typeof CONFIG !== 'undefined' ? CONFIG.APP_NAME : "Connect") + ". Thank you for your inquiry.\n\nWould you like to schedule a site tour this Thursday or Friday? Let me know! 🏢",
+    promo: "Great news {Name}! 💥\n\nFor the next 48 hours, booking a 3BHK villa comes with a free luxury kitchen upgrade package.\n\nReply 'INFO' to receive the brochure directly!"
   };
 
   // =============================================
@@ -1240,10 +1243,11 @@
       let blockHtml = '';
 
       if (type === 'header') {
+        const appName = typeof CONFIG !== 'undefined' ? CONFIG.APP_NAME : 'Connect';
         blockHtml = `
           <div class="builder-header-block" style="text-align: center; border-bottom: 3px solid #f05a28; padding: 20px 10px; background-color: #ffffff;">
-            <a href="#" onclick="return false;"><img src="images/logo.png" alt="7 Days Creation" style="height: 32px; display: block; margin: 0 auto 6px;"></a>
-            <h3 class="header-title" style="font-size: 20px; font-weight: 700; margin: 0; color: #000000; font-family: 'Inter', sans-serif;">7 Days Creation</h3>
+            <a href="#" onclick="return false;"><img src="images/logo.png" alt="${appName}" style="height: 32px; display: block; margin: 0 auto 6px;"></a>
+            <h3 class="header-title" style="font-size: 20px; font-weight: 700; margin: 0; color: #000000; font-family: 'Inter', sans-serif;">${appName}</h3>
             <div class="header-subtitle" style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #f05a28; letter-spacing: 1px; margin-top: 4px;">ADVERTISER PORTAL</div>
           </div>
         `;
@@ -1680,14 +1684,15 @@
         const subtitleEl = item.querySelector('.header-subtitle');
         const imgEl = item.querySelector('img');
 
-        const title = titleEl ? titleEl.textContent : '7 Days Creation';
+        const title = titleEl ? titleEl.textContent : (typeof CONFIG !== 'undefined' ? CONFIG.APP_NAME : 'Connect');
         const subtitle = subtitleEl ? subtitleEl.textContent : '';
         const align = headerBlock ? headerBlock.style.textAlign || 'center' : 'center';
 
         const logoSrc = imgEl ? imgEl.getAttribute('src') || '' : '';
         let absoluteLogo = logoSrc;
         if (logoSrc.startsWith('images/')) {
-          absoluteLogo = 'https://7dayscreation.com/communication/' + logoSrc;
+          const basePath = window.location.origin + window.location.pathname.replace(/\/[^\/]*\.html$/, '/');
+          absoluteLogo = basePath + logoSrc;
         }
 
         const logoHeight = imgEl ? imgEl.style.height || '32px' : '32px';
@@ -1808,7 +1813,8 @@
 
         let absoluteThumb = thumbUrl;
         if (thumbUrl.startsWith('images/')) {
-          absoluteThumb = 'https://7dayscreation.com/communication/' + thumbUrl;
+          const basePath = window.location.origin + window.location.pathname.replace(/\/[^\/]*\.html$/, '/');
+          absoluteThumb = basePath + thumbUrl;
         }
 
         html += `
@@ -2008,7 +2014,7 @@
   // SUBMISSION LOGIC
   // =============================================
   if (campaignForm) {
-    campaignForm.addEventListener('submit', function (e) {
+    campaignForm.addEventListener('submit', async function (e) {
       e.preventDefault();
 
       let hasError = false;
@@ -2050,77 +2056,83 @@
       sendBtn.classList.add('loading');
       sendBtn.disabled = true;
 
-      // Simulate sending blast delay
-      setTimeout(() => {
-        const newCamp = {
-          id: Date.now(),
-          name: campName.value.trim(),
-          audience: campAudience.value || 'All Inquiries',
-          status: "Sent",
-          date: new Date().toISOString()
-        };
-
+      // ── REAL API CALL: Send Campaign ────────────────────────
+      try {
         if (isEmailTemplate) {
-          newCamp.subject = campSubject.value.trim();
-          newCamp.openRate = "100.0%";
-          newCamp.clickRate = "0.0%";
-          newCamp.bodyHtml = compileEmailHtml(); // Dynamic compiled HTML output
-
-          const list = JSON.parse(localStorage.getItem('email_campaigns') || '[]');
-          list.unshift(newCamp);
-          localStorage.setItem('email_campaigns', JSON.stringify(list));
-
-          // Append to notification list
-          const notifs = JSON.parse(localStorage.getItem('notifications') || '[]');
-          const newNotif = {
-            id: Date.now(),
-            type: "Campaigns",
-            icon: "fa-envelope",
-            title: "Email Campaign Blasted",
-            desc: `Drag-&-Drop template '${newCamp.name}' successfully sent to '${newCamp.audience}'.`,
-            time: new Date().toISOString(),
-            read: false
+          const bodyHtml = compileEmailHtml();
+          const payload = {
+            name: campName.value.trim(),
+            subject: campSubject.value.trim(),
+            audience: campAudience.value || 'All',
+            bodyHtml
           };
-          notifs.unshift(newNotif);
-          localStorage.setItem('notifications', JSON.stringify(notifs));
-          
-          showToast('Email campaign blasted! Redirecting...');
-          setTimeout(() => {
-            window.location.href = 'email-campaign.html';
-          }, 1500);
+
+          let sent = false;
+          if (typeof API !== 'undefined' && API.session.isLoggedIn()) {
+            const res = await API.campaigns.email.send(payload);
+            if (res && res.ok) {
+              sent = true;
+              showToast(`Email campaign sent! Redirecting...`);
+            } else {
+              console.warn('[Email Campaign] API error:', res?.data?.error);
+            }
+          }
+
+          // Fallback: localStorage
+          if (!sent) {
+            const newCamp = { id: Date.now(), name: payload.name, subject: payload.subject, audience: payload.audience, status: 'Sent', openRate: '0.0%', clickRate: '0.0%', date: new Date().toISOString() };
+            const list = JSON.parse(localStorage.getItem('email_campaigns') || '[]');
+            list.unshift(newCamp);
+            localStorage.setItem('email_campaigns', JSON.stringify(list));
+            showToast('Email campaign saved (offline mode). Redirecting...');
+          }
+
+          setTimeout(() => { window.location.href = 'email-campaign.html'; }, 1500);
 
         } else if (isWhatsappTemplate) {
           const selectedTmpl = document.querySelector('input[name="campTemplate"]:checked');
-          newCamp.template = selectedTmpl ? selectedTmpl.closest('.tmpl-radio').querySelector('span').textContent : 'Custom Message';
-          newCamp.delivered = "100%";
-          newCamp.read = "Pending";
-          newCamp.message = campBody.value.trim();
-
-          const list = JSON.parse(localStorage.getItem('whatsapp_campaigns') || '[]');
-          list.unshift(newCamp);
-          localStorage.setItem('whatsapp_campaigns', JSON.stringify(list));
-
-          // Append to notification list
-          const notifs = JSON.parse(localStorage.getItem('notifications') || '[]');
-          const newNotif = {
-            id: Date.now(),
-            type: "Campaigns",
-            icon: "fa-comments",
-            title: "WhatsApp Campaign Sent",
-            desc: `WhatsApp blast '${newCamp.name}' broadcasted to '${newCamp.audience}' segment.`,
-            time: new Date().toISOString(),
-            read: false
+          const templateName = selectedTmpl ? selectedTmpl.closest('.tmpl-radio').querySelector('span').textContent : 'Custom Message';
+          const mediaType = campMedia ? campMedia.value : 'none';
+          const payload = {
+            name: campName.value.trim(),
+            audience: campAudience.value || 'All',
+            message: campBody.value.trim(),
+            templateName,
+            mediaType: mediaType || 'none',
+            mediaUrl: null
           };
-          notifs.unshift(newNotif);
-          localStorage.setItem('notifications', JSON.stringify(notifs));
 
-          showToast('WhatsApp campaign blasted! Redirecting...');
-          setTimeout(() => {
-            window.location.href = 'whatsapp-campaign.html';
-          }, 1500);
+          let sent = false;
+          if (typeof API !== 'undefined' && API.session.isLoggedIn()) {
+            const res = await API.campaigns.whatsapp.send(payload);
+            if (res && res.ok) {
+              sent = true;
+              const mode = res.data.whatsapp?.mode === 'dummy' ? '(Dummy Mode — API not connected yet)' : '';
+              showToast(`WhatsApp campaign dispatched! ${mode} Redirecting...`);
+            } else {
+              console.warn('[WA Campaign] API error:', res?.data?.error);
+            }
+          }
+
+          // Fallback: localStorage
+          if (!sent) {
+            const newCamp = { id: Date.now(), name: payload.name, template: templateName, audience: payload.audience, status: 'Sent', delivered: '100%', read: 'Pending', date: new Date().toISOString() };
+            const list = JSON.parse(localStorage.getItem('whatsapp_campaigns') || '[]');
+            list.unshift(newCamp);
+            localStorage.setItem('whatsapp_campaigns', JSON.stringify(list));
+            showToast('WhatsApp campaign saved (offline mode). Redirecting...');
+          }
+
+          setTimeout(() => { window.location.href = 'whatsapp-campaign.html'; }, 1500);
         }
 
-      }, 1500);
+      } catch (err) {
+        console.error('[Campaign Send Error]', err);
+        showToast('Error sending campaign. Check API server connection.', 'error');
+      } finally {
+        sendBtn.classList.remove('loading');
+        sendBtn.disabled = false;
+      }
     });
   }
 
@@ -2143,15 +2155,19 @@
     });
   }
 
-  // Logout simulator
+  // Logout
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', function (e) {
+    logoutBtn.addEventListener('click', async function (e) {
       e.preventDefault();
       showToast('Logging out...');
-      setTimeout(function () {
-        window.location.href = 'index.html';
-      }, 1000);
+      if (typeof API !== 'undefined') {
+        await API.auth.logout();
+      } else {
+        setTimeout(function () {
+          window.location.href = 'index.html';
+        }, 1000);
+      }
     });
   }
 

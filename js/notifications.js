@@ -6,6 +6,9 @@
 (function () {
   'use strict';
 
+  // Auth Guard
+  if (typeof API !== 'undefined') API.requireAuth();
+
   // =============================================
   // DEFAULT NOTIFICATION LOGS
   // =============================================
@@ -57,7 +60,31 @@
   // =============================================
   // DATA CONTROLLERS
   // =============================================
-  function loadData() {
+  async function loadData() {
+    try {
+      if (typeof API !== 'undefined' && API.session.isLoggedIn()) {
+        const res = await API.notifications.list();
+        if (res && res.ok && res.data.data) {
+          notifications = res.data.data.map(n => ({
+            id: n.id,
+            type: n.type,
+            icon: n.icon,
+            title: n.title,
+            desc: n.description,
+            time: n.created_at,
+            read: n.is_read === 1
+          }));
+          updateMetrics();
+          renderNotifications();
+          updateGlobalBellBadge();
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn('[Notifications] API unavailable, using localStorage:', err);
+    }
+
+    // Fallback: localStorage
     const data = localStorage.getItem('notifications');
     if (!data) {
       localStorage.setItem('notifications', JSON.stringify(defaultNotifications));
@@ -282,15 +309,19 @@
     });
   }
 
-  // Logout simulator
+  // Logout
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', function (e) {
+    logoutBtn.addEventListener('click', async function (e) {
       e.preventDefault();
       showToast('Logging out...');
-      setTimeout(function () {
-        window.location.href = 'index.html';
-      }, 1000);
+      if (typeof API !== 'undefined') {
+        await API.auth.logout();
+      } else {
+        setTimeout(function () {
+          window.location.href = 'index.html';
+        }, 1000);
+      }
     });
   }
 

@@ -6,6 +6,9 @@
 (function () {
   'use strict';
 
+  // Auth Guard
+  if (typeof API !== 'undefined') API.requireAuth();
+
   // =============================================
   // DETECT PAGE TYPE
   // =============================================
@@ -51,7 +54,50 @@
   // =============================================
   // DATA CONTROLLERS
   // =============================================
-  function loadCampaigns() {
+  async function loadCampaigns() {
+    try {
+      if (typeof API !== 'undefined' && API.session.isLoggedIn()) {
+        if (isEmailPage) {
+          const res = await API.campaigns.email.list();
+          if (res && res.ok && res.data.data) {
+            campaigns = res.data.data.map(c => ({
+              id: c.id,
+              name: c.name,
+              subject: c.subject,
+              audience: c.audience,
+              status: c.status,
+              date: c.sent_at || c.created_at,
+              openRate: c.open_rate || '0.0%',
+              clickRate: c.click_rate || '0.0%'
+            }));
+            renderCampaignTable();
+            updateCampaignMetrics();
+            return;
+          }
+        } else if (isWhatsappPage) {
+          const res = await API.campaigns.whatsapp.list();
+          if (res && res.ok && res.data.data) {
+            campaigns = res.data.data.map(c => ({
+              id: c.id,
+              name: c.name,
+              template: c.template_name,
+              audience: c.audience,
+              status: c.status,
+              date: c.sent_at || c.created_at,
+              delivered: c.delivered_rate || '—',
+              read: c.read_rate || '—'
+            }));
+            renderCampaignTable();
+            updateCampaignMetrics();
+            return;
+          }
+        }
+      }
+    } catch (err) {
+      console.warn('[Campaigns] API error, falling back to localStorage:', err);
+    }
+
+    // Fallback to localStorage
     if (isEmailPage) {
       const data = localStorage.getItem('email_campaigns');
       if (!data) {
@@ -150,15 +196,19 @@
     });
   }
 
-  // Logout simulator
+  // Logout
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', function (e) {
+    logoutBtn.addEventListener('click', async function (e) {
       e.preventDefault();
       showToast('Logging out...');
-      setTimeout(function () {
-        window.location.href = 'index.html';
-      }, 1000);
+      if (typeof API !== 'undefined') {
+        await API.auth.logout();
+      } else {
+        setTimeout(function () {
+          window.location.href = 'index.html';
+        }, 1000);
+      }
     });
   }
 
@@ -182,8 +232,10 @@
   // =============================================
   // INITIALIZATION
   // =============================================
-  loadCampaigns();
-  updateGlobalBellBadge();
+  (async function() {
+    await loadCampaigns();
+    updateGlobalBellBadge();
+  })();
 
   window.addEventListener('storage', function (e) {
     if (e.key === 'notifications') {

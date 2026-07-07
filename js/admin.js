@@ -12,10 +12,12 @@
   // =============================================
   const loginStep = document.getElementById('loginStep');
   const verifyStep = document.getElementById('verifyStep');
+  const totpStep = document.getElementById('totpStep');
   const successStep = document.getElementById('successStep');
 
   const loginForm = document.getElementById('loginForm');
   const verifyForm = document.getElementById('verifyForm');
+  const totpForm = document.getElementById('totpForm');
 
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
@@ -28,11 +30,16 @@
   const resendTimer = document.getElementById('resendTimer');
   const maskedEmail = document.getElementById('maskedEmail');
 
+  const totpCode = document.getElementById('totpCode');
+  const totpVerifyBtn = document.getElementById('totpVerifyBtn');
+  const backToOtpBtn = document.getElementById('backToOtp');
+
   const passwordStrength = document.getElementById('passwordStrength');
   const otpContainer = document.getElementById('otpContainer');
   const otpInputs = document.querySelectorAll('.otp-input');
 
   let resendInterval = null;
+  let turnstileToken = null;
   let toastContainer = null;
 
 
@@ -78,7 +85,7 @@
   // STEP NAVIGATION
   // =============================================
   function showStep(step) {
-    const steps = [loginStep, verifyStep, successStep];
+    const steps = [loginStep, verifyStep, totpStep, successStep];
     steps.forEach(s => {
       if (s) {
         s.classList.remove('active');
@@ -205,14 +212,13 @@
   // =============================================
   if (loginForm) {
     // Clear errors on input
-    emailInput.addEventListener('input', () => clearInputError(emailInput));
-    passwordInput.addEventListener('input', () => clearInputError(passwordInput));
+    if (emailInput) emailInput.addEventListener('input', () => clearInputError(emailInput));
+    if (passwordInput) passwordInput.addEventListener('input', () => clearInputError(passwordInput));
 
-    loginForm.addEventListener('submit', function (e) {
+    loginForm.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
+      const email = emailInput ? emailInput.value.trim() : '';
       let hasError = false;
 
       // Validate email
@@ -224,45 +230,58 @@
         hasError = true;
       }
 
-      // Validate password
-      if (!password) {
-        setInputError(passwordInput, 'Password is required');
-        hasError = true;
-      } else if (password.length < 6) {
-        setInputError(passwordInput, 'Password must be at least 6 characters');
-        hasError = true;
+      // Validate Turnstile
+      const turnstileContainer = document.getElementById('turnstileContainer');
+      if (turnstileContainer && turnstileContainer.style.display !== 'none' && !turnstileToken) {
+        setInputError(emailInput, 'Please complete the Captcha verification.');
+        return;
       }
 
       if (hasError) return;
 
+      // Store email for OTP step
+      window._loginEmail = email;
+
       // Show loading state
       loginBtn.classList.add('loading');
+      loginBtn.disabled = true;
 
-      // Simulate API call
-      setTimeout(() => {
+      // ── REAL API CALL: Send OTP via Worker → Resend ──────────
+      try {
+        const res = await API.auth.sendOTP(email, turnstileToken);
         loginBtn.classList.remove('loading');
+        loginBtn.disabled = false;
+
+        if (!res || !res.ok) {
+          const errMsg = res?.data?.error || 'This email is not authorized to access the portal.';
+          setInputError(emailInput, errMsg);
+          return;
+        }
 
         // Set masked email for 2FA step
         if (maskedEmail) {
-          maskedEmail.textContent = maskEmail(email);
+          maskedEmail.textContent = res.data.masked || maskEmail(email);
         }
 
-        // Show success toast
-        showToast('Credentials verified! Please complete 2-step verification.', 'success');
+        // Show dev OTP hint in console if available
+        if (res.data.dev_otp) {
+          console.log('%c[DEV] OTP Code: ' + res.data.dev_otp, 'background:#111;color:#0f0;font-size:16px;padding:4px 8px;border-radius:4px;');
+        }
 
-        // Transition to 2FA step
+        showToast('OTP sent to your email. Please check your inbox.', 'success');
         showStep(verifyStep);
-
-        // Start resend timer
         startResendTimer();
 
-        // Focus first OTP input
         setTimeout(() => {
           const firstOtp = otpInputs[0];
           if (firstOtp) firstOtp.focus();
         }, 400);
 
-      }, 1500);
+      } catch (err) {
+        loginBtn.classList.remove('loading');
+        loginBtn.disabled = false;
+        setInputError(emailInput, 'Connection error. Make sure the API server is running.');
+      }
     });
   }
 
@@ -370,13 +389,13 @@
   // VERIFY FORM SUBMISSION
   // =============================================
   if (verifyForm) {
-    verifyForm.addEventListener('submit', function (e) {
+    verifyForm.addEventListener('submit', async function (e) {
       e.preventDefault();
 
       const otp = getOtpValue();
+      const email = window._loginEmail || '';
 
       if (otp.length < 6) {
-        // Highlight empty inputs
         otpInputs.forEach(inp => {
           if (!inp.value) inp.classList.add('error');
         });
@@ -384,32 +403,133 @@
         return;
       }
 
+      if (!email) {
+        showToast('Session lost. Please start again.', 'error');
+        showStep(loginStep);
+        return;
+      }
+
       // Show loading state
       verifyBtn.classList.add('loading');
+      verifyBtn.disabled = true;
 
-      // Simulate verification
-      setTimeout(() => {
+      // ── REAL API CALL: Verify OTP → Get Session Token ────────
+      try {
+        const res = await API.auth.verifyOTP(email, otp);
         verifyBtn.classList.remove('loading');
+        verifyBtn.disabled = false;
 
-        // For demo, accept any 6-digit code
-        // In production, validate against server
-        showToast('Verification successful!', 'success');
-
-        // Show success step
-        showStep(successStep);
-
-        // Clear timer
-        if (resendInterval) {
-          clearInterval(resendInterval);
+        if (!res || !res.ok) {
+          otpInputs.forEach(inp => inp.classList.add('error'));
+          showToast(res?.data?.error || 'Invalid OTP. Please try again.', 'error');
+          clearOtp();
+          if (otpInputs[0]) otpInputs[0].focus();
+          return;
         }
 
-        // Simulate redirect after success animation
+        if (res.data.require2FA) {
+          window._temp2faToken = res.data.tempToken;
+          showToast('OTP verified. Please enter your Authenticator code.', 'success');
+          showStep(totpStep);
+          if (totpCode) {
+            totpCode.value = '';
+            setTimeout(() => totpCode.focus(), 400);
+          }
+          return;
+        }
+
+        // ── Store session token ──────────────────────────────────
+        API.session.setToken(res.data.token, res.data.user, true);
+
+        showToast('Verification successful! Redirecting...', 'success');
+        showStep(successStep);
+
+        if (resendInterval) clearInterval(resendInterval);
+
         setTimeout(() => {
           window.location.href = 'dashboard.html';
-          showToast('Redirecting to dashboard...', 'success');
-        }, 3000);
+        }, 2500);
 
-      }, 2000);
+      } catch (err) {
+        verifyBtn.classList.remove('loading');
+        verifyBtn.disabled = false;
+        showToast('Connection error. Make sure the API server is running.', 'error');
+      }
+    });
+  }
+
+
+  // =============================================
+  // GOOGLE AUTHENTICATOR (TOTP) SUBMISSION
+  // =============================================
+  if (totpForm) {
+    totpForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const code = totpCode ? totpCode.value.replace(/\s+/g, '') : '';
+      const tempToken = window._temp2faToken || '';
+
+      if (!code || code.length < 6) {
+        showToast('Please enter a valid 6-digit code.', 'error');
+        if (totpCode) totpCode.classList.add('error');
+        return;
+      }
+
+      if (!tempToken) {
+        showToast('Session expired. Please request a new OTP.', 'error');
+        showStep(loginStep);
+        return;
+      }
+
+      // Show loading state
+      totpVerifyBtn.classList.add('loading');
+      totpVerifyBtn.disabled = true;
+
+      try {
+        const res = await API.auth.twoFA.verify(tempToken, code);
+        totpVerifyBtn.classList.remove('loading');
+        totpVerifyBtn.disabled = false;
+
+        if (!res || !res.ok) {
+          if (totpCode) {
+            totpCode.classList.add('error');
+            totpCode.value = '';
+            totpCode.focus();
+          }
+          showToast(res?.data?.error || 'Invalid authenticator code. Please try again.', 'error');
+          return;
+        }
+
+        // ── Store final session token ────────────────────────────
+        API.session.setToken(res.data.token, res.data.user, true);
+
+        showToast('2FA Verification successful! Redirecting...', 'success');
+        showStep(successStep);
+
+        if (resendInterval) clearInterval(resendInterval);
+
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 2500);
+
+      } catch (err) {
+        totpVerifyBtn.classList.remove('loading');
+        totpVerifyBtn.disabled = false;
+        showToast('Connection error. Make sure the API server is running.', 'error');
+      }
+    });
+
+    if (totpCode) {
+      totpCode.addEventListener('input', function () {
+        this.classList.remove('error');
+      });
+    }
+  }
+
+  // Back to OTP from TOTP step
+  if (backToOtpBtn) {
+    backToOtpBtn.addEventListener('click', function () {
+      showStep(verifyStep);
     });
   }
 
@@ -454,14 +574,26 @@
   }
 
   if (resendBtn) {
-    resendBtn.addEventListener('click', function () {
+    resendBtn.addEventListener('click', async function () {
       if (this.disabled) return;
+
+      const email = window._loginEmail || '';
+      if (!email) { showToast('Session lost. Please start again.', 'error'); showStep(loginStep); return; }
 
       clearOtp();
       startResendTimer();
-      showToast('Verification code resent to your email', 'success');
 
-      // Focus first input
+      // ── REAL API CALL: Resend OTP ─────────────────────────────
+      const res = await API.auth.sendOTP(email);
+      if (res && res.ok) {
+        if (res.data.dev_otp) {
+          console.log('%c[DEV] Resent OTP: ' + res.data.dev_otp, 'background:#111;color:#0f0;font-size:16px;padding:4px 8px;border-radius:4px;');
+        }
+        showToast('New OTP sent to your email.', 'success');
+      } else {
+        showToast('Failed to resend OTP. Please try again.', 'error');
+      }
+
       setTimeout(() => {
         if (otpInputs[0]) otpInputs[0].focus();
       }, 100);
@@ -533,5 +665,55 @@
       setTimeout(() => { formSubmitting = false; }, 3000);
     });
   });
+
+  // =============================================
+  // CLOUDFLARE TURNSTILE CAPTCHA INITIALIZATION
+  // =============================================
+  async function checkTurnstileConfig() {
+    try {
+      const res = await API.auth.branding();
+      if (res && res.ok && res.data.data) {
+        const brand = res.data.data;
+        if (brand.turnstileEnabled) {
+          const container = document.getElementById('turnstileContainer');
+          if (container) {
+            container.style.display = 'flex';
+            
+            // Load script dynamically if not already loaded
+            if (!window.turnstile) {
+              const script = document.createElement('script');
+              script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback';
+              script.async = true;
+              script.defer = true;
+              document.head.appendChild(script);
+              
+              window.onloadTurnstileCallback = function () {
+                turnstile.render('#turnstileContainer', {
+                  sitekey: brand.turnstileSiteKey,
+                  theme: brand.turnstileTheme || 'light',
+                  callback: function (token) {
+                    turnstileToken = token;
+                  }
+                });
+              };
+            } else {
+              turnstile.render('#turnstileContainer', {
+                sitekey: brand.turnstileSiteKey,
+                theme: brand.turnstileTheme || 'light',
+                callback: function (token) {
+                  turnstileToken = token;
+                }
+              });
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('[Turnstile] Failed to initialize Turnstile:', e);
+    }
+  }
+
+  // Run on load
+  checkTurnstileConfig();
 
 })();

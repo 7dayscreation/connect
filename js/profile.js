@@ -4,6 +4,8 @@
  * Follows the same patterns as settings.js.
  */
 document.addEventListener('DOMContentLoaded', () => {
+  // Auth Guard
+  if (typeof API !== 'undefined') API.requireAuth();
 
   /* ──────────────────────────────────────────────
      1. Mobile Sidebar Toggle
@@ -229,14 +231,19 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ──────────────────────────────────────────────
      11. Logout Simulator
      ────────────────────────────────────────────── */
+  // Logout
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', (e) => {
+    logoutBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       showToast('Logging out...');
-      setTimeout(() => {
-        window.location.href = 'index.html'; // back to main page
-      }, 1000);
+      if (typeof API !== 'undefined') {
+        await API.auth.logout();
+      } else {
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1000);
+      }
     });
   }
 

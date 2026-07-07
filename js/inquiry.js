@@ -21,6 +21,8 @@
   const email = document.getElementById('email');
   const inquiryType = document.getElementById('inquiryType');
 
+  let turnstileToken = null;
+
   // =============================================
   // TOAST NOTIFICATIONS
   // =============================================
@@ -130,9 +132,9 @@
   });
 
   // =============================================
-  // SUBMISSION LOGIC
+  // SUBMISSION LOGIC (Real API)
   // =============================================
-  form.addEventListener('submit', function (e) {
+  form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
     let hasError = false;
@@ -158,10 +160,7 @@
     }
 
     const emailVal = email.value.trim();
-    if (!emailVal) {
-      setError(email, 'Email address is required');
-      hasError = true;
-    } else if (!validateEmail(emailVal)) {
+    if (emailVal && !validateEmail(emailVal)) {
       setError(email, 'Enter a valid email address');
       hasError = true;
     }
@@ -169,6 +168,13 @@
     if (!inquiryType.value) {
       setError(inquiryType, 'Please select segment / source');
       hasError = true;
+    }
+
+    // Turnstile Check
+    const turnstileContainer = document.getElementById('turnstileContainer');
+    if (turnstileContainer && turnstileContainer.style.display !== 'none' && !turnstileToken) {
+      showToast('Please complete the Captcha verification.', 'error');
+      return;
     }
 
     if (hasError) {
@@ -180,27 +186,52 @@
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
 
-    // Simulate API Network response delay
-    setTimeout(() => {
-      const newInquiry = {
-        firstName: firstName.value.trim(),
-        surname: surname.value.trim(),
-        phone: phoneVal,
-        email: emailVal,
-        inquiryType: inquiryType.value
-      };
+    const newInquiry = {
+      firstName: firstName.value.trim(),
+      surname: surname.value.trim(),
+      phone: phoneVal,
+      email: emailVal || null,
+      inquiryType: inquiryType.value,
+      turnstileToken: turnstileToken
+    };
 
-      saveInquiry(newInquiry);
+    // ── REAL API CALL ──────────────────────────────────────────
+    try {
+      // Try the Cloudflare Worker API first
+      let saved = false;
+
+      if (typeof API !== 'undefined') {
+        const res = await API.inquiries.create(newInquiry);
+        if (res && res.ok) {
+          saved = true;
+        } else {
+          console.warn('[Inquiry] API error, falling back to localStorage:', res?.data?.error);
+        }
+      }
+
+      // Fallback: localStorage (if API not available)
+      if (!saved) {
+        const list = JSON.parse(localStorage.getItem('inquiries') || '[]');
+        const localEntry = { ...newInquiry, id: Date.now(), date: new Date().toISOString() };
+        list.unshift(localEntry);
+        localStorage.setItem('inquiries', JSON.stringify(list));
+        const notifs = JSON.parse(localStorage.getItem('notifications') || '[]');
+        notifs.unshift({ id: Date.now(), type: 'Inquiries', icon: 'fa-user-plus', title: 'New Inquiry (Local)', desc: `${newInquiry.firstName} ${newInquiry.surname} - ${newInquiry.inquiryType}`, time: new Date().toISOString(), read: false });
+        localStorage.setItem('notifications', JSON.stringify(notifs));
+      }
 
       // Trigger success view
       form.style.display = 'none';
       successState.style.display = 'flex';
-
       showToast('Inquiry successfully recorded!');
-      
+
+    } catch (err) {
+      console.error('[Inquiry Submit Error]', err);
+      showToast('Failed to save inquiry. Please try again.', 'error');
+    } finally {
       submitBtn.classList.remove('loading');
       submitBtn.disabled = false;
-    }, 1200);
+    }
   });
 
   // Log Another Action
@@ -212,5 +243,56 @@
     // Focus first input
     setTimeout(() => firstName.focus(), 100);
   });
+
+  // =============================================
+  // CLOUDFLARE TURNSTILE CAPTCHA INITIALIZATION
+  // =============================================
+  async function checkTurnstileConfig() {
+    try {
+      if (typeof API === 'undefined') return;
+      const res = await API.auth.branding();
+      if (res && res.ok && res.data.data) {
+        const brand = res.data.data;
+        if (brand.turnstileEnabled) {
+          const container = document.getElementById('turnstileContainer');
+          if (container) {
+            container.style.display = 'flex';
+            
+            // Load script dynamically if not already loaded
+            if (!window.turnstile) {
+              const script = document.createElement('script');
+              script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback';
+              script.async = true;
+              script.defer = true;
+              document.head.appendChild(script);
+              
+              window.onloadTurnstileCallback = function () {
+                turnstile.render('#turnstileContainer', {
+                  sitekey: brand.turnstileSiteKey,
+                  theme: brand.turnstileTheme || 'light',
+                  callback: function (token) {
+                    turnstileToken = token;
+                  }
+                });
+              };
+            } else {
+              turnstile.render('#turnstileContainer', {
+                sitekey: brand.turnstileSiteKey,
+                theme: brand.turnstileTheme || 'light',
+                callback: function (token) {
+                  turnstileToken = token;
+                }
+              });
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('[Turnstile] Failed to initialize Turnstile:', e);
+    }
+  }
+
+  // Run on load
+  checkTurnstileConfig();
 
 })();

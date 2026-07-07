@@ -8,6 +8,9 @@
 (function () {
   'use strict';
 
+  // Auth Guard
+  if (typeof API !== 'undefined') API.requireAuth();
+
   // =============================================
   // SETTINGS NAV / TAB SWITCHING
   // =============================================
@@ -262,10 +265,10 @@
 
 
   // =============================================
-  // FORM SAVE — SHOW TOAST
+  // FORM SAVE — SHOW TOAST (Real API)
   // =============================================
   document.querySelectorAll('.btn-save').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
+    btn.addEventListener('click', async function (e) {
       e.preventDefault();
       var self = this;
       var origText = self.textContent;
@@ -275,13 +278,58 @@
       self.disabled = true;
       self.style.opacity = '0.7';
 
-      // Simulate save
-      setTimeout(function () {
+      var payload = {
+        brandName: document.getElementById('brandName') ? document.getElementById('brandName').value : '',
+        brandTagline: document.getElementById('brandTagline') ? document.getElementById('brandTagline').value : '',
+        brandUrl: document.getElementById('brandUrl') ? document.getElementById('brandUrl').value : '',
+        contactEmail: document.getElementById('contactEmail') ? document.getElementById('contactEmail').value : '',
+        contactPhone: document.getElementById('contactPhone') ? document.getElementById('contactPhone').value : '',
+        resendApiKey: document.getElementById('resendApiKey') ? document.getElementById('resendApiKey').value : '',
+        fromEmail: document.getElementById('fromEmail') ? document.getElementById('fromEmail').value : '',
+        fromName: document.getElementById('fromName') ? document.getElementById('fromName').value : '',
+        replyToEmail: document.getElementById('replyToEmail') ? document.getElementById('replyToEmail').value : '',
+        logoBase64: logoBase64 || (window.currentConfig ? window.currentConfig.logoBase64 : '') || '',
+        faviconBase64: faviconBase64 || (window.currentConfig ? window.currentConfig.faviconBase64 : '') || '',
+        turnstileEnabled: document.getElementById('turnstileEnabled') ? document.getElementById('turnstileEnabled').checked : false,
+        turnstileSiteKey: document.getElementById('turnstileSiteKey') ? document.getElementById('turnstileSiteKey').value : '',
+        turnstileSecretKey: document.getElementById('turnstileSecretKey') ? document.getElementById('turnstileSecretKey').value : '',
+        turnstileApplyLogin: document.getElementById('turnstileApplyLogin') ? document.getElementById('turnstileApplyLogin').checked : false,
+        turnstileApplyContact: document.getElementById('turnstileApplyContact') ? document.getElementById('turnstileApplyContact').checked : false,
+        turnstileApplyInquiry: document.getElementById('turnstileApplyInquiry') ? document.getElementById('turnstileApplyInquiry').checked : false,
+        turnstileApplyNewsletter: document.getElementById('turnstileApplyNewsletter') ? document.getElementById('turnstileApplyNewsletter').checked : false,
+        turnstileTheme: document.getElementById('turnstileTheme') ? document.getElementById('turnstileTheme').value : 'light',
+        
+        sessionTimeout: document.getElementById('sessionTimeout') ? parseInt(document.getElementById('sessionTimeout').value) || 30 : 30,
+        maxAttempts: document.getElementById('maxAttempts') ? parseInt(document.getElementById('maxAttempts').value) || 5 : 5,
+        lockoutDuration: document.getElementById('lockoutDuration') ? parseInt(document.getElementById('lockoutDuration').value) || 15 : 15,
+        minPasswordLength: document.getElementById('minPasswordLength') ? parseInt(document.getElementById('minPasswordLength').value) || 8 : 8,
+        reqUppercase: document.getElementById('reqUppercase') ? document.getElementById('reqUppercase').checked : false,
+        reqLowercase: document.getElementById('reqLowercase') ? document.getElementById('reqLowercase').checked : false,
+        reqNumber: document.getElementById('reqNumber') ? document.getElementById('reqNumber').checked : false,
+        reqSpecial: document.getElementById('reqSpecial') ? document.getElementById('reqSpecial').checked : false,
+        force2FA: document.getElementById('force2FA') ? document.getElementById('force2FA').checked : false
+      };
+
+      try {
+        if (typeof API !== 'undefined' && API.session.isLoggedIn()) {
+          const res = await API.config.save(payload);
+          if (res && res.ok) {
+            showSaveToast('Settings saved successfully to Cloudflare KV!');
+          } else {
+            showSaveToast('API error: ' + (res?.data?.error || 'Could not save.'));
+          }
+        } else {
+          // Local fallback
+          localStorage.setItem('local_settings', JSON.stringify(payload));
+          showSaveToast('Settings saved locally.');
+        }
+      } catch (err) {
+        showSaveToast('Connection error. Saved locally.');
+      } finally {
         self.innerHTML = origText;
         self.disabled = false;
         self.style.opacity = '1';
-        showSaveToast('Settings saved successfully!');
-      }, 1200);
+      }
     });
   });
 
@@ -334,31 +382,200 @@
 
 
   // =============================================
-  // GENERATE AUTHENTICATOR SECRET (demo)
+  // GENERATE AUTHENTICATOR SECRET & SETUP (Real API)
   // =============================================
   var generateAuthBtn = document.getElementById('generateAuthSecret');
+  var generatedSecret2FA = null;
+
   if (generateAuthBtn) {
-    generateAuthBtn.addEventListener('click', function () {
+    generateAuthBtn.addEventListener('click', async function () {
       var secretDisplay = document.getElementById('authSecretKey');
       var qrPlaceholder = document.getElementById('authQrCode');
+      var self = this;
+      var origText = self.innerHTML;
 
-      // Generate random base32-like key
-      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
-      var key = '';
-      for (var i = 0; i < 32; i++) {
-        key += chars.charAt(Math.floor(Math.random() * chars.length));
-        if ((i + 1) % 4 === 0 && i < 31) key += ' ';
+      self.disabled = true;
+      self.innerHTML = '<i class="fas fa-circle-notch fa-spin" style="margin-right:6px;"></i> Generating...';
+
+      try {
+        if (typeof API !== 'undefined') {
+          const res = await API.auth.twoFA.generate();
+          if (res && res.ok && res.data.success) {
+            generatedSecret2FA = res.data.secret;
+            if (secretDisplay) secretDisplay.textContent = generatedSecret2FA;
+            if (qrPlaceholder) {
+              qrPlaceholder.innerHTML = '<img src="' + res.data.qrCodeUrl + '" style="width:180px;height:180px;border-radius:12px;display:block;"><p style="font-size:12px;color:#71717a;margin-top:8px;">Scan with Google Authenticator</p>';
+            }
+            showSaveToast('New secret generated successfully!');
+          } else {
+            showSaveToast('API error: ' + (res?.data?.error || 'Could not generate secret.'));
+          }
+        }
+      } catch (err) {
+        showSaveToast('Failed to generate secret key.');
+      } finally {
+        self.disabled = false;
+        self.innerHTML = origText;
       }
-
-      if (secretDisplay) secretDisplay.textContent = key;
-      if (qrPlaceholder) {
-        qrPlaceholder.innerHTML = '<div style="width:180px;height:180px;background:#f0f0f0;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#71717a;border:2px dashed #e5e5e5;"><i class="fas fa-qrcode" style="font-size:48px;color:#d4d4d4;"></i></div><p style="font-size:12px;color:#71717a;margin-top:8px;">Scan with Google Authenticator</p>';
-      }
-
-      showSaveToast('Authenticator secret generated!');
     });
   }
 
+  // Verify and Setup 2FA
+  var setup2faVerifyBtn = document.getElementById('setup2faVerifyBtn');
+  if (setup2faVerifyBtn) {
+    setup2faVerifyBtn.addEventListener('click', async function () {
+      var codeInput = document.getElementById('setup2faCode');
+      var code = codeInput ? codeInput.value.replace(/\s+/g, '') : '';
+      if (!generatedSecret2FA) {
+        showSaveToast('Please generate a secret key first.');
+        return;
+      }
+      if (!code || code.length < 6) {
+        showSaveToast('Please enter a valid 6-digit code.');
+        return;
+      }
+
+      var self = this;
+      var origText = self.innerHTML;
+      self.disabled = true;
+      self.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+
+      try {
+        if (typeof API !== 'undefined') {
+          const res = await API.auth.twoFA.verifySetup(generatedSecret2FA, code);
+          if (res && res.ok && res.data.success) {
+            showSaveToast('Google Authenticator 2FA enabled successfully!');
+            // Check the status checkbox and keep it checked
+            var mainCheckbox = document.getElementById('twoFAEnabled');
+            if (mainCheckbox) {
+              mainCheckbox.checked = true;
+              mainCheckbox.dispatchEvent(new Event('change'));
+            }
+            // Clear code input
+            if (codeInput) codeInput.value = '';
+          } else {
+            showSaveToast('Verification failed: ' + (res?.data?.error || 'Invalid code.'));
+          }
+        }
+      } catch (err) {
+        showSaveToast('Failed to connect to API.');
+      } finally {
+        self.disabled = false;
+        self.innerHTML = origText;
+      }
+    });
+  }
+
+  // Handle Disable 2FA via checkbox toggle
+  var twoFAEnabledCheckbox = document.getElementById('twoFAEnabled');
+  if (twoFAEnabledCheckbox) {
+    twoFAEnabledCheckbox.addEventListener('change', async function () {
+      // If user unchecks it, it means they want to disable 2FA
+      if (!this.checked) {
+        if (confirm('Are you sure you want to disable Google Authenticator 2FA? This will reduce your account security.')) {
+          try {
+            if (typeof API !== 'undefined') {
+              const res = await API.auth.twoFA.disable();
+              if (res && res.ok && res.data.success) {
+                showSaveToast('2FA disabled successfully.');
+                // Clear inputs
+                var secretDisplay = document.getElementById('authSecretKey');
+                if (secretDisplay) secretDisplay.textContent = 'Click "Generate" to create a new key';
+                var qrPlaceholder = document.getElementById('authQrCode');
+                if (qrPlaceholder) {
+                  qrPlaceholder.innerHTML = '<div style="width:180px;height:180px;background:#f0f0f0;border-radius:12px;display:flex;align-items:center;justify-content:center;border:2px dashed #e5e5e5;"><i class="fas fa-qrcode" style="font-size:48px;color:#d4d4d4;"></i></div><p style="font-size:12px;color:#71717a;margin-top:8px;">Generate key first</p>';
+                }
+                generatedSecret2FA = null;
+              } else {
+                showSaveToast('API error: ' + (res?.data?.error || 'Could not disable 2FA.'));
+                this.checked = true; // revert checkbox
+                this.dispatchEvent(new Event('change'));
+              }
+            }
+          } catch (err) {
+            showSaveToast('Failed to connect to API.');
+            this.checked = true; // revert checkbox
+            this.dispatchEvent(new Event('change'));
+          }
+        } else {
+          this.checked = true; // revert checkbox
+          this.dispatchEvent(new Event('change'));
+        }
+      }
+    });
+  }
+
+
+  // =============================================
+  // LOGO & FAVICON UPLOADS (Base64)
+  // =============================================
+  var logoBase64 = null;
+  var faviconBase64 = null;
+
+  function fileToBase64(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () { resolve(reader.result); };
+      reader.onerror = function (error) { reject(error); };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  var logoInput = document.getElementById('logoInput');
+  if (logoInput) {
+    logoInput.addEventListener('change', async function () {
+      if (this.files && this.files[0]) {
+        try {
+          logoBase64 = await fileToBase64(this.files[0]);
+          var uploadArea = this.closest('.file-upload-area');
+          if (uploadArea) {
+            var img = uploadArea.querySelector('.upload-preview-img');
+            if (!img) {
+              img = document.createElement('img');
+              img.className = 'upload-preview-img';
+              img.style.maxHeight = '40px';
+              img.style.borderRadius = '4px';
+              img.style.display = 'block';
+              img.style.margin = '0 auto 8px';
+              uploadArea.insertBefore(img, uploadArea.firstChild);
+            }
+            img.src = logoBase64;
+          }
+          showSaveToast('Logo loaded successfully!');
+        } catch (e) {
+          showSaveToast('Failed to read logo file.');
+        }
+      }
+    });
+  }
+
+  var faviconInput = document.getElementById('faviconInput');
+  if (faviconInput) {
+    faviconInput.addEventListener('change', async function () {
+      if (this.files && this.files[0]) {
+        try {
+          faviconBase64 = await fileToBase64(this.files[0]);
+          var uploadArea = this.closest('.file-upload-area');
+          if (uploadArea) {
+            var img = uploadArea.querySelector('.upload-preview-img');
+            if (!img) {
+              img = document.createElement('img');
+              img.className = 'upload-preview-img';
+              img.style.maxHeight = '32px';
+              img.style.borderRadius = '4px';
+              img.style.display = 'block';
+              img.style.margin = '0 auto 8px';
+              uploadArea.insertBefore(img, uploadArea.firstChild);
+            }
+            img.src = faviconBase64;
+          }
+          showSaveToast('Favicon loaded successfully!');
+        } catch (e) {
+          showSaveToast('Failed to read favicon file.');
+        }
+      }
+    });
+  }
 
   // =============================================
   // SEARCH SETTINGS
@@ -401,15 +618,19 @@
     });
   }
 
-  // Logout simulator
+  // Logout
   var logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', function (e) {
+    logoutBtn.addEventListener('click', async function (e) {
       e.preventDefault();
       showSaveToast('Logging out...');
-      setTimeout(function () {
-        window.location.href = 'index.html'; // back to main page
-      }, 1000);
+      if (typeof API !== 'undefined') {
+        await API.auth.logout();
+      } else {
+        setTimeout(function () {
+          window.location.href = 'index.html';
+        }, 1000);
+      }
     });
   }
 
@@ -518,12 +739,107 @@
       }
     });
   }
-  updateGlobalBellBadge();
+  // =============================================
+  // INITIALIZATION
+  // =============================================
+  async function loadConfig() {
+    if (typeof API === 'undefined' || !API.session.isLoggedIn()) return;
+    try {
+      const res = await API.config.get();
+        const cfg = res.data.data;
+        window.currentConfig = cfg;
+        if (document.getElementById('brandName')) document.getElementById('brandName').value = cfg.brandName || '';
+        if (document.getElementById('brandTagline')) document.getElementById('brandTagline').value = cfg.brandTagline || '';
+        if (document.getElementById('brandUrl')) document.getElementById('brandUrl').value = cfg.brandUrl || '';
+        if (document.getElementById('contactEmail')) document.getElementById('contactEmail').value = cfg.contactEmail || '';
+        if (document.getElementById('contactPhone')) document.getElementById('contactPhone').value = cfg.contactPhone || '';
+        if (document.getElementById('resendApiKey')) document.getElementById('resendApiKey').value = cfg.resendApiKey || '';
+        if (document.getElementById('fromEmail')) document.getElementById('fromEmail').value = cfg.fromEmail || '';
+        if (document.getElementById('fromName')) document.getElementById('fromName').value = cfg.fromName || '';
+        if (document.getElementById('replyToEmail')) document.getElementById('replyToEmail').value = cfg.replyToEmail || '';
 
-  window.addEventListener('storage', function (e) {
-    if (e.key === 'notifications') {
-      updateGlobalBellBadge();
+        // Render logo preview if logo exists
+        if (cfg.logoBase64 && logoInput) {
+          var uploadArea = logoInput.closest('.file-upload-area');
+          if (uploadArea) {
+            var img = uploadArea.querySelector('.upload-preview-img') || document.createElement('img');
+            img.className = 'upload-preview-img';
+            img.src = cfg.logoBase64;
+            img.style.maxHeight = '40px';
+            img.style.borderRadius = '4px';
+            img.style.display = 'block';
+            img.style.margin = '0 auto 8px';
+            if (!uploadArea.querySelector('.upload-preview-img')) {
+              uploadArea.insertBefore(img, uploadArea.firstChild);
+            }
+          }
+        }
+
+        // Render favicon preview if favicon exists
+        if (cfg.faviconBase64 && faviconInput) {
+          var uploadArea = faviconInput.closest('.file-upload-area');
+          if (uploadArea) {
+            var img = uploadArea.querySelector('.upload-preview-img') || document.createElement('img');
+            img.className = 'upload-preview-img';
+            img.src = cfg.faviconBase64;
+            img.style.maxHeight = '32px';
+            img.style.borderRadius = '4px';
+            img.style.display = 'block';
+            img.style.margin = '0 auto 8px';
+            if (!uploadArea.querySelector('.upload-preview-img')) {
+              uploadArea.insertBefore(img, uploadArea.firstChild);
+            }
+          }
+        }
+
+        // Set Turnstile values
+        if (document.getElementById('turnstileEnabled')) {
+          document.getElementById('turnstileEnabled').checked = cfg.turnstileEnabled || false;
+          // Trigger change event to update the UI dependent panel visibility
+          document.getElementById('turnstileEnabled').dispatchEvent(new Event('change'));
+        }
+        if (document.getElementById('turnstileSiteKey')) document.getElementById('turnstileSiteKey').value = cfg.turnstileSiteKey || '';
+        if (document.getElementById('turnstileSecretKey')) document.getElementById('turnstileSecretKey').value = cfg.turnstileSecretKey || '';
+        if (document.getElementById('turnstileApplyLogin')) document.getElementById('turnstileApplyLogin').checked = cfg.turnstileApplyLogin !== false; // default true
+        if (document.getElementById('turnstileApplyContact')) document.getElementById('turnstileApplyContact').checked = cfg.turnstileApplyContact !== false; // default true
+        if (document.getElementById('turnstileApplyInquiry')) document.getElementById('turnstileApplyInquiry').checked = cfg.turnstileApplyInquiry || false;
+        if (document.getElementById('turnstileApplyNewsletter')) document.getElementById('turnstileApplyNewsletter').checked = cfg.turnstileApplyNewsletter || false;
+        if (document.getElementById('turnstileTheme')) document.getElementById('turnstileTheme').value = cfg.turnstileTheme || 'light';
+
+        // Security Policy fields
+        if (document.getElementById('sessionTimeout')) document.getElementById('sessionTimeout').value = cfg.sessionTimeout || 30;
+        if (document.getElementById('maxAttempts')) document.getElementById('maxAttempts').value = cfg.maxAttempts || 5;
+        if (document.getElementById('lockoutDuration')) document.getElementById('lockoutDuration').value = cfg.lockoutDuration || 15;
+        if (document.getElementById('minPasswordLength')) document.getElementById('minPasswordLength').value = cfg.minPasswordLength || 8;
+        if (document.getElementById('reqUppercase')) document.getElementById('reqUppercase').checked = cfg.reqUppercase !== false;
+        if (document.getElementById('reqLowercase')) document.getElementById('reqLowercase').checked = cfg.reqLowercase !== false;
+        if (document.getElementById('reqNumber')) document.getElementById('reqNumber').checked = cfg.reqNumber !== false;
+        if (document.getElementById('reqSpecial')) document.getElementById('reqSpecial').checked = cfg.reqSpecial || false;
+        if (document.getElementById('force2FA')) document.getElementById('force2FA').checked = cfg.force2FA || false;
+
+        // Fetch 2FA status
+        if (typeof API !== 'undefined') {
+          try {
+            const twoFARes = await API.auth.twoFA.status();
+            if (twoFARes && twoFARes.ok && twoFARes.data.enabled) {
+              var mainCheckbox = document.getElementById('twoFAEnabled');
+              if (mainCheckbox) {
+                mainCheckbox.checked = true;
+                mainCheckbox.dispatchEvent(new Event('change'));
+              }
+            }
+          } catch (e) {
+            console.warn('[Settings] Failed to check 2FA status:', e);
+          }
+        }
+    } catch (err) {
+      console.warn('[Settings] Failed to load config:', err);
     }
-  });
+  }
+
+  (async function() {
+    await loadConfig();
+    updateGlobalBellBadge();
+  })();
 
 })();
