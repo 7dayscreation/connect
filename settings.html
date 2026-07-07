@@ -253,34 +253,16 @@
             </div>
           </div>
 
-
           <!-- ===== 3. EMAIL (RESEND API) ===== -->
           <div id="sectionEmail" class="settings-section">
             <div class="settings-card">
               <div class="settings-card-header">
-                <div class="flex-between" style="width:100%;">
-                  <div>
-                    <h3>Resend Email API</h3>
-                    <p>Configure Resend for transactional emails.</p>
-                  </div>
-                  <span class="status-badge disconnected"><span class="status-dot"></span> Not Connected</span>
+                <div>
+                  <h3>Resend Email API</h3>
+                  <p>Configure Resend for transactional emails.</p>
                 </div>
               </div>
               <div class="settings-card-body">
-                <div class="form-row">
-                  <label class="form-label">Resend API Key
-                    <span class="form-description">Get your API key from <a href="https://resend.com" target="_blank"
-                        rel="noopener">resend.com/api-keys</a></span>
-                  </label>
-                  <div class="api-key-field">
-                    <input type="password" id="resendApiKey" class="form-input" placeholder="re_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" value="">
-                    <div class="api-key-actions">
-                      <button type="button" class="api-key-btn api-toggle-btn"><i class="fas fa-eye"></i></button>
-                      <button type="button" class="api-key-btn api-copy-btn"><i class="fas fa-copy"></i>
-                        <span>Copy</span></button>
-                    </div>
-                  </div>
-                </div>
                 <div class="form-grid">
                   <div class="form-row">
                     <label class="form-label">From Email Address</label>
@@ -316,83 +298,21 @@
                 </div>
               </div>
               <div class="settings-card-footer">
-                <button class="btn-test">Test Connection</button>
                 <button class="btn-save">Save Email Settings</button>
               </div>
             </div>
 
-            <!-- SMTP Fallback -->
-            <div class="settings-card">
-              <div class="settings-card-header">
-                <h3>SMTP Fallback</h3>
-                <p>Backup SMTP configuration if Resend is unavailable.</p>
-              </div>
-              <div class="settings-card-body">
-                <div class="form-row">
-                  <label class="toggle-switch">
-                    <input type="checkbox" class="toggle-input">
-                    <span class="toggle-track"></span>
-                    <div>
-                      <span class="toggle-label">Enable SMTP Fallback</span>
-                      <span class="toggle-description">Falls back to SMTP when Resend API fails.</span>
-                    </div>
-                  </label>
-                </div>
-                <div class="toggle-dependent" style="max-height:0;opacity:0;overflow:hidden;transition:all 0.3s ease;">
-                  <div class="form-grid">
-                    <div class="form-row">
-                      <label class="form-label">SMTP Host</label>
-                      <input type="text" class="form-input" placeholder="smtp.gmail.com">
-                    </div>
-                    <div class="form-row">
-                      <label class="form-label">SMTP Port</label>
-                      <input type="number" class="form-input" placeholder="587">
-                    </div>
-                  </div>
-                  <div class="form-grid">
-                    <div class="form-row">
-                      <label class="form-label">SMTP Username</label>
-                      <input type="text" class="form-input" placeholder="your-email@gmail.com">
-                    </div>
-                    <div class="form-row">
-                      <label class="form-label">SMTP Password</label>
-                      <div class="api-key-field">
-                        <input type="password" class="form-input" placeholder="App password">
-                        <div class="api-key-actions">
-                          <button type="button" class="api-key-btn api-toggle-btn"><i class="fas fa-eye"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <label class="form-label">Encryption</label>
-                    <select class="form-select">
-                      <option value="tls">TLS</option>
-                      <option value="ssl">SSL</option>
-                      <option value="none">None</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="settings-card-footer">
-                <button class="btn-save">Save SMTP</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===== 5. SECURITY (CAPTCHA & AUTHENTICATOR) ===== -->
+            <!-- ===== 5. SECURITY (CAPTCHA & AUTHENTICATOR) ===== -->
           <div id="sectionSecurity" class="settings-section">
             <!-- CloudFlare Turnstile -->
             <div class="settings-card">
               <div class="settings-card-header">
-                <div class="flex-between" style="width:100%;">
-                  <div>
-                    <h3>CloudFlare Turnstile Captcha</h3>
-                    <p>Protect forms from spam and bots using CloudFlare Turnstile.</p>
-                  </div>
-                  <span class="status-badge disconnected"><span class="status-dot"></span> Not Active</span>
+                <div>
+                  <h3>CloudFlare Turnstile Captcha</h3>
+                  <p>Protect forms from spam and bots using CloudFlare Turnstile.</p>
                 </div>
-                     <div class="settings-card-body">
+              </div>
+              <div class="settings-card-body">
                 <div class="form-row">
                   <label class="toggle-switch">
                     <input type="checkbox" class="toggle-input" id="turnstileEnabled">
@@ -405,28 +325,6 @@
                 </div>
                 <div class="toggle-dependent" style="max-height:0;opacity:0;overflow:hidden;transition:all 0.3s ease;">
                   <hr class="section-divider">
-                  <div class="form-row">
-                    <label class="form-label">Site Key
-                      <span class="form-description">Get from <a href="https://dash.cloudflare.com" target="_blank"
-                          rel="noopener">CloudFlare Dashboard</a> â†’ Turnstile.</span>
-                    </label>
-                    <div class="api-key-field">
-                      <input type="text" class="form-input" id="turnstileSiteKey" placeholder="0x4AAAAAAXXXXXXXXXXXXXXX">
-                      <div class="api-key-actions">
-                        <button type="button" class="api-key-btn api-copy-btn"><i class="fas fa-copy"></i>
-                          <span>Copy</span></button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <label class="form-label">Secret Key</label>
-                    <div class="api-key-field">
-                      <input type="password" class="form-input" id="turnstileSecretKey" placeholder="0x4AAAAAAXXXXXXXXXXXXXXX">
-                      <div class="api-key-actions">
-                        <button type="button" class="api-key-btn api-toggle-btn"><i class="fas fa-eye"></i></button>
-                      </div>
-                    </div>
-                  </div>
                   <div class="form-row">
                     <label class="form-label">Apply Captcha To</label>
                     <div class="checkbox-group">
@@ -444,12 +342,12 @@
                       <option value="auto">Auto (follow system)</option>
                     </select>
                   </div>
-                </div>               </div>
+                </div>
               </div>
               <div class="settings-card-footer">
-                <button class="btn-test">Verify Integration</button>
                 <button class="btn-save">Save Captcha</button>
               </div>
+            </div>
             </div>
 
             <!-- Google Authenticator -->
