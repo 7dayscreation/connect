@@ -1,0 +1,469 @@
+/*
+  Sales Inquiry Form — 7 Days Creation
+  Styles for clean B&W theme
+*/
+
+:root {
+  --bw-black: #000000;
+  --bw-white: #ffffff;
+  --bw-gray-dark: #1f1f1f;
+  --bw-gray-medium: #757575;
+  --bw-gray-light: #e5e5e5;
+  --bw-gray-bg: #fafafa;
+  --bw-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --bw-radius: 12px;
+  --bw-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body.inquiry-form-page {
+  font-family: var(--bw-font);
+  background: var(--bw-gray-bg);
+  background-image: radial-gradient(circle, #e0e0e0 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: var(--bw-black);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.inquiry-container {
+  width: 100%;
+  max-width: 680px;
+  animation: fadeUp 0.5s ease both;
+}
+
+.inquiry-card {
+  background: var(--bw-white);
+  border: 1px solid var(--bw-gray-light);
+  border-radius: var(--bw-radius);
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header link & Logo */
+.inquiry-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.back-link {
+  color: var(--bw-gray-medium);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--bw-transition);
+}
+
+.back-link:hover {
+  color: var(--bw-black);
+}
+
+.logo-wrap img {
+  height: 36px;
+  object-fit: contain;
+}
+
+/* Intro */
+.form-intro {
+  margin-bottom: 32px;
+}
+
+.form-intro h1 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.form-intro p {
+  color: var(--bw-gray-medium);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Form structure */
+.inquiry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: var(--bw-transition);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 580px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bw-black);
+}
+
+/* Input wrappers */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--bw-gray-medium);
+  font-size: 15px;
+  pointer-events: none;
+  transition: var(--bw-transition);
+}
+
+.input-wrapper input,
+.input-wrapper select {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px 0 42px;
+  border: 1px solid var(--bw-gray-light);
+  border-radius: 8px;
+  font-family: var(--bw-font);
+  font-size: 14px;
+  color: var(--bw-black);
+  background: var(--bw-white);
+  outline: none;
+  transition: var(--bw-transition);
+}
+
+.input-wrapper input::placeholder {
+  color: var(--bw-gray-medium);
+  opacity: 0.7;
+}
+
+.input-wrapper input:focus,
+.input-wrapper select:focus {
+  border-color: var(--bw-black);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+.input-wrapper input:focus + .input-icon,
+.input-wrapper select:focus + .input-icon {
+  color: var(--bw-black);
+}
+
+/* Select specifics */
+.input-wrapper select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 14px;
+  color: var(--bw-gray-medium);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.input-wrapper select:focus ~ .select-arrow {
+  color: var(--bw-black);
+}
+
+/* Error state styling */
+.input-wrapper.error input,
+.input-wrapper.error select {
+  border-color: #ff3b30;
+  background: #fffbfa;
+}
+
+.input-wrapper.error .input-icon {
+  color: #ff3b30;
+}
+
+.error-hint {
+  font-size: 11px;
+  font-weight: 500;
+  color: #ff3b30;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Submit button */
+.btn-submit {
+  width: 100%;
+  height: 50px;
+  background: var(--bw-black);
+  color: var(--bw-white);
+  border: 1px solid var(--bw-black);
+  border-radius: 8px;
+  font-family: var(--bw-font);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--bw-transition);
+}
+
+.btn-submit:hover {
+  background: var(--bw-gray-dark);
+  border-color: var(--bw-gray-dark);
+}
+
+.btn-submit:active {
+  transform: scale(0.98);
+}
+
+.btn-submit .btn-loader {
+  display: none;
+}
+
+.btn-submit.loading .btn-text {
+  display: none;
+}
+
+.btn-submit.loading .btn-loader {
+  display: block;
+}
+
+/* Success State */
+.success-state {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 0 20px;
+  animation: fadeIn 0.4s ease both;
+}
+
+.success-state h2 {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 20px 0 8px;
+}
+
+.success-state p {
+  color: var(--bw-gray-medium);
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+.success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.success-actions a,
+.success-actions button {
+  height: 46px;
+  border-radius: 8px;
+  font-family: var(--bw-font);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--bw-transition);
+}
+
+.btn-primary {
+  background: var(--bw-black);
+  color: var(--bw-white);
+  border: 1px solid var(--bw-black);
+}
+
+.btn-primary:hover {
+  background: var(--bw-gray-dark);
+}
+
+.btn-secondary {
+  background: var(--bw-white);
+  color: var(--bw-black);
+  border: 1px solid var(--bw-gray-light);
+}
+
+.btn-secondary:hover {
+  background: var(--bw-gray-bg);
+  border-color: var(--bw-black);
+}
+
+/* Toast styling */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.toast {
+  background: var(--bw-black);
+  color: var(--bw-white);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.3s ease both;
+}
+
+.toast.error {
+  background: #ff3b30;
+}
+
+/* Success Checkmark Animation */
+.success-checkmark {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+
+.success-checkmark .check-icon {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  border-radius: 50%;
+  box-sizing: content-box;
+  border: 4px solid var(--bw-black);
+}
+
+.success-checkmark .check-icon::before,
+.success-checkmark .check-icon::after {
+  content: '';
+  height: 100px;
+  position: absolute;
+  background: var(--bw-white);
+  transform: rotate(-45deg);
+}
+
+.success-checkmark .check-icon::before {
+  border-radius: 100px 0 0 100px;
+  top: -7px;
+  left: -33px;
+  transform-origin: 100px 40px;
+  transform: rotate(-45deg);
+}
+
+.success-checkmark .check-icon::after {
+  border-radius: 0 100px 100px 0;
+  top: -11px;
+  left: 30px;
+  transform-origin: 0px 40px;
+  transform: rotate(-45deg);
+}
+
+.success-checkmark .check-icon .icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-sizing: content-box;
+  position: absolute;
+  z-index: 1;
+  top: -4px;
+  left: -4px;
+}
+
+.success-checkmark .check-icon .icon-fix {
+  width: 5px;
+  height: 80px;
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  left: 28px;
+}
+
+.success-checkmark .check-icon .icon-line {
+  height: 5px;
+  background-color: var(--bw-black);
+  display: block;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 10;
+}
+
+.success-checkmark .check-icon .icon-line.line-tip {
+  width: 25px;
+  left: 14px;
+  top: 46px;
+  transform: rotate(45deg);
+  animation: icon-line-tip 0.75s;
+}
+
+.success-checkmark .check-icon .icon-line.line-long {
+  width: 47px;
+  right: 8px;
+  top: 38px;
+  transform: rotate(-45deg);
+  animation: icon-line-long 0.75s;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes icon-line-tip {
+  0% { width: 0; left: 1px; top: 19px; }
+  54% { width: 0; left: 1px; top: 19px; }
+  70% { width: 14px; left: 14px; top: 37px; }
+  84% { width: 17px; left: 14px; top: 48px; }
+  100% { width: 25px; left: 14px; top: 46px; }
+}
+
+@keyframes icon-line-long {
+  0% { width: 0; right: 46px; top: 54px; }
+  65% { width: 0; right: 46px; top: 54px; }
+  84% { width: 25px; right: 28px; top: 51px; }
+  100% { width: 47px; right: 8px; top: 38px; }
+}

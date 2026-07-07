@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile — 7 Days Creation</title>
+  <meta name="description" content="Admin profile for 7 Days Creation.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+
+<body class="admin-dashboard-page">
+
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <img src="images/logo.png" alt="7 Days Creation">
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link" data-tooltip="Dashboard">
+          <i class="fas fa-table-cells"></i>
+        </a>
+        <a href="users.html" class="sidebar-link" data-tooltip="Users">
+          <i class="fas fa-users"></i>
+        </a>
+        <a href="email-campaign.html" class="sidebar-link" data-tooltip="Email Campaigns">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="whatsapp-campaign.html" class="sidebar-link" data-tooltip="WhatsApp Campaigns">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="settings.html" class="sidebar-link" data-tooltip="Settings">
+          <i class="fas fa-gear"></i>
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="notifications.html" class="sidebar-link" data-tooltip="Notifications"><i class="fas fa-bell"></i><span
+            class="notif-badge"></span></a>
+        <a href="#" class="sidebar-link" data-tooltip="Navigation"><i class="fas fa-location-arrow"></i></a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="dashboard-main">
+
+      <!-- TOP BAR -->
+      <header class="top-bar">
+        <!-- Mobile menu toggle -->
+        <button class="mobile-sidebar-toggle" id="mobileMenuBtn" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Tabs -->
+        <div class="top-tabs">
+          <button class="top-tab active" id="tabDashboard">
+            <i class="fas fa-table-cells" style="margin-right:5px;font-size:12px;"></i> Dashboard
+          </button>
+          <button class="top-tab" id="tabAnalytics">
+            <i class="fas fa-chart-line" style="margin-right:5px;font-size:12px;"></i> Analytics
+          </button>
+          <button class="top-tab" id="tabPulse">
+            <i class="fas fa-wave-square" style="margin-right:5px;font-size:12px;"></i> Pulse
+          </button>
+          <button class="top-tab" id="tabData">
+            <i class="fas fa-database" style="margin-right:5px;font-size:12px;"></i> Data
+          </button>
+        </div>
+
+        <!-- Right Side -->
+        <div class="top-right">
+          <!-- Avatar Group -->
+          <div class="avatar-group">
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#f0abfc,#c084fc);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#34d399,#10b981);"></div>
+            <div class="avatar-count">+6</div>
+          </div>
+          <span class="shared-label">
+            <i class="fas fa-lock"></i> Shared
+          </span>
+
+          <!-- Settings -->
+          <a href="settings.html" class="top-icon-btn" aria-label="Settings">
+            <i class="fas fa-gear"></i>
+          </a>
+
+          <!-- Profile Dropdown Container -->
+          <div class="profile-dropdown-container">
+            <div class="top-profile" id="topProfileBtn" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);">
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+              <div class="dropdown-user-info">
+                <div class="dropdown-avatar" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);"></div>
+                <div class="dropdown-user-details">
+                  <strong>User Name</strong>
+                  <span>info@sitename.com</span>
+                </div>
+              </div>
+              <div class="dropdown-badge">
+                <span class="role-badge admin">Admin</span>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="settings.html#sectionGeneral" class="dropdown-item"><i class="fas fa-gear"></i> General
+                Settings</a>
+              <a href="settings.html#sectionSecurity" class="dropdown-item"><i class="fas fa-shield-halved"></i>
+                Security
+                Policy</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item logout-btn" id="logoutBtn">
+                <i class="fas fa-right-from-bracket"></i> Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <div class="page-breadcrumb">
+            <a href="dashboard.html"><i class="fas fa-home" style="font-size:11px;"></i> Admin</a>
+            <span class="sep"><i class="fas fa-chevron-right"></i></span>
+            <a href="#">Profile</a>
+          </div>
+          <h1 class="page-title">My Profile</h1>
+        </div>
+      </div>
+
+
+      <!-- ============================================
+           PROFILE CONTENT
+           ============================================ -->
+      <div class="profile-layout">
+
+        <!-- ====== PROFILE HERO CARD ====== -->
+        <div class="profile-hero-card">
+          <div class="hero-banner"></div>
+          <div class="hero-body">
+            <div class="hero-avatar" id="heroAvatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="hero-info">
+              <div class="hero-name-row">
+                <h2 class="hero-name">User Name</h2>
+                <span class="hero-role-badge">Admin</span>
+              </div>
+              <p class="hero-email"><i class="fas fa-envelope"></i> info@sitename.com</p>
+            </div>
+            <div class="hero-stats">
+              <div class="hero-stat">
+                <span class="hero-stat-value">142</span>
+                <span class="hero-stat-label">Areas Managed</span>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat-value">2,847</span>
+                <span class="hero-stat-label">Reports</span>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat-value">99.8%</span>
+                <span class="hero-stat-label">Uptime</span>
+              </div>
+            </div>
+            <div class="hero-actions">
+              <button class="btn-outline" id="editProfileBtn"><i class="fas fa-pen"></i> Edit Profile</button>
+              <button class="btn-outline" id="changeAvatarBtn"><i class="fas fa-camera"></i> Change Avatar</button>
+              <input type="file" id="avatarFileInput" accept="image/*" style="display:none;">
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ====== TWO-COLUMN GRID ====== -->
+        <div class="profile-grid">
+
+          <!-- LEFT COLUMN: Personal Information -->
+          <div class="profile-col-left">
+            <div class="profile-card" id="personalInfoCard">
+              <div class="profile-card-header">
+                <h3><i class="fas fa-user-circle"></i> Personal Information</h3>
+              </div>
+              <div class="profile-card-body">
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label" for="firstName">First Name</label>
+                    <input type="text" class="form-input" id="firstName" value="Dhruv" placeholder="First name">
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label" for="lastName">Last Name</label>
+                    <input type="text" class="form-input" id="lastName" value="Patel" placeholder="Last name">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label class="form-label" for="emailAddress">Email Address</label>
+                  <input type="email" class="form-input" id="emailAddress" value="dhruv@areasqft.com"
+                    placeholder="Email address">
+                </div>
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label" for="phoneNumber">Phone Number</label>
+                    <input type="tel" class="form-input" id="phoneNumber" value="+91 98765 43210"
+                      placeholder="Phone number">
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label" for="department">Department</label>
+                    <input type="text" class="form-input" id="department" value="Engineering" placeholder="Department">
+                  </div>
+                </div>
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label" for="designation">Designation</label>
+                    <input type="text" class="form-input" id="designation" value="Lead Developer"
+                      placeholder="Designation">
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label" for="location">Location</label>
+                    <input type="text" class="form-input" id="location" value="Ahmedabad, India" placeholder="Location">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label class="form-label" for="bio">Bio</label>
+                  <textarea class="form-textarea" id="bio" rows="4"
+                    placeholder="Tell us about yourself...">Full-stack developer and platform architect at Area Square Feet. Passionate about building data-driven real estate solutions and making property insights accessible to everyone.</textarea>
+                </div>
+              </div>
+              <div class="profile-card-footer">
+                <button class="btn-save" id="savePersonalInfo"><i class="fas fa-check"></i> Save Changes</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: Stacked Cards -->
+          <div class="profile-col-right">
+
+            <!-- Card A: Account Security -->
+            <div class="profile-card" id="accountSecurityCard">
+              <div class="profile-card-header">
+                <h3><i class="fas fa-shield-halved"></i> Account Security</h3>
+              </div>
+              <div class="profile-card-body">
+                <!-- Password -->
+                <div class="security-row">
+                  <div class="security-info">
+                    <span class="security-label">Password</span>
+                    <span class="security-value">Last changed 15 days ago</span>
+                  </div>
+                  <button class="btn-outline-sm" id="changePasswordBtn">Change Password</button>
+                </div>
+
+                <!-- Two-Factor Auth -->
+                <div class="security-row">
+                  <div class="security-info">
+                    <span class="security-label">Two-Factor Auth</span>
+                    <span class="security-desc">Google Authenticator</span>
+                  </div>
+                  <label class="toggle-switch-mini">
+                    <input type="checkbox" class="toggle-input" id="toggle2fa" checked>
+                    <span class="toggle-track"></span>
+                  </label>
+                </div>
+
+                <!-- Login Alerts -->
+                <div class="security-row">
+                  <div class="security-info">
+                    <span class="security-label">Login Alerts</span>
+                    <span class="security-desc">Email notifications on new login</span>
+                  </div>
+                  <label class="toggle-switch-mini">
+                    <input type="checkbox" class="toggle-input" id="toggleLoginAlerts" checked>
+                    <span class="toggle-track"></span>
+                  </label>
+                </div>
+
+                <!-- Active Sessions -->
+                <div class="security-row">
+                  <div class="security-info">
+                    <span class="security-label">Active Sessions</span>
+                    <span class="security-value">3 devices</span>
+                  </div>
+                  <button class="btn-outline-sm" id="manageSessionsBtn">Manage</button>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Card B: Login Activity -->
+            <div class="profile-card" id="loginActivityCard">
+              <div class="profile-card-header">
+                <h3><i class="fas fa-clock-rotate-left"></i> Recent Login Activity</h3>
+              </div>
+              <div class="profile-card-body no-padding">
+                <div class="login-table-wrap">
+                  <table class="login-table" id="loginTable">
+                    <thead>
+                      <tr>
+                        <th>Device</th>
+                        <th>Location</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="device-info">
+                            <i class="fab fa-chrome"></i>
+                            <span>Chrome / Windows</span>
+                          </div>
+                        </td>
+                        <td>Ahmedabad, India</td>
+                        <td>2 min ago</td>
+                        <td><span class="status-dot-inline active"></span> Active</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="device-info">
+                            <i class="fab fa-safari"></i>
+                            <span>Safari / macOS</span>
+                          </div>
+                        </td>
+                        <td>Mumbai, India</td>
+                        <td>3 hours ago</td>
+                        <td><span class="status-dot-inline active"></span> Active</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="device-info">
+                            <i class="fas fa-mobile-screen"></i>
+                            <span>Mobile App / iOS</span>
+                          </div>
+                        </td>
+                        <td>Ahmedabad, India</td>
+                        <td>Yesterday</td>
+                        <td><span class="status-dot-inline expired"></span> Expired</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="device-info">
+                            <i class="fab fa-chrome"></i>
+                            <span>Chrome / Windows</span>
+                          </div>
+                        </td>
+                        <td>Delhi, India</td>
+                        <td>3 days ago</td>
+                        <td><span class="status-dot-inline expired"></span> Expired</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Card C: Notification Preferences -->
+            <div class="profile-card" id="notifPrefsCard">
+              <div class="profile-card-header">
+                <h3><i class="fas fa-bell"></i> Notification Preferences</h3>
+              </div>
+              <div class="profile-card-body">
+                <div class="notif-row">
+                  <div class="notif-info">
+                    <span class="notif-label">Email Notifications</span>
+                  </div>
+                  <label class="toggle-switch-mini">
+                    <input type="checkbox" class="toggle-input" id="toggleEmailNotif" checked>
+                    <span class="toggle-track"></span>
+                  </label>
+                </div>
+                <div class="notif-row">
+                  <div class="notif-info">
+                    <span class="notif-label">Push Notifications</span>
+                  </div>
+                  <label class="toggle-switch-mini">
+                    <input type="checkbox" class="toggle-input" id="togglePushNotif" checked>
+                    <span class="toggle-track"></span>
+                  </label>
+                </div>
+                <div class="notif-row">
+                  <div class="notif-info">
+                    <span class="notif-label">Weekly Report Summary</span>
+                  </div>
+                  <label class="toggle-switch-mini">
+                    <input type="checkbox" class="toggle-input" id="toggleWeeklyReport" checked>
+                    <span class="toggle-track"></span>
+                  </label>
+                </div>
+                <div class="notif-row">
+                  <div class="notif-info">
+                    <span class="notif-label">Marketing Emails</span>
+                  </div>
+                  <label class="toggle-switch-mini">
+                    <input type="checkbox" class="toggle-input" id="toggleMarketingEmails">
+                    <span class="toggle-track"></span>
+                  </label>
+                </div>
+                <div class="notif-row">
+                  <div class="notif-info">
+                    <span class="notif-label">Security Alerts</span>
+                  </div>
+                  <label class="toggle-switch-mini">
+                    <input type="checkbox" class="toggle-input" id="toggleSecurityAlerts" checked>
+                    <span class="toggle-track"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- /.profile-col-right -->
+
+        </div>
+        <!-- /.profile-grid -->
+
+
+        <!-- ====== DANGER ZONE (Full Width) ====== -->
+        <div class="profile-card danger-zone-card" id="dangerZoneCard">
+          <div class="profile-card-header danger">
+            <h3><i class="fas fa-triangle-exclamation"></i> Danger Zone</h3>
+          </div>
+          <div class="profile-card-body">
+            <div class="danger-row">
+              <div class="danger-info">
+                <span class="danger-label">Deactivate Account</span>
+                <span class="danger-desc">Temporarily disable your account. You can reactivate it anytime by logging
+                  back in.</span>
+              </div>
+              <button class="btn-danger-outline" id="deactivateAccountBtn">Deactivate</button>
+            </div>
+            <div class="danger-row">
+              <div class="danger-info">
+                <span class="danger-label">Delete Account</span>
+                <span class="danger-desc">Permanently delete your account and all associated data. This action cannot be
+                  undone.</span>
+              </div>
+              <button class="btn-danger-filled" id="deleteAccountBtn">Delete Account</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.profile-layout -->
+
+    </main>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  </div>
+  <!-- /.dashboard-layout -->
+
+  <!-- Save Toast -->
+  <div class="save-toast" id="saveToast"><i class="fas fa-check-circle"></i> Changes saved successfully</div>
+
+  <!-- Scripts -->
+  <script src="js/profile.js?v=1.0"></script>
+
+</body>
+
+</html>

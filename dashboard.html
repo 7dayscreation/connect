@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — 7 Days Creation</title>
+  <meta name="description" content="Admin analytics dashboard for 7 Days Creation">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+
+  <!-- Google Fonts — Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Dashboard Stylesheet -->
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body class="admin-dashboard-page">
+
+  <div class="dashboard-layout">
+
+    <!-- ============================================
+         SIDEBAR (Dark, Icon-only)
+         ============================================ -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Logo -->
+      <div class="sidebar-logo">
+        <img src="images/logo.png" alt="7 Days Creation">
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link active" data-tooltip="Dashboard">
+          <i class="fas fa-table-cells"></i>
+        </a>
+        <a href="users.html" class="sidebar-link" data-tooltip="Users">
+          <i class="fas fa-users"></i>
+        </a>
+        <a href="email-campaign.html" class="sidebar-link" data-tooltip="Email Campaigns">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="whatsapp-campaign.html" class="sidebar-link" data-tooltip="WhatsApp Campaigns">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="settings.html" class="sidebar-link" data-tooltip="Settings">
+          <i class="fas fa-gear"></i>
+        </a>
+      </nav>
+
+      <!-- Bottom -->
+      <div class="sidebar-bottom">
+        <a href="notifications.html" class="sidebar-link" data-tooltip="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="notif-badge"></span>
+        </a>
+        <a href="#" class="sidebar-link" data-tooltip="Navigation">
+          <i class="fas fa-location-arrow"></i>
+        </a>
+      </div>
+    </aside>
+
+
+    <!-- ============================================
+         MAIN CONTENT
+         ============================================ -->
+    <main class="dashboard-main">
+
+      <!-- TOP BAR -->
+      <header class="top-bar">
+        <!-- Mobile menu toggle -->
+        <button class="mobile-sidebar-toggle" id="mobileMenuBtn" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Tabs -->
+        <div class="top-tabs">
+          <button class="top-tab active" id="tabDashboard">
+            <i class="fas fa-table-cells" style="margin-right:5px;font-size:12px;"></i> Dashboard
+          </button>
+          <button class="top-tab" id="tabAnalytics">
+            <i class="fas fa-chart-line" style="margin-right:5px;font-size:12px;"></i> Analytics
+          </button>
+          <button class="top-tab" id="tabPulse">
+            <i class="fas fa-wave-square" style="margin-right:5px;font-size:12px;"></i> Pulse
+          </button>
+          <button class="top-tab" id="tabData">
+            <i class="fas fa-database" style="margin-right:5px;font-size:12px;"></i> Data
+          </button>
+        </div>
+
+        <!-- Right Side -->
+        <div class="top-right">
+          <!-- Avatar Group -->
+          <div class="avatar-group">
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#f0abfc,#c084fc);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#34d399,#10b981);"></div>
+            <div class="avatar-count">+6</div>
+          </div>
+          <span class="shared-label">
+            <i class="fas fa-lock"></i> Shared
+          </span>
+
+          <!-- Settings -->
+          <a href="settings.html" class="top-icon-btn" aria-label="Settings">
+            <i class="fas fa-gear"></i>
+          </a>
+
+          <!-- Profile Dropdown Container -->
+          <div class="profile-dropdown-container">
+            <div class="top-profile" id="topProfileBtn" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);">
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+              <div class="dropdown-user-info">
+                <div class="dropdown-avatar" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);"></div>
+                <div class="dropdown-user-details">
+                  <strong>User Name</strong>
+                  <span>info@sitename.com</span>
+                </div>
+              </div>
+              <div class="dropdown-badge">
+                <span class="role-badge admin">Admin</span>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="settings.html#sectionGeneral" class="dropdown-item"><i class="fas fa-gear"></i> General
+                Settings</a>
+              <a href="settings.html#sectionSecurity" class="dropdown-item"><i class="fas fa-shield-halved"></i>
+                Security Policy</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item logout-btn" id="logoutBtn">
+                <i class="fas fa-right-from-bracket"></i> Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <!-- Breadcrumb -->
+          <div class="page-breadcrumb">
+            <a href="#"><i class="fas fa-paper-plane" style="font-size:11px;"></i> Communication</a>
+            <span class="sep"><i class="fas fa-chevron-right"></i></span>
+            <a href="#">Dashboard</a>
+          </div>
+          <!-- Title -->
+          <h1 class="page-title">Marketing & Communications</h1>
+        </div>
+
+        <!-- Actions -->
+        <div class="page-actions">
+          <button class="action-btn icon-only" aria-label="Search">
+            <i class="fas fa-magnifying-glass"></i>
+          </button>
+          <button class="action-btn icon-only" aria-label="Filters">
+            <i class="fas fa-sliders"></i>
+          </button>
+          <button class="action-btn icon-only" aria-label="Calendar">
+            <i class="fas fa-calendar"></i>
+          </button>
+          <button class="action-btn" id="dateStartBtn">
+            <span id="dateStart">23.5.2026</span>
+          </button>
+          <button class="action-btn" id="dateEndBtn">
+            <span id="dateEnd">30.5.2026</span>
+          </button>
+          <a href="inquiry.html" class="action-btn accent" style="text-decoration:none;">
+            <i class="fas fa-plus" style="font-size:11px;"></i> Add Inquiry
+          </a>
+          <a href="email-template.html" class="action-btn filled" style="text-decoration:none;">
+            <i class="fas fa-paper-plane" style="font-size:11px;"></i> New Campaign
+          </a>
+        </div>
+      </div>
+
+
+      <!-- ============================================
+           DASHBOARD GRID
+           ============================================ -->
+      <div class="dashboard-grid">
+
+        <!-- ====== CARD 1: FEATURED AREA (spans 2 rows) ====== -->
+        <div class="widget-card featured-card">
+          <div class="widget-card-header">
+            <span class="widget-card-title">Campaign Spotlight</span>
+            <div class="widget-header-actions">
+              <button class="close-btn" aria-label="Close"><i class="fas fa-xmark"></i></button>
+            </div>
+          </div>
+
+          <!-- Visual: CSS spheres -->
+          <div class="featured-visual">
+            <div class="sphere sphere-1"></div>
+            <div class="sphere sphere-2"></div>
+            <div class="sphere sphere-3"></div>
+            <div class="sphere sphere-4"></div>
+            <div class="sphere sphere-5"></div>
+            <div class="sphere sphere-6"></div>
+            <div class="sphere sphere-7"></div>
+            <div class="sphere-dots"></div>
+
+            <!-- Advantages overlay -->
+            <div class="featured-advantages">
+              <div class="advantages-left">
+                <div class="adv-icon"><i class="fas fa-paper-plane"></i></div>
+                <div class="adv-text">
+                  Outreach
+                  <small>Real-time communication logs</small>
+                </div>
+              </div>
+              <a href="email-campaign.html" class="advantages-arrow" aria-label="View campaigns">
+                <i class="fas fa-up-right-from-square"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Outreach Stats -->
+          <div class="featured-stats-row">
+            <div class="featured-stat-big">
+              <span class="fs-value" id="spotlightEmailCount">0</span>
+              <span class="fs-label">Emails Sent</span>
+            </div>
+            <div class="featured-stat-big">
+              <span class="fs-value" id="spotlightWhatsappCount">0</span>
+              <span class="fs-label">WhatsApp Sent</span>
+            </div>
+          </div>
+
+          <!-- Bottom Stats Grid (2x2) -->
+          <div class="featured-bottom-stats">
+            <div class="fb-stat lime">
+              <div class="fb-value" id="spotlightInquiries" data-counter="0" data-delay="200">0</div>
+              <div class="fb-label">total leads</div>
+              <div class="fb-sub" id="spotlightLeadsGrowth">0%</div>
+              <div class="fb-sub-label">growth</div>
+            </div>
+            <div class="fb-stat black">
+              <div class="fb-value" id="spotlightCampaignsCount" data-counter="0" data-delay="400">0</div>
+              <div class="fb-label">active campaigns</div>
+              <div class="fb-sub" id="spotlightDeliveryRate">0%</div>
+              <div class="fb-sub-label">deliv. rate</div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ====== CARD 2: ACTIVITY (bar chart) ====== -->
+        <div class="widget-card activity-card">
+          <div class="widget-card-header">
+            <span class="widget-card-title">Inquiry Volume</span>
+            <div class="widget-header-actions">
+              <button class="widget-icon-btn" aria-label="Options"><i class="fas fa-sort"></i></button>
+              <a href="users.html" class="widget-icon-btn" aria-label="View Inquiries"><i class="fas fa-up-right-from-square"></i></a>
+            </div>
+          </div>
+          <div class="widget-card-body">
+            <div class="widget-subtitle">Leads received this week</div>
+            <div class="activity-number-row">
+              <div class="widget-big-number" id="inquiryVolumeNum" data-counter="0" data-delay="300">0</div>
+              <span class="widget-badge" id="inquiryVolumeBadge">+0 new</span>
+            </div>
+            <div class="chart-container" style="height: 140px;">
+              <canvas id="activityChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ====== CARD 3: OUTREACH COMPARISON (dual line chart) ====== -->
+        <div class="widget-card comparison-card">
+          <div class="widget-card-header">
+            <span class="widget-card-title">Outreach Channels</span>
+            <div class="widget-header-actions">
+              <button class="widget-icon-btn" aria-label="Options"><i class="fas fa-sort"></i></button>
+              <button class="widget-icon-btn" aria-label="Layer"><i class="fas fa-layer-group"></i></button>
+              <a href="email-campaign.html" class="widget-icon-btn" aria-label="View Campaigns"><i class="fas fa-up-right-from-square"></i></a>
+            </div>
+          </div>
+          <div class="widget-card-body">
+            <div class="widget-subtitle">Weekly broadcast volume</div>
+            <div class="flex-between" style="margin-bottom:4px;">
+              <div class="widget-big-number" id="weeklyOutreachTotal">0<span>K</span></div>
+            </div>
+            <div class="comparison-legend">
+              <div class="legend-item">
+                <div class="legend-dot lime"></div>
+                <span>Emails</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot striped"></div>
+                <span>WhatsApp</span>
+              </div>
+              <span class="widget-badge" style="margin-left:auto;" id="outreachBadge">+0%</span>
+            </div>
+            <div class="chart-container" style="height: 150px;">
+              <canvas id="comparisonChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ====== CARD 4: AUDIENCE GROWTH (line chart) ====== -->
+        <div class="widget-card growth-card">
+          <div class="widget-card-header">
+            <span class="widget-card-title">Audience Growth</span>
+            <div class="widget-header-actions">
+              <button class="widget-icon-btn" aria-label="Options"><i class="fas fa-sort"></i></button>
+              <a href="users.html" class="widget-icon-btn" aria-label="View Audience"><i class="fas fa-up-right-from-square"></i></a>
+            </div>
+          </div>
+          <div class="widget-card-body">
+            <div class="widget-subtitle">Subscriber base count</div>
+            <div class="widget-big-number" id="audienceGrowthNum" data-counter="0" data-delay="500">0</div>
+            <div class="fz-14 text-tertiary" id="audienceGrowthPrev">Prev: 0</div>
+
+            <div class="growth-meta">
+              <div class="growth-meta-item">
+                <strong id="growthMetaProjects">7</strong> Projects
+              </div>
+              <div class="growth-meta-item">
+                <strong id="growthMetaSources">4</strong> Lead Sources
+              </div>
+            </div>
+
+            <div class="chart-container" style="height: 130px;">
+              <canvas id="growthChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ====== CARD 5: LEAD SEGMENTATION (progress bars) ====== -->
+        <div class="widget-card investment-card">
+          <div class="widget-card-header">
+            <span class="widget-card-title">Lead Segmentation</span>
+            <div class="widget-header-actions">
+              <a href="users.html" class="widget-icon-btn" aria-label="View Segmentation"><i class="fas fa-up-right-from-square"></i></a>
+            </div>
+          </div>
+          <div class="widget-card-body">
+            <div class="widget-subtitle">Outreach Quality Score</div>
+            <div class="inv-balance-row">
+              <div class="widget-big-number">8.8<span>/10</span></div>
+              <span class="inv-sub-amount">+0.4</span>
+            </div>
+
+            <div class="inv-progress-list" id="segmentationList">
+              <div class="inv-progress-item">
+                <span class="inv-progress-label">Web Inquiry</span>
+                <div class="inv-progress-bar">
+                  <div class="inv-progress-fill lime" id="progressWeb" data-width="0%" style="width: 0;"></div>
+                </div>
+                <span class="inv-progress-value" id="valWeb">0%</span>
+              </div>
+              <div class="inv-progress-item">
+                <span class="inv-progress-label">Walking Inquiry</span>
+                <div class="inv-progress-bar">
+                  <div class="inv-progress-fill black" id="progressWalking" data-width="0%" style="width: 0;"></div>
+                </div>
+                <span class="inv-progress-value" id="valWalking">0%</span>
+              </div>
+              <div class="inv-progress-item">
+                <span class="inv-progress-label">Subscriber</span>
+                <div class="inv-progress-bar">
+                  <div class="inv-progress-fill pale" id="progressSubscriber" data-width="0%" style="width: 0;"></div>
+                </div>
+                <span class="inv-progress-value" id="valSubscriber">0%</span>
+              </div>
+              <div class="inv-progress-item">
+                <span class="inv-progress-label">Existing Client</span>
+                <div class="inv-progress-bar">
+                  <div class="inv-progress-fill lime" id="progressClient" data-width="0%" style="width: 0;"></div>
+                </div>
+                <span class="inv-progress-value" id="valClient">0%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.dashboard-grid -->
+
+    </main>
+  </div>
+
+  <!-- Chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+  <!-- Dashboard JS -->
+  <script src="js/dashboard.js?v=1.2"></script>
+</body>
+
+</html>

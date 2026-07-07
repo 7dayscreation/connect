@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification Center — 7 Days Creation</title>
+  <meta name="description" content="Admin notifications and system logs for 7 Days Creation">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+
+  <!-- Google Fonts — Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Dashboard Stylesheet (Shared base layout) -->
+  <link rel="stylesheet" href="css/dashboard.css">
+  <!-- Notifications Stylesheet -->
+  <link rel="stylesheet" href="css/notifications.css">
+</head>
+
+<body class="admin-dashboard-page">
+
+  <div class="dashboard-layout">
+
+    <!-- ============================================
+         SIDEBAR
+         ============================================ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <img src="images/logo.png" alt="7 Days Creation">
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link" data-tooltip="Dashboard">
+          <i class="fas fa-table-cells"></i>
+        </a>
+        <a href="users.html" class="sidebar-link" data-tooltip="Users">
+          <i class="fas fa-users"></i>
+        </a>
+        <a href="email-campaign.html" class="sidebar-link" data-tooltip="Email Campaigns">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="whatsapp-campaign.html" class="sidebar-link" data-tooltip="WhatsApp Campaigns">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="settings.html" class="sidebar-link" data-tooltip="Settings">
+          <i class="fas fa-gear"></i>
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="notifications.html" class="sidebar-link active" data-tooltip="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="notif-badge"></span>
+        </a>
+        <a href="#" class="sidebar-link" data-tooltip="Navigation">
+          <i class="fas fa-location-arrow"></i>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ============================================
+         MAIN CONTENT
+         ============================================ -->
+    <main class="dashboard-main">
+
+      <!-- TOP BAR (Exact Original Header Restored) -->
+      <header class="top-bar">
+        <!-- Mobile menu toggle -->
+        <button class="mobile-sidebar-toggle" id="mobileMenuBtn" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Tabs -->
+        <div class="top-tabs">
+          <button class="top-tab active" id="tabDashboard">
+            <i class="fas fa-table-cells" style="margin-right:5px;font-size:12px;"></i> Dashboard
+          </button>
+          <button class="top-tab" id="tabAnalytics">
+            <i class="fas fa-chart-line" style="margin-right:5px;font-size:12px;"></i> Analytics
+          </button>
+          <button class="top-tab" id="tabPulse">
+            <i class="fas fa-wave-square" style="margin-right:5px;font-size:12px;"></i> Pulse
+          </button>
+          <button class="top-tab" id="tabData">
+            <i class="fas fa-database" style="margin-right:5px;font-size:12px;"></i> Data
+          </button>
+        </div>
+
+        <!-- Right Side -->
+        <div class="top-right">
+          <!-- Avatar Group -->
+          <div class="avatar-group">
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#f0abfc,#c084fc);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#34d399,#10b981);"></div>
+            <div class="avatar-count">+6</div>
+          </div>
+          <span class="shared-label">
+            <i class="fas fa-lock"></i> Shared
+          </span>
+
+          <!-- Settings -->
+          <a href="settings.html" class="top-icon-btn" aria-label="Settings">
+            <i class="fas fa-gear"></i>
+          </a>
+
+          <!-- Profile Dropdown Container -->
+          <div class="profile-dropdown-container">
+            <div class="top-profile" id="topProfileBtn" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);">
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+              <div class="dropdown-user-info">
+                <div class="dropdown-avatar" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);"></div>
+                <div class="dropdown-user-details">
+                  <strong>User Name</strong>
+                  <span>info@sitename.com</span>
+                </div>
+              </div>
+              <div class="dropdown-badge">
+                <span class="role-badge admin">Admin</span>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="settings.html#sectionGeneral" class="dropdown-item"><i class="fas fa-gear"></i> General Settings</a>
+              <a href="settings.html#sectionSecurity" class="dropdown-item"><i class="fas fa-shield-halved"></i> Security Policy</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item logout-btn" id="logoutBtn">
+                <i class="fas fa-right-from-bracket"></i> Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <div class="page-breadcrumb">
+            <a href="dashboard.html"><i class="fas fa-table-cells" style="font-size:11px;"></i> Admin</a>
+            <span class="sep"><i class="fas fa-chevron-right"></i></span>
+            <a href="#">System</a>
+            <span class="sep"><i class="fas fa-chevron-right"></i></span>
+            <a href="#">Notifications</a>
+          </div>
+          <h1 class="page-title">Notification Center</h1>
+        </div>
+
+        <div class="page-actions">
+          <button class="action-btn" id="markAllReadBtn">
+            <i class="fas fa-check-double"></i> Mark all as Read
+          </button>
+          <button class="action-btn filled" id="clearAllBtn" style="background: #ff3b30; border-color: #ff3b30;">
+            <i class="fas fa-trash-can"></i> Clear History
+          </button>
+        </div>
+      </div>
+
+      <!-- METRICS GRID -->
+      <div class="notifications-metrics">
+        <div class="metric-card">
+          <span class="metric-label">Total Notifications</span>
+          <span class="metric-value" id="countAll">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Unread Alerts</span>
+          <span class="metric-value" id="countUnread">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Inquiry Logs</span>
+          <span class="metric-value" id="countInquiries">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Campaign Blasts</span>
+          <span class="metric-value" id="countCampaigns">0</span>
+        </div>
+      </div>
+
+      <!-- LOG CARDS CONTAINER -->
+      <div class="notifications-data-card">
+        
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all">All Logs</button>
+          <button class="filter-tab" data-filter="Inquiries">Inquiry Alerts</button>
+          <button class="filter-tab" data-filter="Campaigns">Campaign Blasts</button>
+          <button class="filter-tab" data-filter="System">System Logs</button>
+        </div>
+
+        <!-- Search panel -->
+        <div class="search-panel">
+          <div class="search-input-wrap">
+            <i class="fas fa-magnifying-glass"></i>
+            <input type="text" id="notifSearch" class="search-input" placeholder="Search notification content...">
+          </div>
+        </div>
+
+        <!-- Notifications Log List -->
+        <div class="logs-container">
+          <div id="notificationsList" class="notifications-list">
+            <!-- Dynamic rows inserted here -->
+          </div>
+
+          <div class="empty-state" id="emptyState">
+            <i class="fas fa-bell-slash"></i>
+            <h3>No notifications to display</h3>
+            <p>You're all caught up! New alerts will appear here in real-time.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="save-toast" id="toastMessage"></div>
+
+  <!-- Scripts -->
+  <script src="js/notifications.js"></script>
+</body>
+
+</html>

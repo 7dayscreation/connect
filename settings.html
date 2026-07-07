@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — 7 Days Creation</title>
+  <meta name="description" content="Admin settings for 7 Days Creation.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/settings.css">
+</head>
+
+<body class="admin-dashboard-page">
+
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <img src="images/logo.png" alt="Area Square Feet">
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link" data-tooltip="Dashboard"><i class="fas fa-table-cells"></i></a>
+        <a href="users.html" class="sidebar-link" data-tooltip="Users"><i class="fas fa-users"></i></a>
+        <a href="email-campaign.html" class="sidebar-link" data-tooltip="Email Campaigns"><i
+            class="fas fa-envelope"></i></a>
+        <a href="whatsapp-campaign.html" class="sidebar-link" data-tooltip="WhatsApp Campaigns"><i
+            class="fab fa-whatsapp"></i></a>
+        <a href="#" class="sidebar-link active" data-tooltip="Settings"><i class="fas fa-gear"></i></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="notifications.html" class="sidebar-link" data-tooltip="Notifications"><i class="fas fa-bell"></i><span
+            class="notif-badge"></span></a>
+        <a href="#" class="sidebar-link" data-tooltip="Navigation"><i class="fas fa-location-arrow"></i></a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="dashboard-main">
+
+      <!-- TOP BAR -->
+      <header class="top-bar">
+        <!-- Mobile menu toggle -->
+        <button class="mobile-sidebar-toggle" id="mobileMenuBtn" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Tabs -->
+        <div class="top-tabs">
+          <button class="top-tab active" id="tabDashboard">
+            <i class="fas fa-table-cells" style="margin-right:5px;font-size:12px;"></i> Dashboard
+          </button>
+          <button class="top-tab" id="tabAnalytics">
+            <i class="fas fa-chart-line" style="margin-right:5px;font-size:12px;"></i> Analytics
+          </button>
+          <button class="top-tab" id="tabPulse">
+            <i class="fas fa-wave-square" style="margin-right:5px;font-size:12px;"></i> Pulse
+          </button>
+          <button class="top-tab" id="tabData">
+            <i class="fas fa-database" style="margin-right:5px;font-size:12px;"></i> Data
+          </button>
+        </div>
+
+        <!-- Right Side -->
+        <div class="top-right">
+          <!-- Avatar Group -->
+          <div class="avatar-group">
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#f0abfc,#c084fc);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#34d399,#10b981);"></div>
+            <div class="avatar-count">+6</div>
+          </div>
+          <span class="shared-label">
+            <i class="fas fa-lock"></i> Shared
+          </span>
+
+          <!-- Settings -->
+          <a href="settings.html" class="top-icon-btn" aria-label="Settings">
+            <i class="fas fa-gear"></i>
+          </a>
+
+          <!-- Profile Dropdown Container -->
+          <div class="profile-dropdown-container">
+            <div class="top-profile" id="topProfileBtn" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);">
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+              <div class="dropdown-user-info">
+                <div class="dropdown-avatar" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);"></div>
+                <div class="dropdown-user-details">
+                  <strong>Dhruv Patel</strong>
+                  <span>dhruv@areasqft.com</span>
+                </div>
+              </div>
+              <div class="dropdown-badge">
+                <span class="role-badge admin">Admin</span>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="settings.html#sectionGeneral" class="dropdown-item"><i class="fas fa-gear"></i> General
+                Settings</a>
+              <a href="settings.html#sectionSecurity" class="dropdown-item"><i class="fas fa-shield-halved"></i>
+                Security
+                Policy</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item logout-btn" id="logoutBtn">
+                <i class="fas fa-right-from-bracket"></i> Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <div class="page-breadcrumb">
+            <a href="dashboard.html"><i class="fas fa-home" style="font-size:11px;"></i> Admin</a>
+            <span class="sep"><i class="fas fa-chevron-right"></i></span>
+            <a href="#">Settings</a>
+          </div>
+          <h1 class="page-title">Settings</h1>
+        </div>
+        <div class="page-actions">
+          <div class="settings-search-wrap">
+            <i class="fas fa-magnifying-glass"></i>
+            <input type="text" id="settingsSearch" class="settings-search" placeholder="Search settings...">
+          </div>
+        </div>
+      </div>
+
+
+      <!-- SETTINGS LAYOUT -->
+      <div class="settings-layout">
+
+        <!-- SETTINGS NAV -->
+        <nav class="settings-nav" id="settingsNav">
+          <!-- Mobile Dropdown Trigger -->
+          <div class="settings-nav-trigger" id="settingsNavTrigger">
+            <span id="currentSectionLabel"><i class="fas fa-gear"></i> General</span>
+            <i class="fas fa-chevron-down trigger-chevron"></i>
+          </div>
+
+          <div class="settings-nav-menu">
+            <div class="settings-nav-group">
+              <div class="settings-nav-label">Configuration</div>
+              <a href="#" class="settings-nav-item active" data-section="sectionGeneral"><span class="nav-icon"><i
+                    class="fas fa-gear"></i></span> General</a>
+              <a href="#" class="settings-nav-item" data-section="sectionEmail"><span class="nav-icon"><i
+                    class="fas fa-envelope"></i></span> Email (Resend)</a>
+            </div>
+            <div class="settings-nav-group">
+              <div class="settings-nav-label">Security</div>
+              <a href="#" class="settings-nav-item" data-section="sectionSecurity"><span class="nav-icon"><i
+                    class="fas fa-shield-halved"></i></span> Captcha & Auth</a>
+              <a href="#" class="settings-nav-item" data-section="sectionUsers"><span class="nav-icon"><i
+                    class="fas fa-user-plus"></i></span> User Management</a>
+            </div>
+            <div class="settings-nav-group">
+              <div class="settings-nav-label">Appearance</div>
+              <a href="#" class="settings-nav-item" data-section="sectionTheme"><span class="nav-icon"><i
+                    class="fas fa-palette"></i></span> Theme & Design</a>
+            </div>
+            <div class="settings-nav-group">
+              <div class="settings-nav-label">Advanced</div>
+              <a href="#" class="settings-nav-item" data-section="sectionMaintenance"><span class="nav-icon"><i
+                    class="fas fa-wrench"></i></span> Maintenance</a>
+              <a href="#" class="settings-nav-item" data-section="sectionBackup"><span class="nav-icon"><i
+                    class="fas fa-database"></i></span> Backup & Data</a>
+            </div>
+          </div>
+        </nav>
+
+
+        <!-- SETTINGS CONTENT -->
+        <div class="settings-content">
+
+
+          <!-- ===== 1. GENERAL SETTINGS ===== -->
+          <div id="sectionGeneral" class="settings-section active">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <h3>General Settings</h3>
+                <p>Basic site information and branding configuration.</p>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label">Site Name</label>
+                    <input type="text" class="form-input" placeholder="Your site name">
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Site Tagline</label>
+                    <input type="text" class="form-input" placeholder="Short description">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label class="form-label">Site URL</label>
+                  <input type="url" class="form-input" placeholder="https://example.com">
+                </div>
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label">Contact Email</label>
+                    <input type="email" class="form-input" placeholder="admin@example.com">
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Contact Phone</label>
+                    <input type="tel" class="form-input" placeholder="+91 XXXXX XXXXX">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label class="form-label">Address</label>
+                  <textarea class="form-textarea" rows="2"
+                    placeholder="Full business address">Bodakdev, Ahmedabad, Gujarat 380054, India</textarea>
+                </div>
+                <div class="form-row">
+                  <label class="form-label">Copyright Text</label>
+                  <input type="text" class="form-input" placeholder="© Year Company Name">
+                </div>
+                <hr class="section-divider">
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label">Logo Upload
+                      <span class="form-description">PNG or SVG, max 2MB. Recommended 200×50px.</span>
+                    </label>
+                    <div class="file-upload-area">
+                      <i class="fas fa-cloud-arrow-up"></i>
+                      <span>Click to upload or drag & drop</span>
+                      <input type="file" accept=".png,.svg,.jpg,.webp">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Favicon Upload
+                      <span class="form-description">ICO or PNG, 32×32px or 16×16px.</span>
+                    </label>
+                    <div class="file-upload-area">
+                      <i class="fas fa-cloud-arrow-up"></i>
+                      <span>Click to upload or drag & drop</span>
+                      <input type="file" accept=".ico,.png">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-card-footer">
+                <button class="btn-save">Save Changes</button>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ===== 3. EMAIL (RESEND API) ===== -->
+          <div id="sectionEmail" class="settings-section">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div class="flex-between" style="width:100%;">
+                  <div>
+                    <h3>Resend Email API</h3>
+                    <p>Configure Resend for transactional emails.</p>
+                  </div>
+                  <span class="status-badge disconnected"><span class="status-dot"></span> Not Connected</span>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-row">
+                  <label class="form-label">Resend API Key
+                    <span class="form-description">Get your API key from <a href="https://resend.com" target="_blank"
+                        rel="noopener">resend.com/api-keys</a></span>
+                  </label>
+                  <div class="api-key-field">
+                    <input type="password" class="form-input" placeholder="re_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" value="">
+                    <div class="api-key-actions">
+                      <button type="button" class="api-key-btn api-toggle-btn"><i class="fas fa-eye"></i></button>
+                      <button type="button" class="api-key-btn api-copy-btn"><i class="fas fa-copy"></i>
+                        <span>Copy</span></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label">From Email Address</label>
+                    <input type="email" class="form-input" placeholder="noreply@yourdomain.com">
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">From Name</label>
+                    <input type="text" class="form-input" placeholder="Your brand name">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label class="form-label">Reply-To Email</label>
+                  <input type="email" class="form-input" placeholder="support@yourdomain.com">
+                </div>
+                <hr class="section-divider">
+                <div class="form-row">
+                  <label class="form-label">Email Template</label>
+                  <select class="form-select">
+                    <option value="default">Default Template</option>
+                    <option value="minimal">Minimal</option>
+                    <option value="branded">Branded (with Logo)</option>
+                  </select>
+                </div>
+                <div class="form-row">
+                  <label class="form-label">Test Email Address
+                    <span class="form-description">Send a test email to verify your configuration.</span>
+                  </label>
+                  <div style="display:flex;gap:10px;">
+                    <input type="email" class="form-input" placeholder="test@example.com" style="flex:1;">
+                    <button class="btn-test"><i class="fas fa-paper-plane" style="margin-right:6px;"></i> Send
+                      Test</button>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-card-footer">
+                <button class="btn-test">Test Connection</button>
+                <button class="btn-save">Save Email Settings</button>
+              </div>
+            </div>
+
+            <!-- SMTP Fallback -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <h3>SMTP Fallback</h3>
+                <p>Backup SMTP configuration if Resend is unavailable.</p>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-row">
+                  <label class="toggle-switch">
+                    <input type="checkbox" class="toggle-input">
+                    <span class="toggle-track"></span>
+                    <div>
+                      <span class="toggle-label">Enable SMTP Fallback</span>
+                      <span class="toggle-description">Falls back to SMTP when Resend API fails.</span>
+                    </div>
+                  </label>
+                </div>
+                <div class="toggle-dependent" style="max-height:0;opacity:0;overflow:hidden;transition:all 0.3s ease;">
+                  <div class="form-grid">
+                    <div class="form-row">
+                      <label class="form-label">SMTP Host</label>
+                      <input type="text" class="form-input" placeholder="smtp.gmail.com">
+                    </div>
+                    <div class="form-row">
+                      <label class="form-label">SMTP Port</label>
+                      <input type="number" class="form-input" placeholder="587">
+                    </div>
+                  </div>
+                  <div class="form-grid">
+                    <div class="form-row">
+                      <label class="form-label">SMTP Username</label>
+                      <input type="text" class="form-input" placeholder="your-email@gmail.com">
+                    </div>
+                    <div class="form-row">
+                      <label class="form-label">SMTP Password</label>
+                      <div class="api-key-field">
+                        <input type="password" class="form-input" placeholder="App password">
+                        <div class="api-key-actions">
+                          <button type="button" class="api-key-btn api-toggle-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Encryption</label>
+                    <select class="form-select">
+                      <option value="tls">TLS</option>
+                      <option value="ssl">SSL</option>
+                      <option value="none">None</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-card-footer">
+                <button class="btn-save">Save SMTP</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== 5. SECURITY (CAPTCHA & AUTHENTICATOR) ===== -->
+          <div id="sectionSecurity" class="settings-section">
+            <!-- CloudFlare Turnstile -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div class="flex-between" style="width:100%;">
+                  <div>
+                    <h3>CloudFlare Turnstile Captcha</h3>
+                    <p>Protect forms from spam and bots using CloudFlare Turnstile.</p>
+                  </div>
+                  <span class="status-badge disconnected"><span class="status-dot"></span> Not Active</span>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-row">
+                  <label class="toggle-switch">
+                    <input type="checkbox" class="toggle-input">
+                    <span class="toggle-track"></span>
+                    <div>
+                      <span class="toggle-label">Enable Turnstile Captcha</span>
+                      <span class="toggle-description">Apply captcha to login, registration, and contact forms.</span>
+                    </div>
+                  </label>
+                </div>
+                <div class="toggle-dependent" style="max-height:0;opacity:0;overflow:hidden;transition:all 0.3s ease;">
+                  <hr class="section-divider">
+                  <div class="form-row">
+                    <label class="form-label">Site Key
+                      <span class="form-description">Get from <a href="https://dash.cloudflare.com" target="_blank"
+                          rel="noopener">CloudFlare Dashboard</a> → Turnstile.</span>
+                    </label>
+                    <div class="api-key-field">
+                      <input type="text" class="form-input" placeholder="0x4AAAAAAXXXXXXXXXXXXXXX">
+                      <div class="api-key-actions">
+                        <button type="button" class="api-key-btn api-copy-btn"><i class="fas fa-copy"></i>
+                          <span>Copy</span></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Secret Key</label>
+                    <div class="api-key-field">
+                      <input type="password" class="form-input" placeholder="0x4AAAAAAXXXXXXXXXXXXXXX">
+                      <div class="api-key-actions">
+                        <button type="button" class="api-key-btn api-toggle-btn"><i class="fas fa-eye"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Apply Captcha To</label>
+                    <div class="checkbox-group">
+                      <label class="checkbox-item"><input type="checkbox" checked> Admin Login</label>
+                      <label class="checkbox-item"><input type="checkbox" checked> Contact Form</label>
+                      <label class="checkbox-item"><input type="checkbox"> Property Inquiry</label>
+                      <label class="checkbox-item"><input type="checkbox"> Newsletter Signup</label>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Captcha Theme</label>
+                    <select class="form-select">
+                      <option value="light" selected>Light</option>
+                      <option value="dark">Dark</option>
+                      <option value="auto">Auto (follow system)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-card-footer">
+                <button class="btn-test">Verify Integration</button>
+                <button class="btn-save">Save Captcha</button>
+              </div>
+            </div>
+
+            <!-- Google Authenticator -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <h3>Google Authenticator (2FA)</h3>
+                <p>Add time-based one-time password (TOTP) authentication for admin login.</p>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-row">
+                  <label class="toggle-switch">
+                    <input type="checkbox" class="toggle-input">
+                    <span class="toggle-track"></span>
+                    <div>
+                      <span class="toggle-label">Enable Google Authenticator</span>
+                      <span class="toggle-description">Require TOTP code in addition to password for admin login.</span>
+                    </div>
+                  </label>
+                </div>
+                <div class="toggle-dependent" style="max-height:0;opacity:0;overflow:hidden;transition:all 0.3s ease;">
+                  <hr class="section-divider">
+                  <div class="auth-setup-box">
+                    <div class="auth-setup-steps">
+                      <div class="auth-step-item">
+                        <span class="step-number">1</span>
+                        <div>
+                          <strong>Install Google Authenticator</strong>
+                          <p>Download from <a href="#" target="_blank">Play Store</a> or <a href="#" target="_blank">App
+                              Store</a></p>
+                        </div>
+                      </div>
+                      <div class="auth-step-item">
+                        <span class="step-number">2</span>
+                        <div>
+                          <strong>Generate Secret Key</strong>
+                          <p>Click below to generate a new secret key for your account.</p>
+                        </div>
+                      </div>
+                      <div class="auth-step-item">
+                        <span class="step-number">3</span>
+                        <div>
+                          <strong>Scan QR Code</strong>
+                          <p>Open Google Authenticator and scan the QR code below.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="section-divider">
+                    <div style="display:flex;align-items:flex-start;gap:32px;flex-wrap:wrap;">
+                      <div>
+                        <label class="form-label">Secret Key</label>
+                        <div class="secret-key-display" id="authSecretKey">Click "Generate" to create a new key</div>
+                        <button type="button" class="btn-accent" id="generateAuthSecret" style="margin-top:12px;">
+                          <i class="fas fa-rotate" style="margin-right:6px;"></i> Generate New Secret
+                        </button>
+                      </div>
+                      <div id="authQrCode" style="text-align:center;">
+                        <div
+                          style="width:180px;height:180px;background:#f0f0f0;border-radius:12px;display:flex;align-items:center;justify-content:center;border:2px dashed #e5e5e5;">
+                          <i class="fas fa-qrcode" style="font-size:48px;color:#d4d4d4;"></i>
+                        </div>
+                        <p style="font-size:12px;color:#71717a;margin-top:8px;">Generate key first</p>
+                      </div>
+                    </div>
+                    <hr class="section-divider">
+                    <div class="form-row">
+                      <label class="form-label">Verify Setup — Enter 6-digit code from app</label>
+                      <div style="display:flex;gap:10px;max-width:340px;">
+                        <input type="text" class="form-input" placeholder="000 000" maxlength="7"
+                          style="text-align:center;font-weight:600;letter-spacing:4px;font-size:18px;">
+                        <button class="btn-test">Verify</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-card-footer">
+                <button class="btn-save">Save 2FA Settings</button>
+              </div>
+            </div>
+
+            <!-- Session & Security -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <h3>Session & Password Policy</h3>
+                <p>Control session duration, login attempts, and password requirements.</p>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label">Session Timeout (minutes)</label>
+                    <input type="number" class="form-input" value="30" min="5" max="1440">
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Max Login Attempts</label>
+                    <input type="number" class="form-input" value="5" min="1" max="20">
+                  </div>
+                </div>
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label">Lockout Duration (minutes)</label>
+                    <input type="number" class="form-input" value="15" min="1" max="120">
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Minimum Password Length</label>
+                    <input type="number" class="form-input" value="8" min="6" max="32">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label class="form-label">Password Requirements</label>
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" checked> Uppercase letter (A-Z)</label>
+                    <label class="checkbox-item"><input type="checkbox" checked> Lowercase letter (a-z)</label>
+                    <label class="checkbox-item"><input type="checkbox" checked> Number (0-9)</label>
+                    <label class="checkbox-item"><input type="checkbox"> Special character (!@#$%)</label>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label class="toggle-switch">
+                    <input type="checkbox" class="toggle-input">
+                    <span class="toggle-track"></span>
+                    <div>
+                      <span class="toggle-label">Force 2FA for all admin users</span>
+                      <span class="toggle-description">Require all managers and admins to use two-factor
+                        authentication.</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="settings-card-footer">
+                <button class="btn-save">Save Security Policy</button>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ===== 6. USER MANAGEMENT ===== -->
+          <div id="sectionUsers" class="settings-section">
+            <!-- Add New Manager -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <h3>Add New Account</h3>
+                <p>Create a new manager or editor account with admin rights.</p>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" placeholder="Your Name" id="newUserName">
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="info@website.com" id="newUserEmail">
+                  </div>
+                </div>
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label">Password</label>
+                    <div class="api-key-field">
+                      <input type="password" class="form-input" placeholder="Min 8 characters" id="newUserPassword">
+                      <div class="api-key-actions">
+                        <button type="button" class="api-key-btn" id="toggleNewUserPwd"><i
+                            class="fas fa-eye"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Role</label>
+                    <select class="form-select" id="newUserRole">
+                      <option value="admin">Admin — Full access</option>
+                      <option value="manager" selected>Manager — Manage content & data</option>
+                      <option value="editor">Editor — Edit content only</option>
+                      <option value="viewer">Viewer — Read-only access</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label class="form-label">Permissions</label>
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" checked> Dashboard Access</label>
+                    <label class="checkbox-item"><input type="checkbox" checked> Area Management</label>
+                    <label class="checkbox-item"><input type="checkbox" checked> Blog Management</label>
+                    <label class="checkbox-item"><input type="checkbox"> User Management</label>
+                    <label class="checkbox-item"><input type="checkbox"> Settings Access</label>
+                    <label class="checkbox-item"><input type="checkbox"> Payment Management</label>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label class="toggle-switch">
+                    <input type="checkbox" class="toggle-input" checked>
+                    <span class="toggle-track"></span>
+                    <div>
+                      <span class="toggle-label">Send welcome email</span>
+                      <span class="toggle-description">Email login credentials to the new user.</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="settings-card-footer">
+                <button class="btn-accent" style="font-weight:600;"><i class="fas fa-user-plus"
+                    style="margin-right:6px;"></i> Create Account</button>
+              </div>
+            </div>
+
+            <!-- Existing Users -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <h3>Existing Users</h3>
+                <p>Manage current admin, manager, and editor accounts.</p>
+              </div>
+              <div class="settings-card-body" style="padding:0;">
+                <div style="overflow-x:auto;">
+                  <table class="user-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Last Login</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Dhruv Patel</strong></td>
+                        <td>dhruv@areasqft.com</td>
+                        <td><span class="role-badge admin">Admin</span></td>
+                        <td><span class="status-badge connected"><span class="status-dot"></span> Active</span></td>
+                        <td>Today, 10:30 AM</td>
+                        <td><button class="widget-icon-btn" style="border:none;"><i
+                              class="fas fa-ellipsis"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Priya Sharma</strong></td>
+                        <td>priya@areasqft.com</td>
+                        <td><span class="role-badge manager">Manager</span></td>
+                        <td><span class="status-badge connected"><span class="status-dot"></span> Active</span></td>
+                        <td>Yesterday, 4:15 PM</td>
+                        <td><button class="widget-icon-btn" style="border:none;"><i
+                              class="fas fa-ellipsis"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Amit Kumar</strong></td>
+                        <td>amit@areasqft.com</td>
+                        <td><span class="role-badge editor">Editor</span></td>
+                        <td><span class="status-badge pending"><span class="status-dot"></span> Invited</span></td>
+                        <td>—</td>
+                        <td><button class="widget-icon-btn" style="border:none;"><i
+                              class="fas fa-ellipsis"></i></button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ===== 7. THEME & DESIGN ===== -->
+          <div id="sectionTheme" class="settings-section">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <h3>Website Theme Settings</h3>
+                <p>Customize colors, typography, and visual appearance of your website.</p>
+              </div>
+              <div class="settings-card-body">
+                <h4 class="settings-sub-heading">Colors</h4>
+                <div class="form-grid cols-3">
+                  <div class="form-row">
+                    <label class="form-label">Primary Color</label>
+                    <div class="color-picker-group">
+                      <input type="color" class="color-input" value="#E96E28">
+                      <input type="text" class="form-input color-hex-input" value="#E96E28" maxlength="7">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Secondary Color</label>
+                    <div class="color-picker-group">
+                      <input type="color" class="color-input" value="#1a1a1a">
+                      <input type="text" class="form-input color-hex-input" value="#1a1a1a" maxlength="7">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Accent Color</label>
+                    <div class="color-picker-group">
+                      <input type="color" class="color-input" value="#C7F33C">
+                      <input type="text" class="form-input color-hex-input" value="#C7F33C" maxlength="7">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-grid cols-3">
+                  <div class="form-row">
+                    <label class="form-label">Background Color</label>
+                    <div class="color-picker-group">
+                      <input type="color" class="color-input" value="#ffffff">
+                      <input type="text" class="form-input color-hex-input" value="#ffffff" maxlength="7">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Text Color</label>
+                    <div class="color-picker-group">
+                      <input type="color" class="color-input" value="#1a1a1a">
+                      <input type="text" class="form-input color-hex-input" value="#1a1a1a" maxlength="7">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Link Color</label>
+                    <div class="color-picker-group">
+                      <input type="color" class="color-input" value="#E96E28">
+                      <input type="text" class="form-input color-hex-input" value="#E96E28" maxlength="7">
+                    </div>
+                  </div>
+                </div>
+                <hr class="section-divider">
+                <h4 class="settings-sub-heading">Typography</h4>
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label">Font Family</label>
+                    <select class="form-select" id="fontFamily">
+                      <option value="DM Sans" selected>DM Sans</option>
+                      <option value="Inter">Inter</option>
+                      <option value="Poppins">Poppins</option>
+                      <option value="Roboto">Roboto</option>
+                      <option value="Open Sans">Open Sans</option>
+                      <option value="Outfit">Outfit</option>
+                      <option value="Nunito">Nunito</option>
+                      <option value="Montserrat">Montserrat</option>
+                    </select>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Heading Font Family</label>
+                    <select class="form-select">
+                      <option value="DM Sans" selected>DM Sans</option>
+                      <option value="Inter">Inter</option>
+                      <option value="Poppins">Poppins</option>
+                      <option value="Playfair Display">Playfair Display</option>
+                      <option value="Montserrat">Montserrat</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label class="form-label">Font Preview</label>
+                  <div class="font-preview" id="fontPreview"
+                    style="font-family:'DM Sans',sans-serif;font-size:16px;padding:16px;background:#f9f9f9;border-radius:12px;border:1px solid #e5e5e5;line-height:1.6;">
+                    The quick brown fox jumps over the lazy dog — DM Sans
+                  </div>
+                </div>
+                <div class="form-grid cols-3">
+                  <div class="form-row">
+                    <label class="form-label">Heading Size</label>
+                    <div class="slider-group">
+                      <input type="range" class="size-slider" min="24" max="48" value="34" step="1">
+                      <span class="size-value">34px</span>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Body Size</label>
+                    <div class="slider-group">
+                      <input type="range" class="size-slider" min="12" max="20" value="16" step="1">
+                      <span class="size-value">16px</span>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Border Radius</label>
+                    <div class="slider-group">
+                      <input type="range" class="size-slider" min="0" max="24" value="8" step="1">
+                      <span class="size-value">8px</span>
+                    </div>
+                  </div>
+                </div>
+                <hr class="section-divider">
+                <div class="form-row">
+                  <label class="form-label">Custom CSS
+                    <span class="form-description">Injected site-wide. Use for minor style overrides.</span>
+                  </label>
+                  <textarea class="form-textarea code-textarea" rows="6" placeholder="/* Custom CSS */"></textarea>
+                </div>
+              </div>
+              <div class="settings-card-footer">
+                <button class="btn-test">Preview Changes</button>
+                <button class="btn-save">Save Theme</button>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ===== 9. MAINTENANCE MODE ===== -->
+          <div id="sectionMaintenance" class="settings-section">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <h3>Maintenance Mode</h3>
+                <p>Take the website offline for maintenance. Only admins can access the site.</p>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-row">
+                  <label class="toggle-switch">
+                    <input type="checkbox" class="toggle-input" id="maintenanceToggle">
+                    <span class="toggle-track"></span>
+                    <div>
+                      <span class="toggle-label">Enable Maintenance Mode</span>
+                      <span class="toggle-description">Visitors will see a maintenance page. Admins can still access the
+                        site.</span>
+                    </div>
+                  </label>
+                </div>
+                <hr class="section-divider">
+                <div class="form-row">
+                  <label class="form-label">Maintenance Message</label>
+                  <textarea class="form-textarea" rows="3" id="maintenanceMessage"
+                    placeholder="We are currently performing scheduled maintenance.">We are currently performing scheduled maintenance. We'll be back shortly with an improved experience!</textarea>
+                </div>
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label">Expected Completion</label>
+                    <input type="datetime-local" class="form-input">
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Retry After (minutes)</label>
+                    <input type="number" class="form-input" value="60" min="5" max="1440">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label class="toggle-switch">
+                    <input type="checkbox" class="toggle-input" checked>
+                    <span class="toggle-track"></span>
+                    <div>
+                      <span class="toggle-label">Allow admin access during maintenance</span>
+                      <span class="toggle-description">Admins can browse the site normally while visitors see the
+                        maintenance page.</span>
+                    </div>
+                  </label>
+                </div>
+                <div class="form-row">
+                  <label class="form-label">Whitelisted IPs
+                    <span class="form-description">One IP per line. These IPs can access the site during
+                      maintenance.</span>
+                  </label>
+                  <textarea class="form-textarea code-textarea" rows="3"
+                    placeholder="192.168.1.1&#10;10.0.0.1"></textarea>
+                </div>
+                <hr class="section-divider">
+                <!-- Maintenance Preview -->
+                <div class="maintenance-preview" id="maintenancePreview" style="display:none;">
+                  <div class="maintenance-preview-inner">
+                    <div class="lime-dot-pulse"></div>
+                    <h2>🛠️ Under Maintenance</h2>
+                    <p class="preview-message">We are currently performing scheduled maintenance. We'll be back shortly
+                      with an improved experience!</p>
+                    <div style="margin-top:16px;font-size:12px;opacity:0.5;">Preview of maintenance page</div>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-card-footer">
+                <button class="btn-save">Save Maintenance Settings</button>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ===== 10. BACKUP & DATA ===== -->
+          <div id="sectionBackup" class="settings-section">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <h3>Backup & Database</h3>
+                <p>Manage database backups, export data, and cleanup.</p>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-row">
+                  <label class="toggle-switch">
+                    <input type="checkbox" class="toggle-input" checked>
+                    <span class="toggle-track"></span>
+                    <div>
+                      <span class="toggle-label">Automatic Daily Backups</span>
+                      <span class="toggle-description">Automatically backup the database daily at 3:00 AM IST.</span>
+                    </div>
+                  </label>
+                </div>
+                <div class="form-grid">
+                  <div class="form-row">
+                    <label class="form-label">Backup Retention (days)</label>
+                    <input type="number" class="form-input" value="30" min="7" max="365">
+                  </div>
+                  <div class="form-row">
+                    <label class="form-label">Backup Storage</label>
+                    <select class="form-select">
+                      <option value="local" selected>Local Server</option>
+                      <option value="s3">Amazon S3</option>
+                      <option value="gcs">Google Cloud Storage</option>
+                      <option value="dropbox">Dropbox</option>
+                    </select>
+                  </div>
+                </div>
+                <hr class="section-divider">
+                <div class="form-row">
+                  <label class="form-label">Manual Actions</label>
+                  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <button class="btn-accent"><i class="fas fa-download" style="margin-right:6px;"></i> Download
+                      Backup</button>
+                    <button class="btn-test"><i class="fas fa-upload" style="margin-right:6px;"></i> Restore
+                      Backup</button>
+                    <button class="btn-test"><i class="fas fa-file-export" style="margin-right:6px;"></i> Export
+                      CSV</button>
+                    <button class="btn-danger"><i class="fas fa-trash" style="margin-right:6px;"></i> Clear
+                      Cache</button>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-card-footer">
+                <button class="btn-save">Save Backup Settings</button>
+              </div>
+            </div>
+
+            <!-- Database Stats -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <h3>Database Statistics</h3>
+              </div>
+              <div class="settings-card-body" style="padding:0;">
+                <div style="overflow-x:auto;">
+                  <table class="user-table">
+                    <thead>
+                      <tr>
+                        <th>Table</th>
+                        <th>Records</th>
+                        <th>Size</th>
+                        <th>Last Updated</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Areas</td>
+                        <td>142</td>
+                        <td>2.4 MB</td>
+                        <td>Today</td>
+                      </tr>
+                      <tr>
+                        <td>Price History</td>
+                        <td>45,230</td>
+                        <td>18.6 MB</td>
+                        <td>Today</td>
+                      </tr>
+                      <tr>
+                        <td>Users</td>
+                        <td>3</td>
+                        <td>12 KB</td>
+                        <td>Yesterday</td>
+                      </tr>
+                      <tr>
+                        <td>Blog Posts</td>
+                        <td>87</td>
+                        <td>1.2 MB</td>
+                        <td>3 days ago</td>
+                      </tr>
+                      <tr>
+                        <td>Analytics Events</td>
+                        <td>128,450</td>
+                        <td>42.8 MB</td>
+                        <td>Today</td>
+                      </tr>
+                      <tr>
+                        <td>Backups</td>
+                        <td>12</td>
+                        <td>156 MB</td>
+                        <td>Today</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+        </div><!-- /.settings-content -->
+      </div><!-- /.settings-layout -->
+
+    </main>
+  </div>
+
+  <script src="js/settings.js?v=1.2"></script>
+</body>
+
+</html>

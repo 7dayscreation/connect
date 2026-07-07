@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Email Campaign — 7 Days Creation</title>
+  <meta name="description" content="Design and send email campaigns for 7 Days Creation">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+
+  <!-- Google Fonts — Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Dashboard Stylesheet (Shared base layout) -->
+  <link rel="stylesheet" href="css/dashboard.css">
+  <!-- Campaigns Stylesheet -->
+  <link rel="stylesheet" href="css/campaigns.css">
+</head>
+
+<body class="admin-dashboard-page">
+
+  <div class="dashboard-layout">
+
+    <!-- ============================================
+         SIDEBAR
+         ============================================ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <img src="images/logo.png" alt="7 Days Creation">
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link" data-tooltip="Dashboard">
+          <i class="fas fa-table-cells"></i>
+        </a>
+        <a href="users.html" class="sidebar-link" data-tooltip="Users">
+          <i class="fas fa-users"></i>
+        </a>
+        <a href="email-campaign.html" class="sidebar-link active" data-tooltip="Email Campaigns">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="whatsapp-campaign.html" class="sidebar-link" data-tooltip="WhatsApp Campaigns">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="settings.html" class="sidebar-link" data-tooltip="Settings">
+          <i class="fas fa-gear"></i>
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="notifications.html" class="sidebar-link" data-tooltip="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="notif-badge"></span>
+        </a>
+        <a href="#" class="sidebar-link" data-tooltip="Navigation">
+          <i class="fas fa-location-arrow"></i>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ============================================
+         MAIN CONTENT
+         ============================================ -->
+    <main class="dashboard-main">
+
+      <!-- TOP BAR (Exact Original Header Restored) -->
+      <header class="top-bar">
+        <!-- Mobile menu toggle -->
+        <button class="mobile-sidebar-toggle" id="mobileMenuBtn" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Tabs -->
+        <div class="top-tabs">
+          <button class="top-tab active" id="tabDashboard">
+            <i class="fas fa-table-cells" style="margin-right:5px;font-size:12px;"></i> Dashboard
+          </button>
+          <button class="top-tab" id="tabAnalytics">
+            <i class="fas fa-chart-line" style="margin-right:5px;font-size:12px;"></i> Analytics
+          </button>
+          <button class="top-tab" id="tabPulse">
+            <i class="fas fa-wave-square" style="margin-right:5px;font-size:12px;"></i> Pulse
+          </button>
+          <button class="top-tab" id="tabData">
+            <i class="fas fa-database" style="margin-right:5px;font-size:12px;"></i> Data
+          </button>
+        </div>
+
+        <!-- Right Side -->
+        <div class="top-right">
+          <!-- Avatar Group -->
+          <div class="avatar-group">
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#f0abfc,#c084fc);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#34d399,#10b981);"></div>
+            <div class="avatar-count">+6</div>
+          </div>
+          <span class="shared-label">
+            <i class="fas fa-lock"></i> Shared
+          </span>
+
+          <!-- Settings -->
+          <a href="settings.html" class="top-icon-btn" aria-label="Settings">
+            <i class="fas fa-gear"></i>
+          </a>
+
+          <!-- Profile Dropdown Container -->
+          <div class="profile-dropdown-container">
+            <div class="top-profile" id="topProfileBtn" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);">
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+              <div class="dropdown-user-info">
+                <div class="dropdown-avatar" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);"></div>
+                <div class="dropdown-user-details">
+                  <strong>User Name</strong>
+                  <span>info@sitename.com</span>
+                </div>
+              </div>
+              <div class="dropdown-badge">
+                <span class="role-badge admin">Admin</span>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="settings.html#sectionGeneral" class="dropdown-item"><i class="fas fa-gear"></i> General Settings</a>
+              <a href="settings.html#sectionSecurity" class="dropdown-item"><i class="fas fa-shield-halved"></i> Security Policy</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item logout-btn" id="logoutBtn">
+                <i class="fas fa-right-from-bracket"></i> Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <div class="page-breadcrumb">
+            <a href="email-campaign.html"><i class="fas fa-arrow-left" style="font-size:11px;"></i> Back to Campaigns</a>
+          </div>
+          <h1 class="page-title">Design Email Campaign</h1>
+        </div>
+      </div>
+
+      <!-- SPACIOUS TWO COLUMN BUILDER LAYOUT -->
+      <div class="creator-page-layout">
+        
+        <!-- Form Panel -->
+        <div class="creator-form-card">
+          <form id="campaignForm" novalidate>
+            
+            <div class="form-group-wrap">
+              <label for="campName">Campaign Name</label>
+              <input type="text" id="campName" class="form-input-c" placeholder="e.g. Summer Launch Digest" required>
+            </div>
+
+            <div class="form-group-wrap">
+              <label for="campSubject">Email Subject Line</label>
+              <input type="text" id="campSubject" class="form-input-c" placeholder="e.g. Exclusive Preview: Greenfield Villas" required>
+            </div>
+
+            <div class="form-group-wrap">
+              <label for="campSender">Sender Address</label>
+              <input type="email" id="campSender" class="form-input-c" value="noreply@7dayscreation.com" readonly>
+            </div>
+
+            <div class="form-group-wrap">
+              <label for="campAudience">Target Segment</label>
+              <select id="campAudience" class="form-select-c" required>
+                <option value="" disabled>Select Target Segment</option>
+                <option value="All" selected>All Inquiries (Standard)</option>
+                <option value="Web Inquiry">Web Inquiry leads</option>
+                <option value="Walking Inquiry">Walking Inquiry leads</option>
+                <option value="Subscriber">Subscribers list</option>
+                <option value="Existing Client">Existing Clients list</option>
+              </select>
+            </div>
+            <div class="form-group-wrap">
+              <label>Elements Library (Drag to Canvas)</label>
+              <div class="blocks-library-grid">
+                <div class="drag-block" draggable="true" data-type="header">
+                  <i class="fas fa-heading"></i>
+                  <span>Header</span>
+                </div>
+                <div class="drag-block" draggable="true" data-type="otp-card">
+                  <i class="fas fa-key"></i>
+                  <span>OTP / Verification</span>
+                </div>
+                <div class="drag-block" draggable="true" data-type="text">
+                  <i class="fas fa-paragraph"></i>
+                  <span>Text Block</span>
+                </div>
+                <div class="drag-block" draggable="true" data-type="image">
+                  <i class="fas fa-image"></i>
+                  <span>Image Block</span>
+                </div>
+                <div class="drag-block" draggable="true" data-type="columns-left-img">
+                  <i class="fas fa-table-columns"></i>
+                  <span>Img Left Column</span>
+                </div>
+                <div class="drag-block" draggable="true" data-type="columns-right-img">
+                  <i class="fas fa-table-columns"></i>
+                  <span>Img Right Column</span>
+                </div>
+                <div class="drag-block" draggable="true" data-type="columns-three">
+                  <i class="fas fa-table-columns"></i>
+                  <span>3 Columns Grid</span>
+                </div>
+                <div class="drag-block" draggable="true" data-type="spacer">
+                  <i class="fas fa-arrows-up-down"></i>
+                  <span>Spacer</span>
+                </div>
+                <div class="drag-block" draggable="true" data-type="product-card">
+                  <i class="fas fa-bag-shopping"></i>
+                  <span>Product Card</span>
+                </div>
+                <div class="drag-block" draggable="true" data-type="button">
+                  <i class="fas fa-square-envelope"></i>
+                  <span>Button Link</span>
+                </div>
+                <div class="drag-block" draggable="true" data-type="video">
+                  <i class="fas fa-circle-play"></i>
+                  <span>Video Placeholder</span>
+                </div>
+                <div class="drag-block" draggable="true" data-type="social">
+                  <i class="fas fa-share-nodes"></i>
+                  <span>Social Media</span>
+                </div>
+                <div class="drag-block" draggable="true" data-type="divider">
+                  <i class="fas fa-minus"></i>
+                  <span>Divider</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Personalization Variables Helper -->
+            <div class="form-group-wrap">
+              <label>Personalization Helper (Click to Insert)</label>
+              <div class="vars-container">
+                <span class="vars-label">Select a text block in the canvas, then click a variable to insert:</span>
+                <div class="vars-grid">
+                  <span class="var-chip" data-var="{Name}"><i class="fas fa-user"></i> {Name}</span>
+                  <span class="var-chip" data-var="{Surname}"><i class="fas fa-user-tag"></i> {Surname}</span>
+                  <span class="var-chip" data-var="{Email}"><i class="fas fa-envelope"></i> {Email}</span>
+                  <span class="var-chip" data-var="{Project}"><i class="fas fa-building"></i> {Project}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Saved Templates Section -->
+            <div class="saved-templates-card">
+              <h4>Saved Custom Templates</h4>
+              <div class="save-tmpl-form">
+                <input type="text" id="tmplSaveName" class="save-tmpl-input" placeholder="Template Name (e.g. Autumn Offer)">
+                <button type="button" class="btn-save-tmpl" id="btnSaveTmpl">Save Current</button>
+              </div>
+              <div class="saved-tmpl-list" id="savedTmplList">
+                <div class="saved-tmpl-placeholder" style="font-size:11px; color:#71717a; text-align:center; padding:10px 0;">No saved templates yet.</div>
+              </div>
+            </div>
+
+            <!-- Block Customizer Panel (Shown when element selected) -->
+            <div class="block-customizer" id="blockCustomizer" style="display: none;">
+              <div class="customizer-header">
+                <h4>Block Properties</h4>
+                <button type="button" id="closeCustomizer" class="close-customizer-btn">&times;</button>
+              </div>
+              <div class="customizer-fields" id="customizerFields">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top:20px;">
+              <button type="button" class="btn-modal-close" id="testMailBtn" style="height: 46px; border-radius: 6px; font-size: 14px; font-weight: 600; color:#000000; border-color:#000000; background:#ffffff;">
+                <i class="fas fa-flask"></i> Send Test Email
+              </button>
+              <button type="submit" class="btn-send-campaign" id="sendBtn" style="margin-top:0;">
+                <span class="btn-text"><i class="fas fa-paper-plane"></i> Blast Campaign</span>
+                <span class="btn-loader"><i class="fas fa-circle-notch fa-spin"></i> Blasting...</span>
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Preview Panel -->
+        <div class="creator-preview-card">
+          <div class="preview-header-label">Real-time Email Builder Canvas</div>
+          
+          <div class="email-envelope-mock">
+            <div class="mock-top-fields">
+              <div><strong>From:</strong> 7 Days Creation &lt;noreply@7dayscreation.com&gt;</div>
+              <div><strong>To:</strong> <span id="previewToLabel">Recipient Name (Dynamic)</span></div>
+              <div><strong>Subject:</strong> <span id="previewSubjectLabel">Exclusive Preview: Greenfield Villas</span></div>
+            </div>
+            
+            <div class="mock-body-content" style="padding:0;">
+              <!-- DRAG & DROP CANVAS -->
+              <div class="email-dropzone" id="emailDropzone">
+                <div class="dropzone-placeholder" id="dropzonePlaceholder" style="display: none;">
+                  <i class="fas fa-arrow-down-to-bracket"></i>
+                  <p>Drag elements here to build email</p>
+                </div>
+                
+                <!-- We pre-populate the dropzone with a beautiful default layout! -->
+                <div class="drop-item selected" data-type="header" draggable="true">
+                  <div class="drop-item-actions">
+                    <span><i class="fas fa-grip-vertical"></i></span>
+                    <button type="button" class="btn-delete-block" title="Delete"><i class="fas fa-trash-can"></i></button>
+                  </div>
+                  <div class="builder-header-block" style="text-align: center; border-bottom: 3px solid #f05a28; padding: 20px 10px; background-color: #ffffff;">
+                    <a href="#" onclick="return false;"><img src="images/logo.png" alt="7 Days Creation" style="height: 32px; display: block; margin: 0 auto 6px;"></a>
+                    <h3 class="header-title" style="font-size: 20px; font-weight: 700; margin: 0; color: #000000; font-family: 'Inter', sans-serif;">7 Days Creation</h3>
+                    <div class="header-subtitle" style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #f05a28; letter-spacing: 1px; margin-top: 4px;">ADVERTISER PORTAL</div>
+                  </div>
+                </div>
+
+                <div class="drop-item" data-type="text" draggable="true">
+                  <div class="drop-item-actions">
+                    <span><i class="fas fa-grip-vertical"></i></span>
+                    <button type="button" class="btn-delete-block" title="Delete"><i class="fas fa-trash-can"></i></button>
+                  </div>
+                  <div class="builder-text-block" contenteditable="true">
+                    Dear {Name},<br><br>We are thrilled to announce the launch of our newest luxury living project: Greenfield Villas. Designed with sustainable architecture and modern conveniences, it's the home you've been waiting for.<br><br>As a valued subscriber, we invite you to book a private tour this weekend before public listing opens.
+                  </div>
+                </div>
+
+                <div class="drop-item" data-type="button" draggable="true">
+                  <div class="drop-item-actions">
+                    <span><i class="fas fa-grip-vertical"></i></span>
+                    <button type="button" class="btn-delete-block" title="Delete"><i class="fas fa-trash-can"></i></button>
+                  </div>
+                  <div class="builder-button-block">
+                    <a href="https://7dayscreation.com/tours" class="button-link" target="_blank" style="background:#000000; color:#ffffff;">Book Private Tour</a>
+                  </div>
+                </div>
+
+                <div class="drop-item" data-type="divider" draggable="true">
+                  <div class="drop-item-actions">
+                    <span><i class="fas fa-grip-vertical"></i></span>
+                    <button type="button" class="btn-delete-block" title="Delete"><i class="fas fa-trash-can"></i></button>
+                  </div>
+                  <div class="builder-divider-block">
+                    <hr>
+                  </div>
+                </div>
+
+                <div class="drop-item" data-type="text" draggable="true">
+                  <div class="drop-item-actions">
+                    <span><i class="fas fa-grip-vertical"></i></span>
+                    <button type="button" class="btn-delete-block" title="Delete"><i class="fas fa-trash-can"></i></button>
+                  </div>
+                  <div class="builder-text-block" style="font-size:11px; color:#71717a; text-align:center;">
+                    © 2026 7 Days Creation. All rights reserved.<br>Bodakdev, Ahmedabad, Gujarat 380054, India<br><a href="#" style="color:#000;">Unsubscribe</a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="save-toast" id="toastMessage"></div>
+
+  <!-- Test Email Modal -->
+  <div class="modal-backdrop" id="testEmailModal">
+    <div class="test-modal">
+      <div class="test-modal-header">
+        <h3>Send Test Email</h3>
+        <button type="button" class="close-modal-btn" id="closeTestModal">&times;</button>
+      </div>
+      <div class="test-modal-body">
+        <label for="testEmailInput">Recipient Email Address</label>
+        <input type="email" id="testEmailInput" placeholder="e.g. test@example.com" required>
+      </div>
+      <div class="test-modal-footer">
+        <button type="button" class="btn-modal-close" id="cancelTestModal">Cancel</button>
+        <button type="button" class="btn-modal-send" id="confirmSendTest">
+          <span><i class="fas fa-paper-plane"></i> Send Test</span>
+          <span class="loader-icon"><i class="fas fa-circle-notch fa-spin"></i> Sending...</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/template.js"></script>
+</body>
+
+</html>

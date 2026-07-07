@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User & Inquiry Management — 7 Days Creation</title>
+  <meta name="description" content="Manage user inquiries for 7 Days Creation">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+
+  <!-- Google Fonts — Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Dashboard Stylesheet (Shared base layout) -->
+  <link rel="stylesheet" href="css/dashboard.css">
+  <!-- Custom Users Stylesheet -->
+  <link rel="stylesheet" href="css/users.css">
+</head>
+
+<body class="admin-dashboard-page">
+
+  <div class="dashboard-layout">
+
+    <!-- ============================================
+         SIDEBAR
+         ============================================ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <img src="images/logo.png" alt="7 Days Creation">
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link" data-tooltip="Dashboard">
+          <i class="fas fa-table-cells"></i>
+        </a>
+        <a href="users.html" class="sidebar-link active" data-tooltip="Users">
+          <i class="fas fa-users"></i>
+        </a>
+        <a href="email-campaign.html" class="sidebar-link" data-tooltip="Email Campaigns">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="whatsapp-campaign.html" class="sidebar-link" data-tooltip="WhatsApp Campaigns">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="settings.html" class="sidebar-link" data-tooltip="Settings">
+          <i class="fas fa-gear"></i>
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="notifications.html" class="sidebar-link" data-tooltip="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="notif-badge"></span>
+        </a>
+        <a href="#" class="sidebar-link" data-tooltip="Navigation">
+          <i class="fas fa-location-arrow"></i>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ============================================
+         MAIN CONTENT
+         ============================================ -->
+    <main class="dashboard-main">
+
+      <!-- TOP BAR -->
+      <header class="top-bar">
+        <!-- Mobile menu toggle -->
+        <button class="mobile-sidebar-toggle" id="mobileMenuBtn" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Tabs -->
+        <div class="top-tabs">
+          <button class="top-tab active" id="tabDashboard">
+            <i class="fas fa-table-cells" style="margin-right:5px;font-size:12px;"></i> Dashboard
+          </button>
+          <button class="top-tab" id="tabAnalytics">
+            <i class="fas fa-chart-line" style="margin-right:5px;font-size:12px;"></i> Analytics
+          </button>
+          <button class="top-tab" id="tabPulse">
+            <i class="fas fa-wave-square" style="margin-right:5px;font-size:12px;"></i> Pulse
+          </button>
+          <button class="top-tab" id="tabData">
+            <i class="fas fa-database" style="margin-right:5px;font-size:12px;"></i> Data
+          </button>
+        </div>
+
+        <!-- Right Side -->
+        <div class="top-right">
+          <!-- Avatar Group -->
+          <div class="avatar-group">
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#f0abfc,#c084fc);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#34d399,#10b981);"></div>
+            <div class="avatar-count">+6</div>
+          </div>
+          <span class="shared-label">
+            <i class="fas fa-lock"></i> Shared
+          </span>
+
+          <!-- Settings -->
+          <a href="settings.html" class="top-icon-btn" aria-label="Settings">
+            <i class="fas fa-gear"></i>
+          </a>
+
+          <!-- Profile Dropdown Container -->
+          <div class="profile-dropdown-container">
+            <div class="top-profile" id="topProfileBtn" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);">
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+              <div class="dropdown-user-info">
+                <div class="dropdown-avatar" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);"></div>
+                <div class="dropdown-user-details">
+                  <strong>User Name</strong>
+                  <span>info@sitename.com</span>
+                </div>
+              </div>
+              <div class="dropdown-badge">
+                <span class="role-badge admin">Admin</span>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="settings.html#sectionGeneral" class="dropdown-item"><i class="fas fa-gear"></i> General Settings</a>
+              <a href="settings.html#sectionSecurity" class="dropdown-item"><i class="fas fa-shield-halved"></i> Security Policy</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item logout-btn" id="logoutBtn">
+                <i class="fas fa-right-from-bracket"></i> Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <div class="page-breadcrumb">
+            <a href="dashboard.html"><i class="fas fa-table-cells" style="font-size:11px;"></i> Admin</a>
+            <span class="sep"><i class="fas fa-chevron-right"></i></span>
+            <a href="#">User Inquiries</a>
+          </div>
+          <h1 class="page-title">User Management & Inquiries</h1>
+        </div>
+
+        <div class="page-actions">
+          <a href="inquiry.html" target="_blank" class="action-btn" style="text-decoration:none;">
+            <i class="fas fa-up-right-from-square"></i> Sales Form
+          </a>
+          <button class="action-btn" id="exportCsvBtn">
+            <i class="fas fa-file-csv"></i> Export CSV
+          </button>
+          <button class="action-btn" id="exportJsonBtn">
+            <i class="fas fa-file-code"></i> Export JSON
+          </button>
+          <button class="action-btn filled" id="openDrawerBtn">
+            <i class="fas fa-plus"></i> Add Inquiry
+          </button>
+        </div>
+      </div>
+
+      <!-- METRICS GRID -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-label">Total Inquiries</span>
+          <span class="metric-value" id="countAll">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Web Inquiries</span>
+          <span class="metric-value" id="countWeb">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Walking Inquiries</span>
+          <span class="metric-value" id="countWalking">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Subscribers</span>
+          <span class="metric-value" id="countSubscriber">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Existing Clients</span>
+          <span class="metric-value" id="countClient">0</span>
+        </div>
+      </div>
+
+      <!-- FILTER & DATA CARD -->
+      <div class="data-card">
+        
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-type="all">All Inquiries</button>
+          <button class="filter-tab" data-type="Web Inquiry">Web Inquiry</button>
+          <button class="filter-tab" data-type="Walking Inquiry">Walking Inquiry</button>
+          <button class="filter-tab" data-type="Subscriber">Subscriber</button>
+          <button class="filter-tab" data-type="Existing Client">Existing Client</button>
+        </div>
+
+        <!-- Advanced Search Panel -->
+        <div class="search-panel">
+          <div class="search-input-wrap">
+            <i class="fas fa-magnifying-glass"></i>
+            <input type="text" id="searchQuery" class="search-input" placeholder="Search by name, email, or phone...">
+          </div>
+          
+          <div class="filter-group">
+            <select id="filterProject" class="filter-select">
+              <option value="">All Projects</option>
+              <option value="7 Days Heights">7 Days Heights</option>
+              <option value="Creation Residency">Creation Residency</option>
+              <option value="Signature Tower">Signature Tower</option>
+              <option value="Royal Meadows">Royal Meadows</option>
+              <option value="Greenfield Villa">Greenfield Villa</option>
+            </select>
+
+            <select id="filterDate" class="filter-select">
+              <option value="">Any Date</option>
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Inquiries Table -->
+        <div class="table-wrap">
+          <table class="inquiries-table" id="inquiriesTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Interested Project</th>
+                <th>Source Type</th>
+                <th>Date Logged</th>
+                <th style="width: 80px; text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inquiriesTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+          <div class="empty-state" id="emptyState">
+            <i class="fas fa-folder-open"></i>
+            <h3>No inquiries found</h3>
+            <p>Try refining your search queries or tabs.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============================================
+       SIDE DRAWER (Add Inquiry directly)
+       ============================================ -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="side-drawer" id="sideDrawer">
+    <div class="drawer-header">
+      <h2>Add New Inquiry</h2>
+      <button class="close-drawer-btn" id="closeDrawerBtn"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="drawer-body">
+      <form id="drawerForm" novalidate>
+        
+        <div class="drawer-form-group">
+          <label for="drawerFirstName">First Name</label>
+          <input type="text" id="drawerFirstName" class="drawer-input" placeholder="e.g. Ramesh" required>
+        </div>
+        
+        <div class="drawer-form-group">
+          <label for="drawerSurname">Surname</label>
+          <input type="text" id="drawerSurname" class="drawer-input" placeholder="e.g. Shah" required>
+        </div>
+
+        <div class="drawer-form-group">
+          <label for="drawerPhone">Phone Number</label>
+          <input type="tel" id="drawerPhone" class="drawer-input" placeholder="e.g. 9812345678" required>
+        </div>
+
+        <div class="drawer-form-group">
+          <label for="drawerEmail">Email Address</label>
+          <input type="email" id="drawerEmail" class="drawer-input" placeholder="e.g. ramesh@example.com" required>
+        </div>
+
+        <div class="drawer-form-group">
+          <label for="drawerProject">Interested Project</label>
+          <select id="drawerProject" class="drawer-select" required>
+            <option value="" disabled selected>Select project</option>
+            <option value="7 Days Heights">7 Days Heights</option>
+            <option value="Creation Residency">Creation Residency</option>
+            <option value="Signature Tower">Signature Tower</option>
+            <option value="Royal Meadows">Royal Meadows</option>
+            <option value="Greenfield Villa">Greenfield Villa</option>
+          </select>
+        </div>
+
+        <div class="drawer-form-group">
+          <label for="drawerType">Inquiry Type</label>
+          <select id="drawerType" class="drawer-select" required>
+            <option value="" disabled selected>Select type</option>
+            <option value="Web Inquiry">Web Inquiry</option>
+            <option value="Walking Inquiry">Walking Inquiry</option>
+            <option value="Subscriber">Subscriber</option>
+            <option value="Existing Client">Existing Client</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-drawer-submit" id="drawerSubmitBtn">
+          <span class="btn-text">Save Inquiry</span>
+          <span class="btn-loader"><i class="fas fa-circle-notch fa-spin"></i> Saving...</span>
+        </button>
+
+      </form>
+    </div>
+  </aside>
+
+  <!-- Notification Toast -->
+  <div class="save-toast" id="toastMessage"></div>
+
+  <!-- Custom Scripts -->
+  <script src="js/users.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create WhatsApp Campaign — 7 Days Creation</title>
+  <meta name="description" content="Design and broadcast WhatsApp campaigns for 7 Days Creation">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+
+  <!-- Google Fonts — Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Dashboard Stylesheet (Shared base layout) -->
+  <link rel="stylesheet" href="css/dashboard.css">
+  <!-- Campaigns Stylesheet -->
+  <link rel="stylesheet" href="css/campaigns.css">
+</head>
+
+<body class="admin-dashboard-page">
+
+  <div class="dashboard-layout">
+
+    <!-- ============================================
+         SIDEBAR
+         ============================================ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <img src="images/logo.png" alt="7 Days Creation">
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link" data-tooltip="Dashboard">
+          <i class="fas fa-table-cells"></i>
+        </a>
+        <a href="users.html" class="sidebar-link" data-tooltip="Users">
+          <i class="fas fa-users"></i>
+        </a>
+        <a href="email-campaign.html" class="sidebar-link" data-tooltip="Email Campaigns">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="whatsapp-campaign.html" class="sidebar-link active" data-tooltip="WhatsApp Campaigns">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="settings.html" class="sidebar-link" data-tooltip="Settings">
+          <i class="fas fa-gear"></i>
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="notifications.html" class="sidebar-link" data-tooltip="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="notif-badge"></span>
+        </a>
+        <a href="#" class="sidebar-link" data-tooltip="Navigation">
+          <i class="fas fa-location-arrow"></i>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ============================================
+         MAIN CONTENT
+         ============================================ -->
+    <main class="dashboard-main">
+
+      <!-- TOP BAR (Exact Original Header Restored) -->
+      <header class="top-bar">
+        <!-- Mobile menu toggle -->
+        <button class="mobile-sidebar-toggle" id="mobileMenuBtn" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Tabs -->
+        <div class="top-tabs">
+          <button class="top-tab active" id="tabDashboard">
+            <i class="fas fa-table-cells" style="margin-right:5px;font-size:12px;"></i> Dashboard
+          </button>
+          <button class="top-tab" id="tabAnalytics">
+            <i class="fas fa-chart-line" style="margin-right:5px;font-size:12px;"></i> Analytics
+          </button>
+          <button class="top-tab" id="tabPulse">
+            <i class="fas fa-wave-square" style="margin-right:5px;font-size:12px;"></i> Pulse
+          </button>
+          <button class="top-tab" id="tabData">
+            <i class="fas fa-database" style="margin-right:5px;font-size:12px;"></i> Data
+          </button>
+        </div>
+
+        <!-- Right Side -->
+        <div class="top-right">
+          <!-- Avatar Group -->
+          <div class="avatar-group">
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#f0abfc,#c084fc);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);"></div>
+            <div class="avatar-group-item" style="background:linear-gradient(135deg,#34d399,#10b981);"></div>
+            <div class="avatar-count">+6</div>
+          </div>
+          <span class="shared-label">
+            <i class="fas fa-lock"></i> Shared
+          </span>
+
+          <!-- Settings -->
+          <a href="settings.html" class="top-icon-btn" aria-label="Settings">
+            <i class="fas fa-gear"></i>
+          </a>
+
+          <!-- Profile Dropdown Container -->
+          <div class="profile-dropdown-container">
+            <div class="top-profile" id="topProfileBtn" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);">
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+              <div class="dropdown-user-info">
+                <div class="dropdown-avatar" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);"></div>
+                <div class="dropdown-user-details">
+                  <strong>User Name</strong>
+                  <span>info@sitename.com</span>
+                </div>
+              </div>
+              <div class="dropdown-badge">
+                <span class="role-badge admin">Admin</span>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="settings.html#sectionGeneral" class="dropdown-item"><i class="fas fa-gear"></i> General Settings</a>
+              <a href="settings.html#sectionSecurity" class="dropdown-item"><i class="fas fa-shield-halved"></i> Security Policy</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item logout-btn" id="logoutBtn">
+                <i class="fas fa-right-from-bracket"></i> Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <div class="page-breadcrumb">
+            <a href="whatsapp-campaign.html"><i class="fas fa-arrow-left" style="font-size:11px;"></i> Back to Campaigns</a>
+          </div>
+          <h1 class="page-title">Design WhatsApp Campaign</h1>
+        </div>
+      </div>
+
+      <!-- SPACIOUS TWO COLUMN BUILDER LAYOUT -->
+      <div class="creator-page-layout">
+        
+        <!-- Form Panel -->
+        <div class="creator-form-card">
+          <form id="campaignForm" novalidate>
+            
+            <div class="form-group-wrap">
+              <label for="campName">Campaign Name</label>
+              <input type="text" id="campName" class="form-input-c" placeholder="e.g. Signature Tower VIP Launch" required>
+            </div>
+
+            <div class="form-group-wrap">
+              <label for="campAudience">Target Recipient Segment</label>
+              <select id="campAudience" class="form-select-c" required>
+                <option value="" disabled>Select Target Segment</option>
+                <option value="All" selected>All Inquiries (Standard)</option>
+                <option value="Web Inquiry">Web Inquiry leads</option>
+                <option value="Walking Inquiry">Walking Inquiry leads</option>
+                <option value="Subscriber">Subscribers list</option>
+                <option value="Existing Client">Existing Clients list</option>
+              </select>
+            </div>
+
+            <div class="form-group-wrap">
+              <label style="font-weight: 600; margin-bottom: 8px; display: block;">Header Media Attachment Type</label>
+              <div class="template-selector-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 12px;">
+                <label class="tmpl-radio active" id="mediaTabNone">
+                  <input type="radio" name="campMediaType" value="none" checked>
+                  <div class="tmpl-radio-inner" style="padding: 10px 5px;">
+                    <i class="fas fa-ban" style="font-size:14px; margin-bottom:4px;"></i>
+                    <span style="font-size:10px;">None</span>
+                  </div>
+                </label>
+                <label class="tmpl-radio" id="mediaTabImage">
+                  <input type="radio" name="campMediaType" value="image">
+                  <div class="tmpl-radio-inner" style="padding: 10px 5px;">
+                    <i class="fas fa-image" style="font-size:14px; margin-bottom:4px;"></i>
+                    <span style="font-size:10px;">Image</span>
+                  </div>
+                </label>
+                <label class="tmpl-radio" id="mediaTabVideo">
+                  <input type="radio" name="campMediaType" value="video">
+                  <div class="tmpl-radio-inner" style="padding: 10px 5px;">
+                    <i class="fas fa-video" style="font-size:14px; margin-bottom:4px;"></i>
+                    <span style="font-size:10px;">Video</span>
+                  </div>
+                </label>
+                <label class="tmpl-radio" id="mediaTabDocument">
+                  <input type="radio" name="campMediaType" value="document">
+                  <div class="tmpl-radio-inner" style="padding: 10px 5px;">
+                    <i class="fas fa-file-pdf" style="font-size:14px; margin-bottom:4px;"></i>
+                    <span style="font-size:10px;">PDF</span>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Dynamic Media Input Group -->
+              <div id="mediaInputsContainer" style="display: none; background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; margin-bottom: 16px;">
+                <div class="form-group-wrap" style="margin-bottom: 10px;">
+                  <label id="mediaUrlLabel" style="font-size: 11px; font-weight:600; color: #475569;">Media URL</label>
+                  <input type="url" id="campMedia" class="form-input-c" placeholder="Enter URL...">
+                </div>
+                <div class="form-group-wrap" style="margin-bottom: 0;">
+                  <label style="font-size: 11px; font-weight:600; display:block; margin-bottom:6px; color: #475569;">Or upload local file</label>
+                  <button type="button" class="btn-save-tmpl" id="btnUploadWaMedia" style="background:#000; color:#fff; border:none; padding:8px 12px; border-radius:4px; font-weight:600; cursor:pointer; font-size:12px;">Choose File...</button>
+                  <input type="file" id="waMediaFile" accept="image/*,video/*,application/pdf" style="display:none;">
+                  <span id="waMediaFileName" style="margin-left: 8px; font-size: 11px; color: #64748b; font-style: italic;"></span>
+                </div>
+              </div>
+              <!-- Help Tip Box -->
+              <div class="media-help-note" style="margin-top: 10px; font-size: 11px; color: #1e3a8a; background: #eff6ff; border-left: 3px solid #3b82f6; padding: 10px; border-radius: 4px; line-height: 1.4; text-align: left;">
+                <i class="fas fa-info-circle" style="color: #3b82f6; margin-right: 5px;"></i>
+                <strong>Tip:</strong> WhatsApp Campaigns support PDF documents (e.g. brochures), direct Image files (.png, .jpg), and Video files (.mp4). You can upload a file directly or link to an external web URL.
+              </div>
+            </div>
+
+            <div class="form-group-wrap">
+              <label>Template Select</label>
+              <div class="template-selector-grid">
+                <label class="tmpl-radio active">
+                  <input type="radio" name="campTemplate" value="launch" checked>
+                  <div class="tmpl-radio-inner">
+                    <i class="fas fa-rocket"></i>
+                    <span>VIP Launch</span>
+                  </div>
+                </label>
+                <label class="tmpl-radio">
+                  <input type="radio" name="campTemplate" value="followup">
+                  <div class="tmpl-radio-inner">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Site Visit</span>
+                  </div>
+                </label>
+                <label class="tmpl-radio">
+                  <input type="radio" name="campTemplate" value="promo">
+                  <div class="tmpl-radio-inner">
+                    <i class="fas fa-percentage"></i>
+                    <span>Special Deal</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group-wrap">
+              <label for="campBody">Message Body</label>
+              <textarea id="campBody" class="form-textarea-c" rows="8" placeholder="Type WhatsApp message. Supports {Name} and {Surname} variables." required>Hello {Name}! 👋
+
+Exciting news from 7 Days Creation! We are offering a private booking slot for our newest project: Signature Towers.
+
+Reserve your appointment this week and enjoy exclusive pre-launch pricing. Click here to confirm: https://7dayscreation.com/tours</textarea>
+            </div>
+
+            <button type="submit" class="btn-send-campaign" id="sendBtn">
+              <span class="btn-text"><i class="fab fa-whatsapp"></i> Broadcast Campaign</span>
+              <span class="btn-loader"><i class="fas fa-circle-notch fa-spin"></i> Broadcasting...</span>
+            </button>
+
+          </form>
+        </div>
+
+        <!-- Preview Panel -->
+        <div class="creator-preview-card flex-center">
+          <div class="preview-header-label">Real-time Mobile Screen Simulator</div>
+          
+          <!-- Mobile Phone Device Frame -->
+          <div class="mobile-phone-frame">
+            <div class="phone-camera-notch"></div>
+            <div class="phone-screen">
+              
+              <!-- WhatsApp Chat Header -->
+              <div class="wa-chat-header">
+                <i class="fas fa-arrow-left wa-back"></i>
+                <div class="wa-avatar">7D</div>
+                <div class="wa-contact-info">
+                  <span class="wa-name">7 Days Creation</span>
+                  <span class="wa-status">online</span>
+                </div>
+                <div class="wa-header-icons">
+                  <i class="fas fa-video"></i>
+                  <i class="fas fa-phone"></i>
+                  <i class="fas fa-ellipsis-vertical"></i>
+                </div>
+              </div>
+
+              <!-- WhatsApp Chat Wallpaper Area -->
+              <div class="wa-chat-body">
+                
+                <div class="wa-system-time">TODAY</div>
+
+                <!-- Message bubble -->
+                <div class="wa-msg-bubble outgoing" id="waMsgBubble">
+                  <!-- Media Preview -->
+                  <div class="wa-media-preview" id="waMediaPreview" style="display: none; border-radius: 6px; overflow: hidden; background: #e5e7eb; position: relative;">
+                    <!-- Image render -->
+                    <img src="" id="waMediaImage" alt="Media Attachment" style="width: 100%; display: none;">
+                    
+                    <!-- Video render -->
+                    <div id="waMediaVideoContainer" style="display: none; position: relative; width: 100%; height: 140px; background: #000;">
+                      <video id="waMediaVideo" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline></video>
+                      <!-- Play overlay icon -->
+                      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.6); color: #fff; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                        <i class="fas fa-play" style="margin-left: 3px;"></i>
+                      </div>
+                    </div>
+
+                    <!-- PDF Document render -->
+                    <div id="waMediaDocContainer" style="display: none; padding: 12px; background: #f1f5f9; border-bottom: 1px solid #cbd5e1; align-items: center;">
+                      <div style="background: #ef4444; color: #fff; width: 36px; height: 36px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; margin-right: 12px; flex-shrink:0;">
+                        PDF
+                      </div>
+                      <div style="flex: 1; text-align: left; overflow: hidden;">
+                        <div id="waMediaDocName" style="font-size: 12px; font-weight: 600; color: #1e293b; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; max-width: 100px;">marketing.pdf</div>
+                        <div id="waMediaDocSize" style="font-size: 10px; color: #64748b;">1.2 MB • PDF</div>
+                      </div>
+                      <div style="color: #64748b; font-size: 16px; margin-left: 8px;">
+                        <i class="fas fa-download"></i>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Text contents -->
+                  <div class="wa-msg-text" id="waMsgText">
+                    Hello Amit! 👋<br><br>Exciting news from 7 Days Creation! We are offering a private booking slot for our newest project: Signature Towers.<br><br>Reserve your appointment this week and enjoy exclusive pre-launch pricing. Click here to confirm: https://7dayscreation.com/tours
+                  </div>
+                  
+                  <div class="wa-msg-meta">
+                    <span id="waMsgTime">16:52</span>
+                    <i class="fas fa-check-double wa-ticks"></i>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Bottom input bar -->
+              <div class="wa-bottom-bar">
+                <i class="far fa-face-smile"></i>
+                <div class="wa-input-placeholder">Message</div>
+                <i class="fas fa-paperclip"></i>
+                <i class="fas fa-camera"></i>
+                <div class="wa-mic-btn"><i class="fas fa-microphone"></i></div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="save-toast" id="toastMessage"></div>
+
+  <!-- Scripts -->
+  <script src="js/template.js"></script>
+</body>
+
+</html>

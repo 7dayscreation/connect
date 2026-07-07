@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Inquiry Form — 7 Days Creation</title>
+  <meta name="description" content="Add new sales inquiry - 7 Days Creation">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+
+  <!-- Google Fonts — Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="css/inquiry.css">
+</head>
+
+<body class="inquiry-form-page">
+
+  <div class="inquiry-container">
+    <div class="inquiry-card">
+
+      <!-- Centered Logo Row on Top -->
+      <div class="logo-wrap" style="text-align: center; margin-bottom: 16px;">
+        <img src="images/logo.png" alt="7 Days Creation" style="height: 48px; margin: 0 auto; display: block;">
+      </div>
+
+      <!-- Back to Dashboard -->
+      <div style="text-align: center; margin-bottom: 24px;">
+        <a href="dashboard.html" class="back-link" style="display: inline-flex; align-items: center; gap: 8px;">
+          <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+      </div>
+
+      <!-- Form header -->
+      <div class="form-intro" style="text-align: center;">
+        <h1>Sales Inquiry Form</h1>
+        <p>Enter client details below to log a new marketing inquiry into the system.</p>
+      </div>
+
+      <!-- Inquiry Form -->
+      <form id="inquiryForm" class="inquiry-form" novalidate>
+
+        <!-- Name Row -->
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="firstName">Name</label>
+            <div class="input-wrapper">
+              <i class="fas fa-user input-icon"></i>
+              <input type="text" id="firstName" name="firstName" placeholder="e.g. Mehul" required
+                autocomplete="given-name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="surname">Surname</label>
+            <div class="input-wrapper">
+              <i class="fas fa-signature input-icon"></i>
+              <input type="text" id="surname" name="surname" placeholder="e.g. Vyas" required
+                autocomplete="family-name">
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Row -->
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="phone">Mobile</label>
+            <div class="input-wrapper">
+              <i class="fas fa-phone input-icon"></i>
+              <input type="tel" id="phone" name="phone" placeholder="e.g. 9925193442" required autocomplete="tel">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-wrapper">
+              <i class="fas fa-envelope input-icon"></i>
+              <input type="email" id="email" name="email" placeholder="e.g. info@example.com" required
+                autocomplete="email">
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Dropdown (Full Width) -->
+        <div class="form-group">
+          <label for="inquiryType">Segment / Source</label>
+          <div class="input-wrapper select-wrapper">
+            <i class="fas fa-circle-info input-icon"></i>
+            <select id="inquiryType" name="inquiryType" required>
+              <option value="" disabled selected>Select Segment / Source</option>
+              <option value="General">General</option>
+              <option value="Walking Inquiry">Walking Inquiry</option>
+              <option value="Architect Reference">Architect Reference</option>
+              <option value="Regular Customer">Regular Customer</option>
+            </select>
+            <i class="fas fa-chevron-down select-arrow"></i>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span class="btn-text">Save</span>
+          <span class="btn-loader"><i class="fas fa-circle-notch fa-spin"></i> Saving...</span>
+        </button>
+
+      </form>
+
+      <!-- Success State -->
+      <div id="successState" class="success-state">
+        <div class="success-checkmark">
+          <div class="check-icon">
+            <span class="icon-line line-tip"></span>
+            <span class="icon-line line-long"></span>
+            <div class="icon-circle"></div>
+            <div class="icon-fix"></div>
+          </div>
+        </div>
+        <h2>Inquiry Saved!</h2>
+        <p>The lead has been recorded in the central database.</p>
+        <div class="success-actions">
+          <button id="addAnotherBtn" class="btn-secondary">Log Another Inquiry</button>
+          <a href="users.html" class="btn-primary">Go to User Section</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Custom script -->
+  <script src="js/inquiry.js"></script>
+</body>
+
+</html>
