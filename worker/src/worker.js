@@ -20,11 +20,29 @@ export default {
 
     // ── Handle CORS preflight ──────────────────────────────────
     const requestOrigin = request.headers.get('Origin') || '*';
+    const allowedOrigins = [
+      'https://7dayscreation.github.io',
+      'http://localhost',
+      'http://127.0.0.1',
+      'http://localhost:8787',
+      'http://127.0.0.1:8787'
+    ];
+    let corsOrigin = '*';
+    if (requestOrigin !== '*') {
+      const isAllowed = allowedOrigins.includes(requestOrigin) || 
+                        requestOrigin.endsWith('.github.io') || 
+                        requestOrigin.includes('7dayscreation.com') ||
+                        (env && env.CORS_ORIGIN && requestOrigin === env.CORS_ORIGIN);
+      if (isAllowed) {
+        corsOrigin = requestOrigin;
+      }
+    }
+
     if (request.method === 'OPTIONS') {
       return new Response(null, {
         status: 204,
         headers: {
-          'Access-Control-Allow-Origin': requestOrigin,
+          'Access-Control-Allow-Origin': corsOrigin,
           'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
           'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Session-Token',
           'Access-Control-Max-Age': '86400',
@@ -35,7 +53,7 @@ export default {
     // Helper to inject headers
     const applyCors = (res) => {
       const newHeaders = new Headers(res.headers);
-      newHeaders.set('Access-Control-Allow-Origin', requestOrigin);
+      newHeaders.set('Access-Control-Allow-Origin', corsOrigin);
       newHeaders.set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
       newHeaders.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Session-Token');
       return new Response(res.body, {
